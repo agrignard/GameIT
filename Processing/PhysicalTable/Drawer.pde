@@ -2,7 +2,7 @@ import deadpixel.keystone.*;
 
 public class Drawer{
   Keystone ks;
-  int nbProjector = 1;
+  int nbProjector = 3;
   CornerPinSurface[] surface = new CornerPinSurface[nbProjector];
   PGraphics offscreenSurface;
   PGraphics subSurface;
@@ -24,8 +24,10 @@ public class Drawer{
       offscreenSurface.beginDraw();
       offscreenSurface.clear();
       offscreenSurface.background(0);
+      drawLegend(offscreenSurface);
       //drawTableBackGround(offscreenSurface);
       roads.draw(offscreenSurface);
+      model.run(offscreenSurface);
       offscreenSurface.endDraw();
       for (int i=0; i<nbProjector;i++){
         subSurface.beginDraw();
@@ -41,4 +43,11 @@ public class Drawer{
     p.rect(0, 0, displayWidth, displayHeight);
     p.image(bg,0,0,displayWidth,displayHeight);
   }
+  
+  void drawLegend(PGraphics p) {
+    p.fill(#FFFFFF);
+    p.textAlign(RIGHT); 
+    p.textSize(10);
+    p.text("FRAMERATE: " + int(frameRate) + " fps", width-30, 30);
+ }
 }

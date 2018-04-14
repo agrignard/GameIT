@@ -57,9 +57,7 @@ public class RoadNetwork {
       }
       graph = new Pathfinder(nodes); 
     }
-    
-    
-   // RETURN EXISTING NODE (SAME COORDINATES) IF EXISTS -->
+
   private Node nodeExists(float x, float y, ArrayList<Node> nodes) {
     for(Node node : nodes) {
       if(node.x == x && node.y == y) {

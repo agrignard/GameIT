@@ -7,6 +7,7 @@ public int playGroundWidth = displayWidth;
 public int playGroundHeight = displayHeight;
 PImage bg;
 RoadNetwork roads;
+ABM model;
 
 void setup(){
   fullScreen(P3D, SPAN);
@@ -15,6 +16,8 @@ void setup(){
   bg = loadImage("data/Table_Video_Frame_Template_4k.jpg");
   drawer.initSurface();
   roads = new RoadNetwork("GIS/RoadNetwork/LLL_Roads.geojson");
+  model = new ABM(roads);
+  model.initModel();
 } 
 
 void draw(){
