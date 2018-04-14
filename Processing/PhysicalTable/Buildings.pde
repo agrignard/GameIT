@@ -37,8 +37,10 @@ public class Buildings{
   }
   
   public void draw(PGraphics p){
-    for (int i=0;i<buildings.size();i++){
-      p.shape(buildings.get(i), 0, 0);
+    if (drawer.showBuilding){ 
+      for (int i=0;i<buildings.size();i++){
+        p.shape(buildings.get(i), 0, 0);
+      }
     }
   }
   

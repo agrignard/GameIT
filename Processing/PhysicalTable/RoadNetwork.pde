@@ -115,13 +115,16 @@ public class RoadNetwork {
     );
   }
   
-  public void draw(PGraphics p){    
-    for(int i = 0; i < graph.nodes.size(); i++){
+  public void draw(PGraphics p){ 
+    if(drawer.showRoad){
+      for(int i = 0; i < graph.nodes.size(); i++){
       Node tempN = (Node)graph.nodes.get(i);
       for(int j = 0; j < tempN.links.size(); j++){
         p.stroke(#AAAAAA); p.strokeWeight(1);
         p.line(tempN.x, tempN.y, ((Connector)tempN.links.get(j)).n.x, ((Connector)tempN.links.get(j)).n.y);
       }
-    }  
+    }
+    }
+      
   }
 }  

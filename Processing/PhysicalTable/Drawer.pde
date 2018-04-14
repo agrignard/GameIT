@@ -7,6 +7,11 @@ public class Drawer{
   PGraphics offscreenSurface;
   PGraphics subSurface;
   
+  public boolean showBG = true,
+                 showAgent = true,
+                 showBuilding = true,
+                 showRoad=true;
+  
   
   Drawer(PApplet parent){
     ks = new Keystone(parent);
@@ -24,8 +29,8 @@ public class Drawer{
       offscreenSurface.beginDraw();
       offscreenSurface.clear();
       offscreenSurface.background(0);
-      drawLegend(offscreenSurface);
       drawTableBackGround(offscreenSurface);
+      drawLegend(offscreenSurface);
       roads.draw(offscreenSurface);
       buildings.draw(offscreenSurface);
       model.run(offscreenSurface);
@@ -42,7 +47,9 @@ public class Drawer{
   void drawTableBackGround(PGraphics p) {
     //p.fill(125);  
     //p.rect(0, 0, displayWidth, displayHeight);
-    p.image(bg,0,0,displayWidth,displayHeight);
+    if(showBG){
+      p.image(bg,0,0,displayWidth,displayHeight);
+    }
   }
   
   void drawLegend(PGraphics p) {
@@ -50,5 +57,13 @@ public class Drawer{
     p.textAlign(RIGHT); 
     p.textSize(10);
     p.text("FRAMERATE: " + int(frameRate) + " fps", width-30, 30);
+    p.textAlign(LEFT); 
+    p.text("[A] Agent - [B] Building - [R] Road - [I] Image", 30, 30);
+    p.text("[K] keystone - [L] load keystone - [S] save keystone  ", 30, 50);
  }
+ 
+  public void toggleBG() { showBG = !showBG; }
+  public void toggleAgent() { showAgent = !showAgent; }
+  public void toggleBuilding() { showBuilding = !showBuilding;}
+  public void toggleRoad() { showRoad = !showRoad;}
 }

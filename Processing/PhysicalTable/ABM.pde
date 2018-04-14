@@ -57,9 +57,12 @@ public class Agent{
   }
     
   public void draw(PGraphics p){
-    p.noStroke();
-    p.fill(myColor);
-    p.ellipse(pos.x, pos.y, 5, 5);
+    if(drawer.showAgent){
+      p.noStroke();
+      p.fill(myColor);
+      p.ellipse(pos.x, pos.y, 5, 5);
+    }
+    
   }
     
   // CALCULATE ROUTE --->

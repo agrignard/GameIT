@@ -1,7 +1,7 @@
 Drawer drawer;
 
-public int displayWidth = int(1920);
-public int displayHeight = int(1080);
+public int displayWidth = int(1920)/2;
+public int displayHeight = int(1080)/2;
 
 public int playGroundWidth = displayWidth;
 public int playGroundHeight = displayHeight;
@@ -44,6 +44,18 @@ void keyPressed() {
     break; 
   case 's':
     drawer.ks.save();
+    break;
+  case 'a':  // Toggle agents view  
+    drawer.toggleAgent();
+    break;
+  case 'b':  // Toggle buidings view
+    drawer.toggleBuilding();
+    break; 
+  case 'i':  // Toggle buidings view
+    drawer.toggleBG();
+    break;
+  case 'r':  // Toggle buidings view
+    drawer.toggleRoad();
     break;
   }
 }
