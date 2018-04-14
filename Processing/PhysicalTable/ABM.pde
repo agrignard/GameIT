@@ -2,10 +2,15 @@
 public class ABM {
   private RoadNetwork map;
   private ArrayList<Agent> agents;
+  public ArrayList<Integer> colorPalette;
+
   
   ABM(RoadNetwork _map){
     map=_map;
     agents = new ArrayList<Agent>();
+    colorPalette = new ArrayList<Integer>();
+    colorPalette.add(#FFFFB2);colorPalette.add(#FECC5C);colorPalette.add(#FD8D3C);colorPalette.add(#F03B20);
+    colorPalette.add(#BD0026);colorPalette.add(#0B5038);colorPalette.add(#0B5038);  
   }
   
   public void initModel(){
@@ -28,10 +33,13 @@ public class ABM {
 
 public class Agent{
   private RoadNetwork map;
+  private color myColor;
   private PVector pos;
   private Node srcNode, destNode, toNode;
   private ArrayList<Node> path;
-  private PVector dir;
+  private PVector dir;  
+  //map<string,rgb> color_per_type <- [ "High School Student"::#FFFFB2, "College student"::#FECC5C,"Young professional"::#FD8D3C,  "Mid-career workers"::#F03B20, "Executives"::#BD0026, "Home maker"::#0B5038, "Retirees"::#8CAB13];
+  
   
   Agent(RoadNetwork _map){
     map=_map;
@@ -45,11 +53,12 @@ public class Agent{
     pos= new PVector(srcNode.x,srcNode.y);
     path=null;
     dir = new PVector(0.0, 0.0);
+    myColor= color(int(model.colorPalette.get(int(random(7)))));
   }
     
   public void draw(PGraphics p){
     p.noStroke();
-    p.fill(255,0,0);
+    p.fill(myColor);
     p.ellipse(pos.x, pos.y, 5, 5);
   }
     

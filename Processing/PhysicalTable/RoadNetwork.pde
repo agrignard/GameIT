@@ -14,8 +14,10 @@ public class RoadNetwork {
     JSONObject JSON = loadJSONObject(GeoJSONfile);
     JSONArray JSONlines = JSON.getJSONArray("features");
     
-     // Set map bounds -->
-    setBoundingBox(JSONlines);
+
+    JSONObject JSONBounds = loadJSONObject("GIS/Bounds.geojson");
+    JSONArray JSONBoundslines = JSONBounds.getJSONArray("features");
+    setBoundingBox(JSONBoundslines);
     
     // Import all nodes -->
     Node prevNode = null;
@@ -93,12 +95,9 @@ public class RoadNetwork {
     // Resize map keeping ratio -->
     float mapRatio = (coordsBR.x - coordsTL.x) / (coordsBR.y - coordsTL.y);
     this.size = mapRatio < 1 ? new PVector( height * mapRatio, height ) : new PVector( width , width / mapRatio ) ;
-    this.scale = (coordsBR.x - coordsTL.x) / size.x;
-    
-    println("Bounding Box" + "size" + this.size + "scale" + this.scale);
-    
+    this.scale = (coordsBR.x - coordsTL.x) / size.x;     
   }
-
+ 
   
     // CONVERT TO WEBMERCATOR PROJECTION
   private PVector toWebMercator( float lat, float lng ) {

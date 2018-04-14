@@ -1,7 +1,7 @@
 Drawer drawer;
 
-public int displayWidth = 2000;
-public int displayHeight = 1200;
+public int displayWidth = 1920;
+public int displayHeight = 1080;
 
 public int playGroundWidth = displayWidth;
 public int playGroundHeight = displayHeight;
@@ -10,8 +10,8 @@ RoadNetwork roads;
 ABM model;
 
 void setup(){
-  fullScreen(P3D, SPAN);
-  //size(displayWidth, displayHeight, P3D);
+  //fullScreen(P3D, SPAN);
+  size(displayWidth, displayHeight, P3D);
   drawer = new Drawer(this);
   bg = loadImage("data/Table_Video_Frame_Template_4k.jpg");
   drawer.initSurface();
