@@ -1,11 +1,12 @@
 Drawer drawer;
 
-public int displayWidth = 1000;
-public int displayHeight = 500;
+public int displayWidth = 2000;
+public int displayHeight = 1200;
 
 public int playGroundWidth = displayWidth;
 public int playGroundHeight = displayHeight;
 PImage bg;
+RoadNetwork roads;
 
 void setup(){
   fullScreen(P3D, SPAN);
@@ -13,6 +14,7 @@ void setup(){
   drawer = new Drawer(this);
   bg = loadImage("data/Table_Video_Frame_Template_4k.jpg");
   drawer.initSurface();
+  roads = new RoadNetwork("GIS/RoadNetwork/LLL_Roads.geojson");
 } 
 
 void draw(){

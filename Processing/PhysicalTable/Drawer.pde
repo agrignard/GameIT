@@ -24,7 +24,8 @@ public class Drawer{
       offscreenSurface.beginDraw();
       offscreenSurface.clear();
       offscreenSurface.background(0);
-      drawTableBackGround(offscreenSurface);
+      //drawTableBackGround(offscreenSurface);
+      roads.draw(offscreenSurface);
       offscreenSurface.endDraw();
       for (int i=0; i<nbProjector;i++){
         subSurface.beginDraw();
