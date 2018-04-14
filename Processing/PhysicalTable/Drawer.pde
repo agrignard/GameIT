@@ -10,14 +10,14 @@ public class Drawer{
   
   Drawer(PApplet parent){
     ks = new Keystone(parent);
-    offscreenSurface = createGraphics(playGroundWidth, playGroundHeight, P2D);
+    offscreenSurface = createGraphics(playGroundWidth, playGroundHeight, P3D);
   }
   
   void initSurface(){
     for (int i=0; i<nbProjector;i++){
       surface[i] = ks.createCornerPinSurface((int)playGroundWidth/nbProjector, (int)playGroundHeight, 50);
     }
-    subSurface = createGraphics(playGroundWidth/nbProjector, playGroundHeight, P2D);
+    subSurface = createGraphics(playGroundWidth/nbProjector, playGroundHeight, P3D);
   }
   
   void drawSurface(){
@@ -27,6 +27,7 @@ public class Drawer{
       drawLegend(offscreenSurface);
       drawTableBackGround(offscreenSurface);
       roads.draw(offscreenSurface);
+      buildings.draw(offscreenSurface);
       model.run(offscreenSurface);
       offscreenSurface.endDraw();
       for (int i=0; i<nbProjector;i++){

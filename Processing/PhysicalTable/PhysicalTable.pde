@@ -1,12 +1,13 @@
 Drawer drawer;
 
-public int displayWidth = 1920;
-public int displayHeight = 1080;
+public int displayWidth = int(1920);
+public int displayHeight = int(1080);
 
 public int playGroundWidth = displayWidth;
 public int playGroundHeight = displayHeight;
 PImage bg;
 RoadNetwork roads;
+Buildings buildings;
 ABM model;
 
 void setup(){
@@ -16,6 +17,7 @@ void setup(){
   bg = loadImage("data/Table_Video_Frame_Template_4k.jpg");
   drawer.initSurface();
   roads = new RoadNetwork("GIS/RoadNetwork/LLL_Roads.geojson");
+  buildings = new Buildings("GIS/Buildings.geojson");
   model = new ABM(roads);
   model.initModel();
 } 
