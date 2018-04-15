@@ -2,37 +2,49 @@
 public class ABM {
   private RoadNetwork map;
   private ArrayList<Agent> agents;
-  public ArrayList<Integer> colorPalette;
+  HashMap<String,Integer> profiles;
+
 
   
   ABM(RoadNetwork _map){
     map=_map;
     agents = new ArrayList<Agent>();
-    colorPalette = new ArrayList<Integer>();
-    colorPalette.add(#FFFFB2);colorPalette.add(#FECC5C);colorPalette.add(#FD8D3C);colorPalette.add(#F03B20);
-    colorPalette.add(#BD0026);colorPalette.add(#0B5038);colorPalette.add(#0B5038);  
+    profiles = new HashMap<String,Integer>();
+    profiles.put("Young Children",#FFFFB2);profiles.put("High School",#FFFFB2);
+    profiles.put("College",#FECC5C);profiles.put("Young professional",#FD8D3C);
+    profiles.put("Mid-career workers",#F03B20);profiles.put("Executives",#BD0026);
+    profiles.put("Workforce",#FF0000);profiles.put("Home maker",#0B5038);
+    profiles.put("Retirees",#8CAB13);profiles.put("Artist",#FFFFFF);
   }
   
   public void initModel(){
-    createAgents(2000);
+    createAgents(50);
+  }
+  
+  public void updatePop(){    
   }
   
   public void run(PGraphics p){
     for (Agent agent : agents) {
       agent.move();
       agent.draw(p);
+      updatePop();
     }
+    
   }
   
   public void createAgents(int num) {
     for (int i = 0; i < num; i++){
-      agents.add( new Agent(map));
+      for (Map.Entry me : model.profiles.entrySet()) {
+        agents.add( new Agent(map,(String)me.getKey()));
+    }  
     }
-  } 
+  }
 }
 
 public class Agent{
   private RoadNetwork map;
+  private String profile;
   private color myColor;
   private PVector pos;
   private float size;
@@ -43,8 +55,9 @@ public class Agent{
   //map<string,rgb> color_per_type <- [ "High School Student"::#FFFFB2, "College student"::#FECC5C,"Young professional"::#FD8D3C,  "Mid-career workers"::#F03B20, "Executives"::#BD0026, "Home maker"::#0B5038, "Retirees"::#8CAB13];
   
   
-  Agent(RoadNetwork _map){
+  Agent(RoadNetwork _map, String _profile){
     map=_map;
+    profile=_profile;
     initAgent();
   }
   
@@ -55,9 +68,9 @@ public class Agent{
     pos= new PVector(srcNode.x,srcNode.y);
     path=null;
     dir = new PVector(0.0, 0.0);
-    myColor= color(int(model.colorPalette.get(int(random(7)))));
-    size= 3 + random(5);
-    speed= 0.01 + random(0.2);
+    myColor= (int)(model.profiles.get(profile));
+    size= 1 + random(5);
+    speed= 0.1 + random(0.5);
   }
     
   public void draw(PGraphics p){
