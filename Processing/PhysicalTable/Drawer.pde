@@ -2,10 +2,10 @@ import deadpixel.keystone.*;
 
 public class Drawer{
   Keystone ks;
-  int nbProjector = 1;
   CornerPinSurface[] surface = new CornerPinSurface[nbProjector];
   PGraphics offscreenSurface;
   PGraphics subSurface;
+  //int nbProjector=1;
   
   public boolean showBG = true,
                  showAgent = true,
@@ -31,6 +31,7 @@ public class Drawer{
       offscreenSurface.background(0);
       drawTableBackGround(offscreenSurface);
       drawLegend(offscreenSurface);
+      //scale(4);
       roads.draw(offscreenSurface);
       buildings.draw(offscreenSurface);
       model.run(offscreenSurface);

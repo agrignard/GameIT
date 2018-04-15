@@ -1,7 +1,7 @@
 Drawer drawer;
-
-public int displayWidth = int(1920)/2;
-public int displayHeight = int(1080)/2;
+public int nbProjector=3;
+public int displayWidth = int(1920)*nbProjector;
+public int displayHeight = int(1080)*nbProjector;
 
 public int playGroundWidth = displayWidth;
 public int playGroundHeight = displayHeight;
@@ -11,8 +11,10 @@ Buildings buildings;
 ABM model;
 
 void setup(){
-  //fullScreen(P3D, SPAN);
-  size(displayWidth, displayHeight, P3D);
+  fullScreen(P3D);
+  width=displayWidth;
+  height=displayHeight;
+  //size(displayWidth, displayHeight, P3D);
   drawer = new Drawer(this);
   bg = loadImage("data/Table_Video_Frame_Template_4k.jpg");
   drawer.initSurface();
