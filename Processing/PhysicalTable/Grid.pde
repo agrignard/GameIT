@@ -26,8 +26,24 @@ public class Grid {
           }
         }
       }
-      //p.fill(255);
-      //p.rect (int(mouseX/cellSize)*cellSize, int(mouseY/cellSize)*cellSize, cellSize, cellSize);
+      p.rectMode(CENTER);
+      p.fill(255);
+      p.rect (mouseX, mouseY, cellSize*2, cellSize*2);
+      PVector toCompare= new PVector(mouseX,mouseY);
+      for (int i=0;i<buildings.buildings.size();i++){
+        if(((buildings.buildings.get(i).getVertex(0).x<toCompare.x-100) ||(buildings.buildings.get(i).getVertex(0).x)>toCompare.x+100) ||
+        ((buildings.buildings.get(i).getVertex(0).y<toCompare.y-100) || (buildings.buildings.get(i).getVertex(0).y)>toCompare.y+100))
+    
+        {
+          //p.fill(255,0,0);
+          //p.shape(buildings.buildings.get(i), 0, 0);
+        }
+        else{
+          p.fill(255,0,0);
+          p.shape(buildings.buildings.get(i), 0, 0);
+        }
+        
+      }
     }
   }
 }

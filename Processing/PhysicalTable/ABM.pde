@@ -3,10 +3,7 @@ import java.util.Map;
 public class ABM {
   private RoadNetwork map;
   private ArrayList<Agent> agents;
-  HashMap<String,Integer> profiles;
-
-
-  
+  HashMap<String,Integer> profiles;  
   ABM(RoadNetwork _map){
     map=_map;
     agents = new ArrayList<Agent>();
@@ -19,6 +16,7 @@ public class ABM {
   }
   
   public void initModel(){
+    agents.clear();
     createAgents(50);
   }
   

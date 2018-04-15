@@ -40,8 +40,6 @@ public class Drawer{
       drawTableBackGround(offscreenSurface);
       drawLegend(offscreenSurface);
       drawInteraction(offscreenSurface);
-
-
       roads.draw(offscreenSurface);
       buildings.draw(offscreenSurface);
       model.run(offscreenSurface);
@@ -70,6 +68,7 @@ public class Drawer{
     p.textAlign(RIGHT); 
     p.textSize(10);
     p.text("FRAMERATE: " + int(frameRate) + " fps", width-30, 30);
+    p.text(int(model.agents.size()) + " agents" , width-30, 50);
     p.textAlign(LEFT); 
     if(keystoneMode){
       p.text("Keystone: [L] load keystone - [S] save keystone  ", 30, 30);

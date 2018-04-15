@@ -7,6 +7,7 @@ public int playGroundWidth = displayWidth;
 public int playGroundHeight = displayHeight;
 PImage bg;
 RoadNetwork roads;
+RoadNetwork rivers;
 Buildings buildings;
 ABM model;
 Grid grid;
@@ -22,8 +23,8 @@ void setup(){
   drawer = new Drawer(this);
   bg = loadImage("data/Table_Video_Frame_Template_4k.jpg");
   drawer.initSurface();
-  roads = new RoadNetwork("GIS/RoadNetwork/LLL_rivers.geojson");
-  //roads = new RoadNetwork("GIS/RoadNetwork/LLL_Roads.geojson");
+  roads = new RoadNetwork("GIS/RoadNetwork/LLL_Roads.geojson");
+  rivers = new RoadNetwork("GIS/RoadNetwork/LLL_rivers.geojson");
   buildings = new Buildings("GIS/Buildings.geojson");
   model = new ABM(roads);
   model.initModel();
@@ -54,12 +55,7 @@ void keyPressed() {
     drawer.ks.load();
     break; 
   case 's':
-    if (drawer.keystoneMode){
       drawer.ks.save();
-    }
-     else{
-       drawer.toggleSlider();
-     }
     break;
   case 'a':   
     drawer.toggleAgent();
@@ -81,6 +77,8 @@ void keyPressed() {
     break;
   case 't':  
     drawer.toggleTimelapse();
+  case 'm':  
+    model.initModel();
     break;
   }
 }

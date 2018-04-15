@@ -19,7 +19,6 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
   data = subset(data, 0, data.length-2);
   String message = new String( data );
   String[] list = split(message, ',');
-  println(list[1] +  list[2]);
   if(drawer.showInteraction){
     for (int x=0; x<width/grid.cellSize; x++) {
         for (int y=0; y<height/grid.cellSize; y++) {
