@@ -9,8 +9,11 @@ public class Drawer{
   
   public boolean showBG = true,
                  showAgent = true,
-                 showBuilding = true,
-                 showRoad=true;
+                 showBuilding = false,
+                 showRoad=true,
+                 showInteraction=false,
+                 timelapse=false,
+                 showgrid=true;
   
   
   Drawer(PApplet parent){
@@ -27,14 +30,19 @@ public class Drawer{
   
   void drawSurface(){
       offscreenSurface.beginDraw();
-      offscreenSurface.clear();
-      offscreenSurface.background(0);
+      if(!drawer.timelapse){
+        offscreenSurface.clear();
+        offscreenSurface.background(0);
+      }
+      
       drawTableBackGround(offscreenSurface);
       drawLegend(offscreenSurface);
-      //scale(4);
+      drawInteraction(offscreenSurface);
+
       roads.draw(offscreenSurface);
       buildings.draw(offscreenSurface);
       model.run(offscreenSurface);
+      grid.draw(offscreenSurface);
       offscreenSurface.endDraw();
       for (int i=0; i<nbProjector;i++){
         subSurface.beginDraw();
@@ -59,12 +67,25 @@ public class Drawer{
     p.textSize(10);
     p.text("FRAMERATE: " + int(frameRate) + " fps", width-30, 30);
     p.textAlign(LEFT); 
-    p.text("[A] Agent - [B] Building - [R] Road - [I] Image", 30, 30);
+    p.text("[A] Agent - [B] Building - [G] Grid - [R] Road - [T] Timelapse", 30, 30);
     p.text("[K] keystone - [L] load keystone - [S] save keystone  ", 30, 50);
  }
+ 
+ 
+public void drawInteraction(PGraphics p){
+  stroke(255);
+  if (mousePressed == true) {
+    line(mouseX, mouseY, pmouseX, pmouseY);
+  }
+}
  
   public void toggleBG() { showBG = !showBG; }
   public void toggleAgent() { showAgent = !showAgent; }
   public void toggleBuilding() { showBuilding = !showBuilding;}
   public void toggleRoad() { showRoad = !showRoad;}
+  public void toggleInteraction() { showInteraction = !showInteraction;}
+  public void toggleTimelapse() { timelapse = !timelapse;}
+  public void toggleGrid() { showgrid = !showgrid;}
+  
+  
 }

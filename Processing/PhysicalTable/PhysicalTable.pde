@@ -1,5 +1,5 @@
 Drawer drawer;
-public int nbProjector=3;
+public int nbProjector=1;
 public int displayWidth = int(1920)*nbProjector;
 public int displayHeight = int(1080)*nbProjector;
 
@@ -9,6 +9,8 @@ PImage bg;
 RoadNetwork roads;
 Buildings buildings;
 ABM model;
+Grid grid;
+
 
 void setup(){
   fullScreen(P3D);
@@ -22,6 +24,7 @@ void setup(){
   buildings = new Buildings("GIS/Buildings.geojson");
   model = new ABM(roads);
   model.initModel();
+  grid = new Grid();
 } 
 
 void draw(){
@@ -30,7 +33,9 @@ void draw(){
 
 /* Draw ------------------------------------------------------ */
 void drawScene() {
-  background(0);
+  if(!drawer.timelapse){
+    background(0);
+  }
   drawer.drawSurface();
 }
 
@@ -47,17 +52,26 @@ void keyPressed() {
   case 's':
     drawer.ks.save();
     break;
-  case 'a':  // Toggle agents view  
+  case 'a':   
     drawer.toggleAgent();
     break;
-  case 'b':  // Toggle buidings view
+  case 'b':  
     drawer.toggleBuilding();
-    break; 
-  case 'i':  // Toggle buidings view
-    drawer.toggleBG();
     break;
-  case 'r':  // Toggle buidings view
+  case 'g':  
+    drawer.toggleGrid();
+    break;
+  case ' ':  
+    drawer.toggleBG();
+    break; 
+  case 'i': 
+    drawer.toggleInteraction();
+    break;
+  case 'r':  
     drawer.toggleRoad();
+    break;
+  case 't':  
+    drawer.toggleTimelapse();
     break;
   }
 }

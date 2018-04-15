@@ -19,7 +19,7 @@ public class ABM {
   
   public void run(PGraphics p){
     for (Agent agent : agents) {
-      agent.move(1);
+      agent.move();
       agent.draw(p);
     }
   }
@@ -35,6 +35,8 @@ public class Agent{
   private RoadNetwork map;
   private color myColor;
   private PVector pos;
+  private float size;
+  private float speed;
   private Node srcNode, destNode, toNode;
   private ArrayList<Node> path;
   private PVector dir;  
@@ -54,13 +56,15 @@ public class Agent{
     path=null;
     dir = new PVector(0.0, 0.0);
     myColor= color(int(model.colorPalette.get(int(random(7)))));
+    size= 3 + random(5);
+    speed= 0.01 + random(0.2);
   }
     
   public void draw(PGraphics p){
     if(drawer.showAgent){
       p.noStroke();
       p.fill(myColor);
-      p.ellipse(pos.x, pos.y, 5, 5);
+      p.ellipse(pos.x, pos.y, size, size);
     }
     
   }
@@ -69,7 +73,7 @@ public class Agent{
   private boolean calcRoute(Node origin, Node dest) {
     // Agent already in destination --->
     if (origin == dest) {
-      toNode=dest;
+      toNode=origin;
       return true;
       // Next node is available --->
     }  else {
@@ -83,7 +87,7 @@ public class Agent{
     return false;
   }
   
-    public void move(float speed) {
+    public void move() {
         if (path == null){
           calcRoute( srcNode, destNode );
         }
