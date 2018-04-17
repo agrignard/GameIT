@@ -3,13 +3,15 @@ import java.util.Iterator;
 /* ABM CLASS ------------------------------------------------------------*/
 public class ABM {
   private RoadNetwork map;
+  private String type;
   private ArrayList<Agent> agents;
   private ArrayList<String> profiles;
   private ArrayList<Integer> colors;
   HashMap<String, Integer> colorProfiles; 
   int nbPeoplePerProfile=100;
-  ABM(RoadNetwork _map) {
+  ABM(RoadNetwork _map, String _type) {
     map=_map;
+    type=_type;
     agents = new ArrayList<Agent>();
     profiles = new ArrayList<String>();
     colors = new ArrayList<Integer>();
@@ -163,10 +165,10 @@ public class Agent {
     pos= new PVector(srcNode.x, srcNode.y);
     path=null;
     dir = new PVector(0.0, 0.0);
-    myProfileColor= (int)(model.colorProfiles.get(profile));
-    myUsageColor = (usage.equals("working")) ? #FF0000 : #00FF00;
+    myProfileColor= (int)(models.get(0).colorProfiles.get(profile));
+    myUsageColor = (usage.equals("working")) ? #165E93 : #F4A528;
     size= 1 + random(10);
-    speed= 0.1 + random(0.5);
+    speed= 0.1 + random(0.8);
   }
 
 

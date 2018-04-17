@@ -9,7 +9,7 @@ PImage bg;
 RoadNetwork roads;
 RoadNetwork rivers;
 Buildings buildings;
-ABM model;
+ArrayList<ABM> models;
 Grid grid;
 InterFace interfaceLeap;
 SliderHandler sliderHandler;
@@ -18,15 +18,20 @@ void setup(){
   //fullScreen(P3D);
   width=displayWidth;
   height=displayHeight;
+  //smooth(3);
   size(displayWidth, displayHeight, P3D);
   drawer = new Drawer(this);
   bg = loadImage("data/Table_Video_Frame_Template_4k.jpg");
   drawer.initSurface();
+  
   roads = new RoadNetwork("GIS/RoadNetwork/LLL_Roads.geojson");
-  rivers = new RoadNetwork("GIS/RoadNetwork/LLL_rivers.geojson");
+  rivers = new RoadNetwork("GIS/RoadNetwork/LLL_Rivers.geojson");
   buildings = new Buildings("GIS/Buildings.geojson");
-  model = new ABM(roads);
-  model.initModel();
+  models = new ArrayList<ABM>();
+  models.add(new ABM(roads,"people"));
+  models.get(0).initModel();
+  models.add(new ABM(rivers,"car"));
+  models.get(1).initModel();
   grid = new Grid();
   interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();
@@ -66,6 +71,9 @@ void keyPressed() {
   case 'g':  
     drawer.toggleGrid();
     break;
+  case 'h':  
+    drawer.toggleHeatmap();
+    break;
   case ' ':  
     drawer.toggleBG();
     break; 
@@ -78,7 +86,8 @@ void keyPressed() {
   case 't':  
     drawer.toggleTimelapse();
   case 'm':  
-    model.initModel();
+    models.get(0).initModel();
+    models.get(1).initModel();
     break;
   case 'u':  
     drawer.toggleUsage();

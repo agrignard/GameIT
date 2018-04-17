@@ -16,7 +16,8 @@ public class Drawer{
                  showgrid=false,
                  showSlider=false,
                  keystoneMode=false,
-                 showUsage=false;
+                 showUsage=false,
+                 showHeatmap=false;
   
   
   Drawer(PApplet parent){
@@ -40,11 +41,13 @@ public class Drawer{
       
       drawTableBackGround(offscreenSurface);
       drawLegend(offscreenSurface);
+      grid.draw(offscreenSurface);
       drawInteraction(offscreenSurface);
       roads.draw(offscreenSurface);
       buildings.draw(offscreenSurface);
-      model.run(offscreenSurface);
-      grid.draw(offscreenSurface);
+      models.get(0).run(offscreenSurface);
+      models.get(1).run(offscreenSurface);
+      
       //slider.draw(offscreenSurface);
       offscreenSurface.endDraw();
       for (int i=0; i<nbProjector;i++){
@@ -69,7 +72,8 @@ public class Drawer{
     p.textAlign(RIGHT); 
     p.textSize(10);
     p.text("FRAMERATE: " + int(frameRate) + " fps", width-30, 30);
-    p.text(int(model.agents.size()) + " agents" , width-30, 50);
+    p.text(int(models.get(0).agents.size()) + " agents" , width-30, 50);
+    p.text(int(models.get(1).agents.size()) + " agents" , width-30, 70);
     p.textAlign(LEFT); 
     if(keystoneMode){
       p.text("Keystone: [L] load keystone - [S] save keystone  ", 30, 30);
@@ -105,6 +109,9 @@ public void drawInteraction(PGraphics p){
   public void toggleGrid() { showgrid = !showgrid;}
   public void toggleSlider() { showSlider = !showSlider;}
   public void toggleUsage() { showUsage = !showUsage;}
+  public void toggleHeatmap() { showHeatmap = !showHeatmap;}
+  
+  
   
   
 }
