@@ -30,20 +30,61 @@ public class Grid {
       p.fill(255);
       p.rect (mouseX, mouseY, cellSize*2, cellSize*2);
       PVector toCompare= new PVector(mouseX,mouseY);
-      for (int i=0;i<buildings.buildings.size();i++){
-        if(((buildings.buildings.get(i).getVertex(0).x<toCompare.x-100) ||(buildings.buildings.get(i).getVertex(0).x)>toCompare.x+100) ||
-        ((buildings.buildings.get(i).getVertex(0).y<toCompare.y-100) || (buildings.buildings.get(i).getVertex(0).y)>toCompare.y+100))
-    
-        {
-          //p.fill(255,0,0);
-          //p.shape(buildings.buildings.get(i), 0, 0);
-        }
-        else{
-          p.fill(255,0,0);
-          p.shape(buildings.buildings.get(i), 0, 0);
-        }
-        
+      ArrayList<PShape> tmp = getBuildingInsideROI(toCompare,100);
+      for (int i=0;i<tmp.size();i++){
+        p.fill(255,0,0);
+        p.shape(tmp.get(i), 0, 0);
       }
+      ArrayList<Agent> tmp2 = getAgentInsideROI(toCompare,100);
+      for (int i=0;i<tmp2.size();i++){
+        p.fill(255,0,0);
+       // p.shape(tmp2.get(i), 0, 0);
+       p.ellipse(tmp2.get(i).pos.x, tmp2.get(i).pos.y, tmp2.get(i).size, tmp2.get(i).size);
+      }
+      
+      PVector ratio = getLinvingAndWorkingInsideROI(toCompare,100);
+      p.fill(ratio.x*10,ratio.y*10,0);
+      p.rect (mouseX, mouseY, cellSize*2, cellSize*2);
     }
+  }
+  
+  public ArrayList<PShape> getBuildingInsideROI(PVector pos, int size){
+    ArrayList<PShape> tmp = new ArrayList<PShape>();
+    for (int i=0;i<buildings.buildings.size();i++){
+        if(((buildings.buildings.get(i).getVertex(0).x>pos.x-size) && (buildings.buildings.get(i).getVertex(0).x)<pos.x+size) &&
+        ((buildings.buildings.get(i).getVertex(0).y>pos.y-size) && (buildings.buildings.get(i).getVertex(0).y)<pos.y+size))
+        {
+          tmp.add(buildings.buildings.get(i));
+        }       
+      }
+    return tmp;
+  }
+  
+  public ArrayList<Agent> getAgentInsideROI(PVector pos, int size){
+    ArrayList<Agent> tmp = new ArrayList<Agent>();
+    for (int i=0;i<model.agents.size();i++){
+        if(((model.agents.get(i).pos.x>pos.x-size) && (model.agents.get(i).pos.x)<pos.x+size) &&
+        ((model.agents.get(i).pos.y>pos.y-size) && (model.agents.get(i).pos.y)<pos.y+size))
+        {
+          tmp.add(model.agents.get(i));
+        }       
+      }
+    return tmp;
+  }
+  
+  public PVector getLinvingAndWorkingInsideROI(PVector pos, int size){
+    PVector tmp = new PVector();
+    for (int i=0;i<model.agents.size();i++){
+        if(((model.agents.get(i).pos.x>pos.x-size) && (model.agents.get(i).pos.x)<pos.x+size) &&
+        ((model.agents.get(i).pos.y>pos.y-size) && (model.agents.get(i).pos.y)<pos.y+size))
+        {
+          if(model.agents.get(i).usage.equals("living")){
+            tmp.x++;
+          }else{
+            tmp.y++;
+          }
+        }       
+      }
+    return tmp;
   }
 }
