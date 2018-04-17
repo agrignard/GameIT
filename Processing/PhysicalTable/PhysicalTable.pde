@@ -12,8 +12,7 @@ Buildings buildings;
 ABM model;
 Grid grid;
 InterFace interfaceLeap;
-
-
+SliderHandler sliderHandler;
   
 void setup(){
   //fullScreen(P3D);
@@ -30,6 +29,7 @@ void setup(){
   model.initModel();
   grid = new Grid();
   interfaceLeap = new InterFace();
+  sliderHandler = new SliderHandler();
 } 
 
 void draw(){
@@ -79,6 +79,9 @@ void keyPressed() {
     drawer.toggleTimelapse();
   case 'm':  
     model.initModel();
+    break;
+  case 'u':  
+    drawer.toggleUsage();
     break;
   }
 }

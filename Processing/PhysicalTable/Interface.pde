@@ -33,3 +33,55 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
   println( "receive: \""+message+"\" from "+ip+" on port "+port );
 }
 }
+
+public class SliderHandler{
+  ArrayList<Float> globalSliders;
+  ArrayList<Float> tmpSliders;
+  String newMsg = "";
+  
+  SliderHandler(){
+    // create a new datagram connection on port 6000
+    // and wait for incomming message
+    udp = new UDP( this, 11999 );
+
+    //udp.log( true );     // <-- printout the connection activity
+    udp.listen( true );
+   
+    globalSliders = new ArrayList<Float> ();
+    globalSliders.add(0.5);
+    globalSliders.add(0.5);
+    
+    
+    tmpSliders = new ArrayList<Float> ();
+    tmpSliders.add(0.5);
+    tmpSliders.add(0.5);
+    
+  }
+  
+  /**
+ * To perform any action on datagram reception, you need to implement this 
+ * handler in your code. This method will be automatically called by the UDP 
+ * object each time he receive a nonnull message.
+ * By default, this method have just one argument (the received message as 
+ * byte[] array), but in addition, two arguments (representing in order the 
+ * sender IP address and his port) can be set like below.
+ */
+// void receive( byte[] data ) {       // <-- default handler
+void receive( byte[] data, String ip, int port ) {  // <-- extended handler
+  // get the "real" message =
+  // forget the ";\n" at the end <-- !!! only for a communication with Pd !!!
+  data = subset(data, 0, data.length-2);
+  String message = new String( data );
+   
+  newMsg = "receive: " + message +" from "+ip+" on port "+port;
+  String[] list = split(newMsg, ' ');
+  if(list[1].equals("/slider00")){
+    globalSliders.set(0,float(list[2]));
+  }
+  if(list[1].equals("/slider01")){
+    globalSliders.set(1,float(list[2]));
+  }
+  
+}
+  
+}

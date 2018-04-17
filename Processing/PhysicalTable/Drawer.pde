@@ -15,7 +15,8 @@ public class Drawer{
                  timelapse=false,
                  showgrid=false,
                  showSlider=false,
-                 keystoneMode=false;
+                 keystoneMode=false,
+                 showUsage=false;
   
   
   Drawer(PApplet parent){
@@ -73,7 +74,7 @@ public class Drawer{
     if(keystoneMode){
       p.text("Keystone: [L] load keystone - [S] save keystone  ", 30, 30);
     }else{
-      p.text("[A] Agent - [B] Building - [G] Grid - [K] keystone - [R] Road - [S] Slider - [T] Timelapse - [I] Interaction", 30, 30);
+      p.text("[A] Agent - [B] Building - [G] Grid - [K] keystone - [R] Road - [S] Slider - [T] Timelapse - [I] Interaction - [U] Usage", 30, 30);
     }
     p.textAlign(CENTER); 
     p.text("InnovaCity - LLL & GAME IT - 2018 ", width/2, height);
@@ -103,6 +104,7 @@ public void drawInteraction(PGraphics p){
   public void toggleTimelapse() { timelapse = !timelapse;}
   public void toggleGrid() { showgrid = !showgrid;}
   public void toggleSlider() { showSlider = !showSlider;}
+  public void toggleUsage() { showUsage = !showUsage;}
   
   
 }
