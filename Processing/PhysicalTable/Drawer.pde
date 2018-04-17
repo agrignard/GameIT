@@ -11,9 +11,9 @@ public class Drawer{
                  showAgent = true,
                  showBuilding = false,
                  showRoad=true,
-                 showInteraction=false,
+                 useLeap=false,
                  timelapse=false,
-                 showgrid=false,
+                 showInteraction=false,
                  showSlider=false,
                  keystoneMode=false,
                  showUsage=false,
@@ -41,12 +41,13 @@ public class Drawer{
       
       drawTableBackGround(offscreenSurface);
       drawLegend(offscreenSurface);
-      grid.draw(offscreenSurface);
+      
       drawInteraction(offscreenSurface);
       roads.draw(offscreenSurface);
       buildings.draw(offscreenSurface);
       models.get(0).run(offscreenSurface);
       models.get(1).run(offscreenSurface);
+      grid.draw(offscreenSurface);
       
       //slider.draw(offscreenSurface);
       offscreenSurface.endDraw();
@@ -72,13 +73,14 @@ public class Drawer{
     p.textAlign(RIGHT); 
     p.textSize(10);
     p.text("FRAMERATE: " + int(frameRate) + " fps", width-30, 30);
-    p.text(int(models.get(0).agents.size()) + " agents" , width-30, 50);
-    p.text(int(models.get(1).agents.size()) + " agents" , width-30, 70);
+    p.text(int(models.get(0).agents.size()) + " cars" , width-30, 50);
+    p.text(int(models.get(1).agents.size()) + " peoples" , width-30, 70);
     p.textAlign(LEFT); 
     if(keystoneMode){
       p.text("Keystone: [L] load keystone - [S] save keystone  ", 30, 30);
     }else{
-      p.text("[A] Agent - [B] Building - [G] Grid - [K] keystone - [R] Road - [S] Slider - [T] Timelapse - [I] Interaction - [U] Usage", 30, 30);
+      p.text("[A] Agent - [B] Building - [R] Road - [U] Usage - [H] Heatmap - [T] Timelapse", 30, 30);
+      p.text("[I] Interaction (Mouse) (and [F] Leap)) - [K] keystone", 30, 50);
     }
     p.textAlign(CENTER); 
     p.text("InnovaCity - LLL & GAME IT - 2018 ", width/2, height);
@@ -97,16 +99,9 @@ public void drawInteraction(PGraphics p){
   public void toggleAgent() { showAgent = !showAgent; }
   public void toggleBuilding() { showBuilding = !showBuilding;}
   public void toggleRoad() { showRoad = !showRoad;}
-  public void toggleInteraction() { 
-    showInteraction = !showInteraction;
-    for (int x=0; x<width/grid.cellSize; x++) {
-        for (int y=0; y<height/grid.cellSize; y++) {
-          grid.cells[x][y]=0;
-        }
-      }
-  }
+  public void toggleLeap() { useLeap = !useLeap;}
   public void toggleTimelapse() { timelapse = !timelapse;}
-  public void toggleGrid() { showgrid = !showgrid;}
+  public void toggleInteraction() { showInteraction = !showInteraction;}
   public void toggleSlider() { showSlider = !showSlider;}
   public void toggleUsage() { showUsage = !showUsage;}
   public void toggleHeatmap() { showHeatmap = !showHeatmap;}
