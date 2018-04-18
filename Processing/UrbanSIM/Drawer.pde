@@ -46,11 +46,16 @@ public class Drawer{
       roads.draw(offscreenSurface);
       rivers.draw(offscreenSurface);
       buildings.draw(offscreenSurface);
-      models.get(0).run(offscreenSurface);
-      //models.get(1).run(offscreenSurface);
-      models.get(0).updateGlobalPop(0);
-      grid.draw(offscreenSurface);
+      if(drawer.showInteraction){
+        models.get(1).run(offscreenSurface);
+      }else{
+        models.get(0).run(offscreenSurface);
+      }
       
+      
+      models.get(0).updateGlobalPop(0);
+      models.get(1).updateLocapPop(1);
+      grid.draw(offscreenSurface);
       //slider.draw(offscreenSurface);
       offscreenSurface.endDraw();
       for (int i=0; i<nbProjector;i++){
@@ -75,8 +80,8 @@ public class Drawer{
     p.textAlign(RIGHT); 
     p.textSize(10);
     p.text("FRAMERATE: " + int(frameRate) + " fps", width-30, 30);
-    p.text(int(models.get(0).agents.size()) + " " + models.get(0).type , width-30, 50);
-    //p.text(int(models.get(1).agents.size()) + " " + models.get(1).type , width-30, 70);
+    p.text("model 0: " + int(models.get(0).agents.size())  + models.get(0).type , width-30, 50);
+    p.text("model 1:" + int(models.get(1).agents.size()) + models.get(1).type , width-30, 70);
     p.text("Living/Working:" + int(GetTotalLivingWorkingNumber().x) +"/"+int(GetTotalLivingWorkingNumber().y), width-30, 90);
     p.textAlign(LEFT); 
     if(keystoneMode){

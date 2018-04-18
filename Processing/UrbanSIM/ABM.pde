@@ -74,6 +74,25 @@ public class ABM {
       }
     }
   }
+  
+  public void updateLocapPop(int modelId){
+    if (frameCount % 30 == 0) {
+      for (int i=0;i<sliderHandler.tmpLocalSliders.size();i++){
+         if(sliderHandler.localSliders.get(i)>sliderHandler.tmpLocalSliders.get(i)){
+         if(i<5){
+           addNAgentPerProfiles(modelId,(int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "living") ; 
+         }else{
+           addNAgentPerProfiles(modelId,(int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "working") ; 
+         }
+         sliderHandler.tmpLocalSliders.set(i,sliderHandler.localSliders.get(i));
+         }
+        if(sliderHandler.localSliders.get(i)<sliderHandler.tmpLocalSliders.get(i)){
+          removeNAgentsPerProfiles(modelId,int((sliderHandler.tmpLocalSliders.get(i) - sliderHandler.localSliders.get(i)))*2, profiles.get(i));
+          sliderHandler.tmpLocalSliders.set(i,sliderHandler.localSliders.get(i));
+        }
+      }
+    }
+  }
 
   public void run(PGraphics p) {
       for (int i=0;i<agents.size();i++) {
@@ -83,7 +102,6 @@ public class ABM {
   }
   
   public void addNAgentsPerUsage(int modelId,int num, String usage) {
-    println("add " + num + " agents " + usage); 
     for (int i = 0; i < num; i++) {
       if (usage.equals("living")) {
         models.get(modelId).agents.add( new Agent(map, profiles.get(int(random(4))), "people", "living"));
@@ -94,7 +112,6 @@ public class ABM {
   }
 
   public void removeNAgentsPerUsage(int modelId, int num, String usage) {
-    println("remove" + num);
     Iterator<Agent> ag = models.get(modelId).agents.iterator();
     int i=0;
     while (ag.hasNext()) { 
@@ -110,18 +127,18 @@ public class ABM {
   }  
 
 
-  public void addNAgentPerProfiles(int num, String profile, String usage) {
-    println("I want to add" + num + " agent of profile " + profile);
+  public void addNAgentPerProfiles(int modelId,int num, String profile, String usage) {
     for (int i = 0; i < num; i++) {
-      agents.add( new Agent(map, profile, "people",usage));
+      models.get(modelId).agents.add( new Agent(map, profile, "people",usage));
     }
   }
 
-  public void removeNAgentsPerProfiles(int n, String profile) {
-    Iterator<Agent> ag = agents.iterator();
+  public void removeNAgentsPerProfiles(int modelId,int n, String profile) {
+    Iterator<Agent> ag = models.get(modelId).agents.iterator();
+    int i=0;
     while (ag.hasNext()) { 
       Agent tmpAg = ag.next();
-      int i=0;
+      
       if (profile.equals(tmpAg.profile)) { 
         if (i<n) { 
           ag.remove();

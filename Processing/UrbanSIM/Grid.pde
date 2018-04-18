@@ -74,13 +74,12 @@ public class Grid {
       p.fill(255);
       p.rect (x, y, cellSize, cellSize,cellSize/20);
       PVector toCompare= new PVector(x,y);
-      PVector ratio = getLinvingAndWorkingInsideROI(models.get(0),toCompare,cellSize);
       ArrayList<PShape> tmp = getBuildingInsideROI(toCompare,cellSize);
       for (int i=0;i<tmp.size();i++){
         p.fill(255,0,0);
         //p.shape(tmp.get(i), 0, 0);
       }
-      ArrayList<Agent> tmp2 = getAgentInsideROI(models.get(0),toCompare,cellSize);
+      ArrayList<Agent> tmp2 = getAgentInsideROI(models.get(1),toCompare,cellSize);
       for (int i=0;i<tmp2.size();i++){
          p.fill(255,0,0);
          p.fill(tmp2.get(i).myProfileColor);

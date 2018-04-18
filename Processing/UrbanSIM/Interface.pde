@@ -37,6 +37,8 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
 public class SliderHandler{
   ArrayList<Integer> globalSliders;
   ArrayList<Integer> tmpGlobalSliders;
+  ArrayList<Integer> localSliders;
+  ArrayList<Integer> tmpLocalSliders;
   String newMsg = "";
   
   SliderHandler(){
@@ -54,8 +56,33 @@ public class SliderHandler{
     
     tmpGlobalSliders = new ArrayList<Integer> ();
     tmpGlobalSliders.add(50);
-    tmpGlobalSliders.add(50);
+    tmpGlobalSliders.add(50);  
     
+    
+    localSliders = new ArrayList<Integer> ();
+    localSliders.add(50);
+    localSliders.add(50);
+    localSliders.add(50);
+    localSliders.add(50);
+    localSliders.add(50);
+    localSliders.add(50);
+    localSliders.add(50);
+    localSliders.add(50);
+    localSliders.add(50);
+    localSliders.add(50);
+    
+    
+    tmpLocalSliders = new ArrayList<Integer> ();
+    tmpLocalSliders.add(50);
+    tmpLocalSliders.add(50);
+    tmpLocalSliders.add(50);
+    tmpLocalSliders.add(50); 
+    tmpLocalSliders.add(50);
+    tmpLocalSliders.add(50); 
+    tmpLocalSliders.add(50);
+    tmpLocalSliders.add(50); 
+    tmpLocalSliders.add(50);
+    tmpLocalSliders.add(50); 
   }
   
   /**
@@ -82,6 +109,16 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
   if(int(list[2])==11){
     globalSliders.set(1,int(list[3]));
   }
+  
+  for (int i=0;i<sliderHandler.localSliders.size();i++){
+    if(int(list[2])==i){
+      localSliders.set(i,int(list[3]));
+    }     
+ }
+  
+  
+  
+  
 }
   
 }
