@@ -170,7 +170,8 @@ public class Agent {
     path=null;
     dir = new PVector(0.0, 0.0);
     myProfileColor= (int)(models.get(0).colorProfiles.get(profile));
-    myUsageColor = (usage.equals("working")) ? #165E93 : #F4A528;
+    //myUsageColor = (usage.equals("working")) ? #165E93 : #F4A528;
+    myUsageColor = (usage.equals("working")) ? #FF0000 : #00FF00;
     
     if(type.equals("car")){
       speed= 0.3 + random(0.5);
@@ -178,7 +179,7 @@ public class Agent {
     }
     if (type.equals("people")){
       speed= 0.05 + random(0.1);
-      size= 1 + random(5);
+      size= 3 + random(10);
     }
     
   }

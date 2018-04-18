@@ -86,12 +86,12 @@ public class Grid {
          p.fill(tmp2.get(i).myProfileColor);
          p.ellipse(tmp2.get(i).pos.x, tmp2.get(i).pos.y, tmp2.get(i).size, tmp2.get(i).size);
       }
-      tmp2 = getAgentInsideROI(models.get(1  ),toCompare,cellSize);
+      /*tmp2 = getAgentInsideROI(models.get(1),toCompare,cellSize);
       for (int i=0;i<tmp2.size();i++){
          p.fill(255,0,0);
          p.fill(tmp2.get(i).myProfileColor);
          p.ellipse(tmp2.get(i).pos.x, tmp2.get(i).pos.y, tmp2.get(i).size, tmp2.get(i).size);
-      }
+      }*/
   }
   
   public ArrayList<PShape> getBuildingInsideROI(PVector pos, int size){
