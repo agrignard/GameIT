@@ -2,6 +2,7 @@ import java.util.Map;
 import java.util.Iterator;
 /* ABM CLASS ------------------------------------------------------------*/
 public class ABM {
+  private int id;
   private RoadNetwork map;
   private String type;
   private ArrayList<Agent> agents;
@@ -9,7 +10,8 @@ public class ABM {
   private ArrayList<Integer> colors;
   HashMap<String, Integer> colorProfiles; 
   int nbPeoplePerProfile;
-  ABM(RoadNetwork _map, String _type, int _nbPeoplePerProfile) {
+  ABM(int _id, RoadNetwork _map, String _type, int _nbPeoplePerProfile) {
+    id=_id;
     map=_map;
     type=_type;
     nbPeoplePerProfile= _nbPeoplePerProfile;
@@ -51,62 +53,62 @@ public class ABM {
 
   public void initModel() {
     agents.clear();
-    createAgents(nbPeoplePerProfile,type);
+    createAgents(id,nbPeoplePerProfile, type);
   }
 
   public void updateGlobalPop(int modelId) {
     if (frameCount % 30 == 0) {
-      if(sliderHandler.globalSliders.get(0)>sliderHandler.tmpGlobalSliders.get(0)){
-        addNAgentsPerUsage(modelId,(int)((sliderHandler.globalSliders.get(0) - sliderHandler.tmpGlobalSliders.get(0)))*1000/100, "working");
-        sliderHandler.tmpGlobalSliders.set(0,sliderHandler.globalSliders.get(0));
+      if (sliderHandler.globalSliders.get(0)>sliderHandler.tmpGlobalSliders.get(0)) {
+        addNAgentsPerUsage(modelId, (int)((sliderHandler.globalSliders.get(0) - sliderHandler.tmpGlobalSliders.get(0)))*1000/100, "working");
+        sliderHandler.tmpGlobalSliders.set(0, sliderHandler.globalSliders.get(0));
       }
-      if(sliderHandler.globalSliders.get(0)<sliderHandler.tmpGlobalSliders.get(0)){
-        removeNAgentsPerUsage(modelId,int((sliderHandler.tmpGlobalSliders.get(0) - sliderHandler.globalSliders.get(0)))*1000/100, "working");
-        sliderHandler.tmpGlobalSliders.set(0,sliderHandler.globalSliders.get(0));
+      if (sliderHandler.globalSliders.get(0)<sliderHandler.tmpGlobalSliders.get(0)) {
+        removeNAgentsPerUsage(modelId, int((sliderHandler.tmpGlobalSliders.get(0) - sliderHandler.globalSliders.get(0)))*1000/100, "working");
+        sliderHandler.tmpGlobalSliders.set(0, sliderHandler.globalSliders.get(0));
       }
-      if(sliderHandler.globalSliders.get(1)>sliderHandler.tmpGlobalSliders.get(1)){
-        addNAgentsPerUsage(modelId,int((sliderHandler.globalSliders.get(1) - sliderHandler.tmpGlobalSliders.get(1)))*1000/100, "living");
-        sliderHandler.tmpGlobalSliders.set(1,sliderHandler.globalSliders.get(1));
+      if (sliderHandler.globalSliders.get(1)>sliderHandler.tmpGlobalSliders.get(1)) {
+        addNAgentsPerUsage(modelId, int((sliderHandler.globalSliders.get(1) - sliderHandler.tmpGlobalSliders.get(1)))*1000/100, "living");
+        sliderHandler.tmpGlobalSliders.set(1, sliderHandler.globalSliders.get(1));
       }
-      if(sliderHandler.globalSliders.get(1)<sliderHandler.tmpGlobalSliders.get(1)){
-        removeNAgentsPerUsage(modelId,int((sliderHandler.tmpGlobalSliders.get(1) - sliderHandler.globalSliders.get(1)))*1000/100, "living");
-        sliderHandler.tmpGlobalSliders.set(1,sliderHandler.globalSliders.get(1));
+      if (sliderHandler.globalSliders.get(1)<sliderHandler.tmpGlobalSliders.get(1)) {
+        removeNAgentsPerUsage(modelId, int((sliderHandler.tmpGlobalSliders.get(1) - sliderHandler.globalSliders.get(1)))*1000/100, "living");
+        sliderHandler.tmpGlobalSliders.set(1, sliderHandler.globalSliders.get(1));
       }
     }
   }
-  
-  public void updateLocapPop(int modelId){
+
+  public void updateLocapPop(int modelId) {
     if (frameCount % 30 == 0) {
-      for (int i=0;i<sliderHandler.tmpLocalSliders.size();i++){
-         if(sliderHandler.localSliders.get(i)>sliderHandler.tmpLocalSliders.get(i)){
-         if(i<5){
-           addNAgentPerProfiles(modelId,(int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "living") ; 
-         }else{
-           addNAgentPerProfiles(modelId,(int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "working") ; 
-         }
-         sliderHandler.tmpLocalSliders.set(i,sliderHandler.localSliders.get(i));
-         }
-        if(sliderHandler.localSliders.get(i)<sliderHandler.tmpLocalSliders.get(i)){
-          removeNAgentsPerProfiles(modelId,int((sliderHandler.tmpLocalSliders.get(i) - sliderHandler.localSliders.get(i)))*2, profiles.get(i));
-          sliderHandler.tmpLocalSliders.set(i,sliderHandler.localSliders.get(i));
+      for (int i=0; i<sliderHandler.tmpLocalSliders.size(); i++) {
+        if (sliderHandler.localSliders.get(i)>sliderHandler.tmpLocalSliders.get(i)) {
+          if (i<5) {
+            addNAgentPerProfiles(modelId, (int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "living") ;
+          } else {
+            addNAgentPerProfiles(modelId, (int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "working") ;
+          }
+          sliderHandler.tmpLocalSliders.set(i, sliderHandler.localSliders.get(i));
+        }
+        if (sliderHandler.localSliders.get(i)<sliderHandler.tmpLocalSliders.get(i)) {
+          removeNAgentsPerProfiles(modelId, int((sliderHandler.tmpLocalSliders.get(i) - sliderHandler.localSliders.get(i)))*2, profiles.get(i));
+          sliderHandler.tmpLocalSliders.set(i, sliderHandler.localSliders.get(i));
         }
       }
     }
   }
 
   public void run(PGraphics p) {
-      for (int i=0;i<agents.size();i++) {
-           agents.get(i).move();
-           agents.get(i).draw(p);
-      }
+    for (int i=0; i<agents.size(); i++) {
+      agents.get(i).move();
+      agents.get(i).draw(p);
+    }
   }
-  
-  public void addNAgentsPerUsage(int modelId,int num, String usage) {
+
+  public void addNAgentsPerUsage(int modelId, int num, String usage) {
     for (int i = 0; i < num; i++) {
       if (usage.equals("living")) {
-        models.get(modelId).agents.add( new Agent(map, profiles.get(int(random(4))), "people", "living"));
+        models.get(modelId).agents.add( new Agent(modelId,map, profiles.get(int(random(4))), "people", "living"));
       } else {
-        models.get(modelId).agents.add( new Agent(map, profiles.get(5+int(random(4))), "people", "working"));
+        models.get(modelId).agents.add( new Agent(modelId,map, profiles.get(5+int(random(4))), "people", "working"));
       }
     }
   }
@@ -116,7 +118,7 @@ public class ABM {
     int i=0;
     while (ag.hasNext()) { 
       Agent tmpAg = ag.next();
-      
+
       if (usage.equals(tmpAg.usage)) { 
         if (i<num) { 
           ag.remove();
@@ -127,18 +129,18 @@ public class ABM {
   }  
 
 
-  public void addNAgentPerProfiles(int modelId,int num, String profile, String usage) {
+  public void addNAgentPerProfiles(int modelId, int num, String profile, String usage) {
     for (int i = 0; i < num; i++) {
-      models.get(modelId).agents.add( new Agent(map, profile, "people",usage));
+      models.get(modelId).agents.add( new Agent(modelId,map, profile, "people", usage));
     }
   }
 
-  public void removeNAgentsPerProfiles(int modelId,int n, String profile) {
+  public void removeNAgentsPerProfiles(int modelId, int n, String profile) {
     Iterator<Agent> ag = models.get(modelId).agents.iterator();
     int i=0;
     while (ag.hasNext()) { 
       Agent tmpAg = ag.next();
-      
+
       if (profile.equals(tmpAg.profile)) { 
         if (i<n) { 
           ag.remove();
@@ -148,19 +150,20 @@ public class ABM {
     }
   }
 
-  public void createAgents(int num,String type) {
+  public void createAgents(int id, int num, String type) {
     for (int i = 0; i < num; i++) {
       for (int j=0; j<profiles.size()/2; j++) {
-        agents.add( new Agent(map, profiles.get(j), type, "living"));
+        agents.add( new Agent(id, map, profiles.get(j), type, "living"));
       }
       for (int j=5; j<profiles.size(); j++) {
-        agents.add( new Agent(map, profiles.get(j), type, "working"));
+        agents.add( new Agent(id, map, profiles.get(j), type, "working"));
       }
     }
   }
 }
 
 public class Agent {
+  private int modelId;
   private RoadNetwork map;
   private String profile;
   private String type;
@@ -176,7 +179,8 @@ public class Agent {
   //map<string,rgb> color_per_type <- [ "High School Student"::#FFFFB2, "College student"::#FECC5C,"Young professional"::#FD8D3C,  "Mid-career workers"::#F03B20, "Executives"::#BD0026, "Home maker"::#0B5038, "Retirees"::#8CAB13];
 
 
-  Agent(RoadNetwork _map, String _profile, String _type, String _usage) {
+  Agent(int _modelId, RoadNetwork _map, String _profile, String _type, String _usage) {
+    modelId = _modelId;
     map=_map;
     type=_type;
     profile=_profile;
@@ -189,31 +193,30 @@ public class Agent {
     myProfileColor= (int)(models.get(0).colorProfiles.get(profile));
     //myUsageColor = (usage.equals("working")) ? #165E93 : #F4A528;
     myUsageColor = (usage.equals("working")) ? #FF0000 : #00FF00;
-    
-    if(type.equals("car")){
+
+    if (type.equals("car")) {
       speed= 0.3 + random(0.5);
       size= 5 + random(5);
     }
-    if (type.equals("people")){
+    if (type.equals("people")) {
       speed= 0.05 + random(0.1);
       size= 3 + random(10);
     }
-    
   }
 
 
   public void draw(PGraphics p) {
     if (drawer.showAgent) {
-      if(type.equals("people")){
+      if (type.equals("people")) {
         p.noStroke();
         if (drawer.showUsage) {
           p.fill(myUsageColor);
         } else {
           p.fill(myProfileColor);
         }
-      p.ellipse(pos.x, pos.y, size, size);
+        p.ellipse(pos.x, pos.y, size, size);
       }
-      if(type.equals("car")){
+      if (type.equals("car")) {
         p.stroke(myProfileColor);
         //p.strokeWeight(2);
         p.noFill();
@@ -244,11 +247,17 @@ public class Agent {
     if (path == null) {
       calcRoute( srcNode, destNode );
     }
-    PVector toNodePos= new PVector(toNode.x, toNode.y);
+    PVector toNodePos = new PVector();
+    if(modelId==0){
+      toNodePos = new PVector(toNode.x, toNode.y);
+    }
+    if(modelId==1){
+      //toNodePos= new PVector(mouseX + random(-grid.cellSize,grid.cellSize), mouseY + random(-grid.cellSize,grid.cellSize));
+      toNodePos = new PVector(toNode.x, toNode.y);
+    }
     //PVector toNodePos= new PVector(mouseX, mouseY);
     PVector destNodePos= new PVector(destNode.x, destNode.y);
     dir = PVector.sub(toNodePos, pos);  // Direction to go
-    //dir = new PVector(random(100),random(100));
     // Arrived to node -->
     if ( dir.mag() < dir.normalize().mult(speed).mag() ) {
       // Arrived to destination  --->

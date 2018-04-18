@@ -28,9 +28,9 @@ void setup() {
   rivers = new RoadNetwork("GIS/RoadNetwork/LLL_Rivers.geojson");
   buildings = new Buildings("GIS/Buildings.geojson");
   models = new ArrayList<ABM>();
-  models.add(new ABM(roads, "people", 100));
+  models.add(new ABM(0,roads, "people", 100));
   models.get(0).initModel();
-  models.add(new ABM(rivers, "people", 100));
+  models.add(new ABM(1,rivers, "people", 100));
   models.get(1).initModel();
   grid = new Grid();
   interfaceLeap = new InterFace();
