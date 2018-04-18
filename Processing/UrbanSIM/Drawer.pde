@@ -44,9 +44,11 @@ public class Drawer{
       
       drawInteraction(offscreenSurface);
       roads.draw(offscreenSurface);
+      rivers.draw(offscreenSurface);
       buildings.draw(offscreenSurface);
       models.get(0).run(offscreenSurface);
-      models.get(1).run(offscreenSurface);
+      //models.get(1).run(offscreenSurface);
+      models.get(0).updateGlobalPop(0);
       grid.draw(offscreenSurface);
       
       //slider.draw(offscreenSurface);
@@ -73,8 +75,9 @@ public class Drawer{
     p.textAlign(RIGHT); 
     p.textSize(10);
     p.text("FRAMERATE: " + int(frameRate) + " fps", width-30, 30);
-    p.text(int(models.get(0).agents.size()) + " cars" , width-30, 50);
-    p.text(int(models.get(1).agents.size()) + " peoples" , width-30, 70);
+    p.text(int(models.get(0).agents.size()) + " " + models.get(0).type , width-30, 50);
+    //p.text(int(models.get(1).agents.size()) + " " + models.get(1).type , width-30, 70);
+    p.text("Living/Working:" + int(GetTotalLivingWorkingNumber().x) +"/"+int(GetTotalLivingWorkingNumber().y), width-30, 90);
     p.textAlign(LEFT); 
     if(keystoneMode){
       p.text("Keystone: [L] load keystone - [S] save keystone  ", 30, 30);
@@ -92,6 +95,20 @@ public class Drawer{
 public void drawInteraction(PGraphics p){
   
 }
+
+  public PVector GetTotalLivingWorkingNumber(){
+    PVector tmp  = new PVector (0,0);
+    for (int i=0;i<models.size();i++){
+      for (int j=0;j<models.get(i).agents.size();j++){
+        if(models.get(i).agents.get(j).usage.equals("living")){
+          tmp.x++;
+        }else{
+          tmp.y++;
+        }
+      }
+    }
+    return tmp;
+  }
  
   public void toggleKeystone() { 
     keystoneMode = !keystoneMode; 

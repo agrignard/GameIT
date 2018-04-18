@@ -35,8 +35,8 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
 }
 
 public class SliderHandler{
-  ArrayList<Float> globalSliders;
-  ArrayList<Float> tmpSliders;
+  ArrayList<Integer> globalSliders;
+  ArrayList<Integer> tmpGlobalSliders;
   String newMsg = "";
   
   SliderHandler(){
@@ -47,14 +47,14 @@ public class SliderHandler{
     //udp.log( true );     // <-- printout the connection activity
     udp.listen( true );
    
-    globalSliders = new ArrayList<Float> ();
-    globalSliders.add(0.5);
-    globalSliders.add(0.5);
+    globalSliders = new ArrayList<Integer> ();
+    globalSliders.add(50);
+    globalSliders.add(50);
     
     
-    tmpSliders = new ArrayList<Float> ();
-    tmpSliders.add(0.5);
-    tmpSliders.add(0.5);
+    tmpGlobalSliders = new ArrayList<Integer> ();
+    tmpGlobalSliders.add(50);
+    tmpGlobalSliders.add(50);
     
   }
   
@@ -74,16 +74,14 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
   String message = new String( data );
    
   newMsg = "receive: " + message +" from "+ip+" on port "+port;
-  println(newMsg);
+  //println(newMsg);
   String[] list = split(newMsg, ' ');
-  //println("yo" + float(list[3]));
-  if(list[1].equals("/slider00")){
-    globalSliders.set(0,float(list[2]));
+  if(int(list[2])==10){
+    globalSliders.set(0,int(list[3]));
   }
-  if(list[1].equals("/slider01")){
-    globalSliders.set(1,float(list[2]));
+  if(int(list[2])==11){
+    globalSliders.set(1,int(list[3]));
   }
-  
 }
   
 }

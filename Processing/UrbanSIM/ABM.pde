@@ -54,23 +54,23 @@ public class ABM {
     createAgents(nbPeoplePerProfile,type);
   }
 
-  public void updatePop() { 
+  public void updateGlobalPop(int modelId) {
     if (frameCount % 30 == 0) {
-      if(sliderHandler.globalSliders.get(0)>sliderHandler.tmpSliders.get(0)){
-        addNAgentsPerUsage((int)((sliderHandler.globalSliders.get(0) - sliderHandler.tmpSliders.get(0))*100.0)*500/100, "living");
-        sliderHandler.tmpSliders.set(0,sliderHandler.globalSliders.get(0));
+      if(sliderHandler.globalSliders.get(0)>sliderHandler.tmpGlobalSliders.get(0)){
+        addNAgentsPerUsage(modelId,(int)((sliderHandler.globalSliders.get(0) - sliderHandler.tmpGlobalSliders.get(0)))*1000/100, "working");
+        sliderHandler.tmpGlobalSliders.set(0,sliderHandler.globalSliders.get(0));
       }
-      if(sliderHandler.globalSliders.get(0)<sliderHandler.tmpSliders.get(0)){
-        removeNAgentsPerUsage(int((sliderHandler.tmpSliders.get(0) - sliderHandler.globalSliders.get(0))*100.0)*500/100, "living");
-        sliderHandler.tmpSliders.set(0,sliderHandler.globalSliders.get(0));
+      if(sliderHandler.globalSliders.get(0)<sliderHandler.tmpGlobalSliders.get(0)){
+        removeNAgentsPerUsage(modelId,int((sliderHandler.tmpGlobalSliders.get(0) - sliderHandler.globalSliders.get(0)))*1000/100, "working");
+        sliderHandler.tmpGlobalSliders.set(0,sliderHandler.globalSliders.get(0));
       }
-      if(sliderHandler.globalSliders.get(1)>sliderHandler.tmpSliders.get(1)){
-        addNAgentsPerUsage(int((sliderHandler.globalSliders.get(1) - sliderHandler.tmpSliders.get(1))*100.0)*500/100, "working");
-        sliderHandler.tmpSliders.set(1,sliderHandler.globalSliders.get(1));
+      if(sliderHandler.globalSliders.get(1)>sliderHandler.tmpGlobalSliders.get(1)){
+        addNAgentsPerUsage(modelId,int((sliderHandler.globalSliders.get(1) - sliderHandler.tmpGlobalSliders.get(1)))*1000/100, "living");
+        sliderHandler.tmpGlobalSliders.set(1,sliderHandler.globalSliders.get(1));
       }
-      if(sliderHandler.globalSliders.get(1)<sliderHandler.tmpSliders.get(1)){
-        removeNAgentsPerUsage(int((sliderHandler.tmpSliders.get(1) - sliderHandler.globalSliders.get(1))*100.0)*500/100, "living");
-        sliderHandler.tmpSliders.set(1,sliderHandler.globalSliders.get(1));
+      if(sliderHandler.globalSliders.get(1)<sliderHandler.tmpGlobalSliders.get(1)){
+        removeNAgentsPerUsage(modelId,int((sliderHandler.tmpGlobalSliders.get(1) - sliderHandler.globalSliders.get(1)))*1000/100, "living");
+        sliderHandler.tmpGlobalSliders.set(1,sliderHandler.globalSliders.get(1));
       }
     }
   }
@@ -79,22 +79,23 @@ public class ABM {
       for (int i=0;i<agents.size();i++) {
            agents.get(i).move();
            agents.get(i).draw(p);
-           updatePop();
       }
   }
-
-  public void addNAgentsPerUsage(int num, String usage) {
+  
+  public void addNAgentsPerUsage(int modelId,int num, String usage) {
+    println("add " + num + " agents " + usage); 
     for (int i = 0; i < num; i++) {
       if (usage.equals("living")) {
-        agents.add( new Agent(map, profiles.get(int(random(4))), "people", "living"));
+        models.get(modelId).agents.add( new Agent(map, profiles.get(int(random(4))), "people", "living"));
       } else {
-        agents.add( new Agent(map, profiles.get(5+int(random(4))), "people", "working"));
+        models.get(modelId).agents.add( new Agent(map, profiles.get(5+int(random(4))), "people", "working"));
       }
     }
   }
 
-  public void removeNAgentsPerUsage(int num, String usage) {
-    Iterator<Agent> ag = agents.iterator();
+  public void removeNAgentsPerUsage(int modelId, int num, String usage) {
+    println("remove" + num);
+    Iterator<Agent> ag = models.get(modelId).agents.iterator();
     int i=0;
     while (ag.hasNext()) { 
       Agent tmpAg = ag.next();
@@ -226,8 +227,10 @@ public class Agent {
       calcRoute( srcNode, destNode );
     }
     PVector toNodePos= new PVector(toNode.x, toNode.y);
+    //PVector toNodePos= new PVector(mouseX, mouseY);
     PVector destNodePos= new PVector(destNode.x, destNode.y);
     dir = PVector.sub(toNodePos, pos);  // Direction to go
+    //dir = new PVector(random(100),random(100));
     // Arrived to node -->
     if ( dir.mag() < dir.normalize().mult(speed).mag() ) {
       // Arrived to destination  --->

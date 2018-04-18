@@ -1,7 +1,7 @@
 Drawer drawer;
-public int nbProjector=3;
-public int displayWidth = int(1920)*nbProjector;
-public int displayHeight = int(1080)*nbProjector;
+public int nbProjector=1;
+public int displayWidth = int(1920/2)*nbProjector;
+public int displayHeight = int(1080/2)*nbProjector;
 
 public int playGroundWidth = displayWidth;
 public int playGroundHeight = displayHeight;
@@ -15,11 +15,11 @@ InterFace interfaceLeap;
 SliderHandler sliderHandler;
 
 void setup() {
-  fullScreen(P3D, SPAN);
+  //fullScreen(P3D, SPAN);
   width=displayWidth;
   height=displayHeight;
   //smooth(3);
-  //size(displayWidth, displayHeight, P3D);
+  size(displayWidth, displayHeight, P3D);
   drawer = new Drawer(this);
   bg = loadImage("data/Table_Video_Frame_Template_4k.jpg");
   drawer.initSurface();
@@ -28,10 +28,10 @@ void setup() {
   rivers = new RoadNetwork("GIS/RoadNetwork/LLL_Rivers.geojson");
   buildings = new Buildings("GIS/Buildings.geojson");
   models = new ArrayList<ABM>();
-  models.add(new ABM(roads, "car", 10));
+  models.add(new ABM(roads, "people", 100));
   models.get(0).initModel();
-  models.add(new ABM(rivers, "people", 100));
-  models.get(1).initModel();
+  //models.add(new ABM(rivers, "people", 100));
+  //models.get(1).initModel();
   grid = new Grid();
   interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();
@@ -68,7 +68,7 @@ void keyPressed() {
   case 'b':  
     drawer.toggleBuilding();
     break;
-  case 'i':  
+  case 'g':  
     drawer.toggleInteraction();
     break;
   case 'h':  
@@ -87,7 +87,7 @@ void keyPressed() {
     drawer.toggleTimelapse();
   case 'm':  
     models.get(0).initModel();
-    models.get(1).initModel();
+    //models.get(1).initModel();
     break;
   case 'u':  
     drawer.toggleUsage();
