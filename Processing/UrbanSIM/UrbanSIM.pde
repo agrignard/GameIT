@@ -1,7 +1,7 @@
 Drawer drawer;
 public int nbProjector=1;
-public int displayWidth = int(1920)*nbProjector;
-public int displayHeight = int(1080)*nbProjector;
+public int displayWidth = int(1920/2)*nbProjector;
+public int displayHeight = int(1080/2)*nbProjector;
 
 public int playGroundWidth = displayWidth;
 public int playGroundHeight = displayHeight;
@@ -15,7 +15,7 @@ InterFace interfaceLeap;
 SliderHandler sliderHandler;
 
 void setup() {
-  //fullScreen(P3D, SPAN);
+  //fullScreen(P3D, 1);
   width=displayWidth;
   height=displayHeight;
   //smooth(3);
@@ -30,8 +30,6 @@ void setup() {
   models = new ArrayList<ABM>();
   models.add(new ABM(0,roads, "people", 100));
   models.get(0).initModel();
-  models.add(new ABM(1,rivers, "people", 100));
-  models.get(1).initModel();
   grid = new Grid();
   interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();
@@ -87,7 +85,6 @@ void keyPressed() {
     drawer.toggleTimelapse();
   case 'm':  
     models.get(0).initModel();
-    models.get(1).initModel();
     break;
   case 'u':  
     drawer.toggleUsage();

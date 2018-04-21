@@ -10,7 +10,7 @@ public class Drawer{
   public boolean showBG = true,
                  showAgent = true,
                  showBuilding = false,
-                 showRoad=true,
+                 showRoad=false,
                  useLeap=false,
                  timelapse=false,
                  showInteraction=false,
@@ -41,21 +41,14 @@ public class Drawer{
       
       drawTableBackGround(offscreenSurface);
       drawLegend(offscreenSurface);
-      
-      drawInteraction(offscreenSurface);
       roads.draw(offscreenSurface);
       rivers.draw(offscreenSurface);
       buildings.draw(offscreenSurface);
-      if(drawer.showInteraction){
-        models.get(1).run(offscreenSurface);
-      }else{
-        models.get(0).run(offscreenSurface);
-      }
-      
-      
-      models.get(0).updateGlobalPop(0);
-      models.get(1).updateLocapPop(1);
       grid.draw(offscreenSurface);
+      models.get(0).run(offscreenSurface);
+      models.get(0).updateGlobalPop(0);
+      models.get(0).updateCarPop();
+    
       //slider.draw(offscreenSurface);
       offscreenSurface.endDraw();
       for (int i=0; i<nbProjector;i++){
@@ -81,7 +74,7 @@ public class Drawer{
     p.textSize(10);
     p.text("FRAMERATE: " + int(frameRate) + " fps", width-30, 30);
     p.text("model 0: " + int(models.get(0).agents.size())  + models.get(0).type , width-30, 50);
-    p.text("model 1:" + int(models.get(1).agents.size()) + models.get(1).type , width-30, 70);
+    //p.text("model 1:" + int(models.get(1).agents.size()) + models.get(1).type , width-30, 70);
     p.text("Living/Working:" + int(GetTotalLivingWorkingNumber().x) +"/"+int(GetTotalLivingWorkingNumber().y), width-30, 90);
     p.textAlign(LEFT); 
     if(keystoneMode){
@@ -92,15 +85,11 @@ public class Drawer{
     }
     p.textAlign(CENTER);
     p.textSize(10);
+    p.fill(0);
     p.text("UrbanABM InnovaCity - LLL & GAME IT - 2018 ", 0, height*0.99);
     p.text(" © Arnaud Grignard 2018 ", width*0.95, height*0.99);
  }
  
- 
-public void drawInteraction(PGraphics p){
-  
-}
-
   public PVector GetTotalLivingWorkingNumber(){
     PVector tmp  = new PVector (0,0);
     for (int i=0;i<models.size();i++){

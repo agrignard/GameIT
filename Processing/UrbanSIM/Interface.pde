@@ -115,10 +115,6 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
       localSliders.set(i,int(list[3]));
     }     
  }
-  
-  
-  
-  
 }
   
 }

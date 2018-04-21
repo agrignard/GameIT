@@ -1,6 +1,6 @@
 public class Grid {
   int[][] cells;
-  int cellSize = playGroundWidth/8;
+  int cellSize = playGroundWidth/20;
   int[][] heatmapCells;
   int heatMapcellSize = playGroundWidth/50;
   
@@ -77,9 +77,10 @@ public class Grid {
       ArrayList<PShape> tmp = getBuildingInsideROI(toCompare,cellSize);
       for (int i=0;i<tmp.size();i++){
         p.fill(255,0,0);
-        //p.shape(tmp.get(i), 0, 0);
+        p.shape(tmp.get(i), 0, 0);
+        createStaticAgent(p,tmp.get(i));
       }
-      ArrayList<Agent> tmp2 = getAgentInsideROI(models.get(1),toCompare,cellSize);
+      ArrayList<Agent> tmp2 = getAgentInsideROI(models.get(0),toCompare,cellSize);
       for (int i=0;i<tmp2.size();i++){
          p.fill(255,0,0);
          p.fill(tmp2.get(i).myProfileColor);
@@ -91,6 +92,17 @@ public class Grid {
          p.fill(tmp2.get(i).myProfileColor);
          p.ellipse(tmp2.get(i).pos.x, tmp2.get(i).pos.y, tmp2.get(i).size, tmp2.get(i).size);
       }*/
+  }
+  
+  public void createStaticAgent(PGraphics p,PShape shape){
+    //if(frameCount %30 ==0){
+    PVector pos = shape.getVertex(0);//int(random(shape.getVertexCount())));
+    p.fill(#FF0000);
+    //p.fill(models.get(0).colors.get(int(random(9))));
+    //models.get(0).agents.add( new Agent(0, roads, models.get(0).profiles.get(int(random(models.get(0).profiles.size()))), "people", "living"));
+    p.ellipse(pos.x,pos.y,10,10); 
+    //}
+    //p.ellipse(pos.x,pos.y,10,10); 
   }
   
   public ArrayList<PShape> getBuildingInsideROI(PVector pos, int size){

@@ -18,7 +18,7 @@ public class ABM {
     agents = new ArrayList<Agent>();
     profiles = new ArrayList<String>();
     colors = new ArrayList<Integer>();
-    colors.add(#FFFFB2);
+   /* colors.add(#FFFFB2);
     colors.add(#FFFFB2);
     colors.add(#0B5038);
     colors.add(#8CAB13);
@@ -27,7 +27,22 @@ public class ABM {
     colors.add(#FD8D3C);
     colors.add(#F03B20);
     colors.add(#BD0026);
-    colors.add(#FF0000);
+    colors.add(#FF0000);*/
+    
+    
+    colors.add(color(167,177,60));
+    colors.add(color(148,177,60));
+    colors.add(color(90,177,60));
+    colors.add(color(60,177,132));
+    colors.add(color(3,201,68));
+    colors.add(color(115,177,60));
+    colors.add(color(42,139,190));
+    colors.add(color(51,91,193));
+    colors.add(color(83,70,212));
+    colors.add(color(196,60,177));
+    
+    
+    
     profiles.add("Young Children");
     profiles.add("High School");
     profiles.add("Home maker");
@@ -160,6 +175,71 @@ public class ABM {
       }
     }
   }
+  
+  public int getNbCars(){
+    int nbCars=0;
+    for (int i=0;i<agents.size();i++){
+      if(agents.get(i).type.equals("car")){
+        nbCars++;
+      }
+    }
+    return nbCars;
+  }
+  public void updateCarPop(){
+    if (frameCount % 300 == 0) {
+      int living=0;
+      int working=0;
+      int nbCars=getNbCars();
+      for (int i=0;i<agents.size();i++){
+        if(agents.get(i).usage.equals("living")){
+          living++;
+        }else{
+          working++;
+        }
+      }
+      int nbNewCar = abs((sliderHandler.globalSliders.get(1)-sliderHandler.tmpLocalSliders.get(1))-(sliderHandler.globalSliders.get(0)-sliderHandler.tmpLocalSliders.get(0)));
+      sliderHandler.tmpLocalSliders.set(0, sliderHandler.localSliders.get(0));
+      sliderHandler.tmpLocalSliders.set(1, sliderHandler.localSliders.get(1));
+      if(nbNewCar>0){
+        if(getNbCars()<nbNewCar){
+          for(int i=0;i<nbNewCar-nbCars;i++){
+            if(living>working){
+              agents.add( new Agent(id, map, profiles.get(4), "car", "living"));
+            }else{
+              agents.add( new Agent(id, map, profiles.get(int(5+random(4))), "car", "working"));
+            }
+          } 
+        }else{
+            Iterator<Agent> ag = models.get(0).agents.iterator();
+            int i=0;
+            while (ag.hasNext()) { 
+            Agent tmpAg = ag.next();
+              if (tmpAg.type.equals("car")) { 
+                if (i<nbNewCar-nbCars) { 
+                  ag.remove();
+                  i++;
+                }
+              }
+            }
+        }
+      }else{
+        if(getNbCars()>0){
+          int tmp = getNbCars(); 
+          Iterator<Agent> ag = models.get(0).agents.iterator();
+            int i=0;
+            while (ag.hasNext()) { 
+            Agent tmpAg = ag.next();
+              if (tmpAg.type.equals("car")) { 
+                if (i<tmp) { 
+                  ag.remove();
+                  i++;
+                }
+              }
+            }
+        }
+      }
+    }
+  }
 }
 
 public class Agent {
@@ -191,8 +271,8 @@ public class Agent {
     path=null;
     dir = new PVector(0.0, 0.0);
     myProfileColor= (int)(models.get(0).colorProfiles.get(profile));
-    //myUsageColor = (usage.equals("working")) ? #165E93 : #F4A528;
-    myUsageColor = (usage.equals("working")) ? #FF0000 : #00FF00;
+    myUsageColor = (usage.equals("working")) ? #165E93 : #F4A528;
+    //myUsageColor = (usage.equals("working")) ? #FF0000 : #00FF00;
 
     if (type.equals("car")) {
       speed= 0.3 + random(0.5);
@@ -218,7 +298,7 @@ public class Agent {
       }
       if (type.equals("car")) {
         p.stroke(myProfileColor);
-        //p.strokeWeight(2);
+        p.strokeWeight(2);
         p.noFill();
         p.ellipse(pos.x, pos.y, size, size);
       }
