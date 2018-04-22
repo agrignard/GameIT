@@ -16,7 +16,6 @@ public class Grid {
   }
   
   public void draw(PGraphics p){
-    
     if(drawer.showHeatmap){
         for (int x=0; x<width/heatMapcellSize; x++) {
           for (int y=0; y<height/heatMapcellSize; y++) {
@@ -108,10 +107,10 @@ public class Grid {
   public ArrayList<PShape> getBuildingInsideROI(PVector pos, int size){
     ArrayList<PShape> tmp = new ArrayList<PShape>();
     for (int i=0;i<buildings.buildings.size();i++){
-        if(((buildings.buildings.get(i).getVertex(0).x>pos.x-size/2) && (buildings.buildings.get(i).getVertex(0).x)<pos.x+size/2) &&
-        ((buildings.buildings.get(i).getVertex(0).y>pos.y-size/2) && (buildings.buildings.get(i).getVertex(0).y)<pos.y+size/2))
+        if(((buildings.buildings.get(i).shape.getVertex(0).x>pos.x-size/2) && (buildings.buildings.get(i).shape.getVertex(0).x)<pos.x+size/2) &&
+        ((buildings.buildings.get(i).shape.getVertex(0).y>pos.y-size/2) && (buildings.buildings.get(i).shape.getVertex(0).y)<pos.y+size/2))
         {
-          tmp.add(buildings.buildings.get(i));
+          tmp.add(buildings.buildings.get(i).shape);
         }       
       }
     return tmp;

@@ -69,6 +69,7 @@ public class ABM {
   public void initModel() {
     agents.clear();
     createAgents(id,nbPeoplePerProfile, type);
+    createStaticAgents(id,nbPeoplePerProfile, "static");
   }
 
   public void updateGlobalPop(int modelId) {
@@ -113,7 +114,9 @@ public class ABM {
 
   public void run(PGraphics p) {
     for (int i=0; i<agents.size(); i++) {
-      agents.get(i).move();
+      if(!agents.get(i).type.equals("static")){
+         agents.get(i).move();
+      } 
       agents.get(i).draw(p);
     }
   }
@@ -176,6 +179,17 @@ public class ABM {
     }
   }
   
+  public void createStaticAgents(int id, int num, String type) {
+    for (int i = 0; i < num; i++) {
+      for (int j=0; j<profiles.size()/2; j++) {
+        agents.add( new Agent(id, map, profiles.get(j), type, "living"));
+      }
+      for (int j=5; j<profiles.size(); j++) {
+        agents.add( new Agent(id, map, profiles.get(j), type, "working"));
+      }
+    }
+  }
+  
   public int getNbCars(){
     int nbCars=0;
     for (int i=0;i<agents.size();i++){
@@ -198,6 +212,7 @@ public class ABM {
         }
       }
       int nbNewCar = abs((sliderHandler.globalSliders.get(1)-sliderHandler.tmpLocalSliders.get(1))-(sliderHandler.globalSliders.get(0)-sliderHandler.tmpLocalSliders.get(0)));
+      nbNewCar=nbNewCar*10;
       sliderHandler.tmpLocalSliders.set(0, sliderHandler.localSliders.get(0));
       sliderHandler.tmpLocalSliders.set(1, sliderHandler.localSliders.get(1));
       if(nbNewCar>0){
@@ -272,7 +287,6 @@ public class Agent {
     dir = new PVector(0.0, 0.0);
     myProfileColor= (int)(models.get(0).colorProfiles.get(profile));
     myUsageColor = (usage.equals("working")) ? #165E93 : #F4A528;
-    //myUsageColor = (usage.equals("working")) ? #FF0000 : #00FF00;
 
     if (type.equals("car")) {
       speed= 0.3 + random(0.5);
@@ -280,14 +294,27 @@ public class Agent {
     }
     if (type.equals("people")) {
       speed= 0.05 + random(0.1);
-      size= 3 + random(10);
+      size= 3 + random(8);
+    }
+    if(type.equals("static")){
+      speed= 0.1 + random(0.5);
+      size= 3 + random(8);
+      if(usage.equals("living")){
+        Building tmp= (buildings.getLivingBuilding().get(int(random(buildings.getLivingBuilding().size()))));
+        pos.x = tmp.shape.getVertex(0).x;
+        pos.y = tmp.shape.getVertex(0).y;
+      }else{
+        Building tmp= (buildings.getWorkingBuilding().get(int(random(buildings.getWorkingBuilding().size()))));
+        pos.x = tmp.shape.getVertex(0).x;
+        pos.y = tmp.shape.getVertex(0).y;
+      }
     }
   }
 
 
   public void draw(PGraphics p) {
     if (drawer.showAgent) {
-      if (type.equals("people")) {
+      if (type.equals("people") || type.equals("static")) {
         p.noStroke();
         if (drawer.showUsage) {
           p.fill(myUsageColor);
@@ -296,12 +323,13 @@ public class Agent {
         }
         p.ellipse(pos.x, pos.y, size, size);
       }
-      if (type.equals("car")) {
+      if (type.equals("car")) { 
         p.stroke(myProfileColor);
         p.strokeWeight(2);
         p.noFill();
         p.ellipse(pos.x, pos.y, size, size);
       }
+
     }
   }
 
