@@ -72,6 +72,9 @@ void keyPressed() {
   case 'h':  
     drawer.toggleHeatmap();
     break;
+  case 'j':  
+    drawer.toggleMobilityHeatmap();
+    break;
   case ' ':  
     drawer.toggleBG();
     break; 

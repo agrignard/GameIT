@@ -17,7 +17,8 @@ public class Drawer{
                  showSlider=false,
                  keystoneMode=false,
                  showUsage=false,
-                 showHeatmap=false;
+                 showHeatmap=false,
+                 showMobilityHeatmap=false;
   
   
   Drawer(PApplet parent){
@@ -119,6 +120,7 @@ public class Drawer{
   public void toggleSlider() { showSlider = !showSlider;}
   public void toggleUsage() { showUsage = !showUsage;}
   public void toggleHeatmap() { showHeatmap = !showHeatmap;}
+  public void toggleMobilityHeatmap() { showMobilityHeatmap = !showMobilityHeatmap;}
   
   
   

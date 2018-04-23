@@ -27,6 +27,17 @@ public class Grid {
           }
         }
     }
+    if(drawer.showMobilityHeatmap){
+        for (int x=0; x<width/heatMapcellSize; x++) {
+          for (int y=0; y<height/heatMapcellSize; y++) {
+            p.rectMode(CENTER);
+            int ratio = getAgentInsideROI(models.get(0),new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize).size();
+            p.fill(ratio*10,0,0);
+            p.noStroke();
+            p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);            
+          }
+        }
+    }
     if(drawer.showInteraction){
       p.fill(0,0,0,100);
       p.rect(width/2,height/2,width,height);
@@ -60,8 +71,7 @@ public class Grid {
       int gridSize = 16;
       if (showMicroGrid){
         for (int i=0; i<gridSize; i++) {
-          for (int j=0; j<gridSize; j++) {
-           
+          for (int j=0; j<gridSize; j++) {   
             p.stroke(125);
             p.noFill();
             p.rect (x+i*cellSize/gridSize-cellSize/2+gridSize/2,y+j*cellSize/gridSize-cellSize/2+gridSize/2, cellSize/gridSize, cellSize/gridSize);            
