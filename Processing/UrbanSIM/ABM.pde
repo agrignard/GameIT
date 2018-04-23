@@ -18,31 +18,31 @@ public class ABM {
     agents = new ArrayList<Agent>();
     profiles = new ArrayList<String>();
     colors = new ArrayList<Integer>();
-   /* colors.add(#FFFFB2);
-    colors.add(#FFFFB2);
-    colors.add(#0B5038);
-    colors.add(#8CAB13);
-    colors.add(#FFFFFF);
-    colors.add(#FECC5C);
-    colors.add(#FD8D3C);
-    colors.add(#F03B20);
-    colors.add(#BD0026);
-    colors.add(#FF0000);*/
-    
-    
-    colors.add(color(167,177,60));
-    colors.add(color(148,177,60));
-    colors.add(color(90,177,60));
-    colors.add(color(60,177,132));
-    colors.add(color(3,201,68));
-    colors.add(color(115,177,60));
-    colors.add(color(42,139,190));
-    colors.add(color(51,91,193));
-    colors.add(color(83,70,212));
-    colors.add(color(196,60,177));
-    
-    
-    
+    /* colors.add(#FFFFB2);
+     colors.add(#FFFFB2);
+     colors.add(#0B5038);
+     colors.add(#8CAB13);
+     colors.add(#FFFFFF);
+     colors.add(#FECC5C);
+     colors.add(#FD8D3C);
+     colors.add(#F03B20);
+     colors.add(#BD0026);
+     colors.add(#FF0000);*/
+
+
+    colors.add(color(167, 177, 60));
+    colors.add(color(148, 177, 60));
+    colors.add(color(90, 177, 60));
+    colors.add(color(60, 177, 132));
+    colors.add(color(3, 201, 68));
+    colors.add(color(115, 177, 60));
+    colors.add(color(42, 139, 190));
+    colors.add(color(51, 91, 193));
+    colors.add(color(83, 70, 212));
+    colors.add(color(196, 60, 177));
+
+
+
     profiles.add("Young Children");
     profiles.add("High School");
     profiles.add("Home maker");
@@ -68,26 +68,30 @@ public class ABM {
 
   public void initModel() {
     agents.clear();
-    createAgents(id,nbPeoplePerProfile, type);
-    createStaticAgents(id,nbPeoplePerProfile, "static");
+    createAgents(id, nbPeoplePerProfile, type);
+    createStaticAgents(id, nbPeoplePerProfile, "static");
   }
 
   public void updateGlobalPop(int modelId) {
     if (frameCount % 30 == 0) {
       if (sliderHandler.globalSliders.get(0)>sliderHandler.tmpGlobalSliders.get(0)) {
-        addNAgentsPerUsage(modelId, (int)((sliderHandler.globalSliders.get(0) - sliderHandler.tmpGlobalSliders.get(0)))*1000/100, "working");
+        addNAgentsPerUsage(modelId, (int)((sliderHandler.globalSliders.get(0) - sliderHandler.tmpGlobalSliders.get(0)))*1000/100, "people","working");
+        addNAgentsPerUsage(modelId, (int)((sliderHandler.globalSliders.get(0) - sliderHandler.tmpGlobalSliders.get(0)))*1000/100, "static","working");
         sliderHandler.tmpGlobalSliders.set(0, sliderHandler.globalSliders.get(0));
       }
       if (sliderHandler.globalSliders.get(0)<sliderHandler.tmpGlobalSliders.get(0)) {
-        removeNAgentsPerUsage(modelId, int((sliderHandler.tmpGlobalSliders.get(0) - sliderHandler.globalSliders.get(0)))*1000/100, "working");
+        removeNAgentsPerUsage(modelId, int((sliderHandler.tmpGlobalSliders.get(0) - sliderHandler.globalSliders.get(0)))*1000/100, "people", "working");
+        removeNAgentsPerUsage(modelId, int((sliderHandler.tmpGlobalSliders.get(0) - sliderHandler.globalSliders.get(0)))*1000/100, "static", "working");
         sliderHandler.tmpGlobalSliders.set(0, sliderHandler.globalSliders.get(0));
       }
       if (sliderHandler.globalSliders.get(1)>sliderHandler.tmpGlobalSliders.get(1)) {
-        addNAgentsPerUsage(modelId, int((sliderHandler.globalSliders.get(1) - sliderHandler.tmpGlobalSliders.get(1)))*1000/100, "living");
+        addNAgentsPerUsage(modelId, int((sliderHandler.globalSliders.get(1) - sliderHandler.tmpGlobalSliders.get(1)))*1000/100, "people", "living");
+        addNAgentsPerUsage(modelId, int((sliderHandler.globalSliders.get(1) - sliderHandler.tmpGlobalSliders.get(1)))*1000/100, "static", "living");
         sliderHandler.tmpGlobalSliders.set(1, sliderHandler.globalSliders.get(1));
       }
       if (sliderHandler.globalSliders.get(1)<sliderHandler.tmpGlobalSliders.get(1)) {
-        removeNAgentsPerUsage(modelId, int((sliderHandler.tmpGlobalSliders.get(1) - sliderHandler.globalSliders.get(1)))*1000/100, "living");
+        removeNAgentsPerUsage(modelId, int((sliderHandler.tmpGlobalSliders.get(1) - sliderHandler.globalSliders.get(1)))*1000/100, "people", "living");
+        removeNAgentsPerUsage(modelId, int((sliderHandler.tmpGlobalSliders.get(1) - sliderHandler.globalSliders.get(1)))*1000/100, "static", "living");
         sliderHandler.tmpGlobalSliders.set(1, sliderHandler.globalSliders.get(1));
       }
     }
@@ -98,14 +102,17 @@ public class ABM {
       for (int i=0; i<sliderHandler.tmpLocalSliders.size(); i++) {
         if (sliderHandler.localSliders.get(i)>sliderHandler.tmpLocalSliders.get(i)) {
           if (i<5) {
-            addNAgentPerProfiles(modelId, (int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "living") ;
+            addNAgentPerProfiles(modelId, (int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "people","living") ;
+            addNAgentPerProfiles(modelId, (int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "static","living") ;
           } else {
-            addNAgentPerProfiles(modelId, (int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "working") ;
+            addNAgentPerProfiles(modelId, (int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "people", "working") ;
+            addNAgentPerProfiles(modelId, (int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "static", "working") ;
           }
           sliderHandler.tmpLocalSliders.set(i, sliderHandler.localSliders.get(i));
         }
         if (sliderHandler.localSliders.get(i)<sliderHandler.tmpLocalSliders.get(i)) {
-          removeNAgentsPerProfiles(modelId, int((sliderHandler.tmpLocalSliders.get(i) - sliderHandler.localSliders.get(i)))*2, profiles.get(i));
+          removeNAgentsPerProfiles(modelId, int((sliderHandler.tmpLocalSliders.get(i) - sliderHandler.localSliders.get(i)))*2, "people", profiles.get(i));
+          removeNAgentsPerProfiles(modelId, int((sliderHandler.tmpLocalSliders.get(i) - sliderHandler.localSliders.get(i)))*2, "static", profiles.get(i));
           sliderHandler.tmpLocalSliders.set(i, sliderHandler.localSliders.get(i));
         }
       }
@@ -114,30 +121,29 @@ public class ABM {
 
   public void run(PGraphics p) {
     for (int i=0; i<agents.size(); i++) {
-      if(!agents.get(i).type.equals("static")){
-         agents.get(i).move();
+      if (!agents.get(i).type.equals("static")) {
+        agents.get(i).move();
       } 
       agents.get(i).draw(p);
     }
   }
 
-  public void addNAgentsPerUsage(int modelId, int num, String usage) {
+  public void addNAgentsPerUsage(int modelId, int num, String type, String usage) {
     for (int i = 0; i < num; i++) {
       if (usage.equals("living")) {
-        models.get(modelId).agents.add( new Agent(modelId,map, profiles.get(int(random(4))), "people", "living"));
+        models.get(modelId).agents.add( new Agent(modelId, map, profiles.get(int(random(4))), type, "living"));
       } else {
-        models.get(modelId).agents.add( new Agent(modelId,map, profiles.get(5+int(random(4))), "people", "working"));
+        models.get(modelId).agents.add( new Agent(modelId, map, profiles.get(5+int(random(4))), type, "working"));
       }
     }
   }
 
-  public void removeNAgentsPerUsage(int modelId, int num, String usage) {
+  public void removeNAgentsPerUsage(int modelId, int num, String type, String usage) {
     Iterator<Agent> ag = models.get(modelId).agents.iterator();
     int i=0;
     while (ag.hasNext()) { 
       Agent tmpAg = ag.next();
-
-      if (usage.equals(tmpAg.usage)) { 
+      if (usage.equals(tmpAg.usage) && type.equals(tmpAg.type)) { 
         if (i<num) { 
           ag.remove();
           i++;
@@ -147,19 +153,19 @@ public class ABM {
   }  
 
 
-  public void addNAgentPerProfiles(int modelId, int num, String profile, String usage) {
+  public void addNAgentPerProfiles(int modelId, int num, String profile, String type, String usage) {
     for (int i = 0; i < num; i++) {
-      models.get(modelId).agents.add( new Agent(modelId,map, profile, "people", usage));
+      models.get(modelId).agents.add( new Agent(modelId, map, profile, type, usage));
     }
   }
 
-  public void removeNAgentsPerProfiles(int modelId, int n, String profile) {
+  public void removeNAgentsPerProfiles(int modelId, int n, String type, String profile) {
     Iterator<Agent> ag = models.get(modelId).agents.iterator();
     int i=0;
     while (ag.hasNext()) { 
       Agent tmpAg = ag.next();
 
-      if (profile.equals(tmpAg.profile)) { 
+      if (profile.equals(tmpAg.profile) && type.equals(tmpAg.type)) { 
         if (i<n) { 
           ag.remove();
           i++;
@@ -178,7 +184,7 @@ public class ABM {
       }
     }
   }
-  
+
   public void createStaticAgents(int id, int num, String type) {
     for (int i = 0; i < num; i++) {
       for (int j=0; j<profiles.size()/2; j++) {
@@ -189,25 +195,25 @@ public class ABM {
       }
     }
   }
-  
-  public int getNbCars(){
+
+  public int getNbCars() {
     int nbCars=0;
-    for (int i=0;i<agents.size();i++){
-      if(agents.get(i).type.equals("car")){
+    for (int i=0; i<agents.size(); i++) {
+      if (agents.get(i).type.equals("car")) {
         nbCars++;
       }
     }
     return nbCars;
   }
-  public void updateCarPop(){
-    if (frameCount % 300 == 0) {
+  public void updateCarPop() {
+    if (frameCount % 30 == 0) {
       int living=0;
       int working=0;
       int nbCars=getNbCars();
-      for (int i=0;i<agents.size();i++){
-        if(agents.get(i).usage.equals("living")){
+      for (int i=0; i<agents.size(); i++) {
+        if (agents.get(i).usage.equals("living")) {
           living++;
-        }else{
+        } else {
           working++;
         }
       }
@@ -215,42 +221,42 @@ public class ABM {
       nbNewCar=nbNewCar*10;
       sliderHandler.tmpLocalSliders.set(0, sliderHandler.localSliders.get(0));
       sliderHandler.tmpLocalSliders.set(1, sliderHandler.localSliders.get(1));
-      if(nbNewCar>0){
-        if(getNbCars()<nbNewCar){
-          for(int i=0;i<nbNewCar-nbCars;i++){
-            if(living>working){
+      if (nbNewCar>0) {
+        if (getNbCars()<nbNewCar) {
+          for (int i=0; i<nbNewCar-nbCars; i++) {
+            if (living>working) {
               agents.add( new Agent(id, map, profiles.get(4), "car", "living"));
-            }else{
+            } else {
               agents.add( new Agent(id, map, profiles.get(int(5+random(4))), "car", "working"));
             }
-          } 
-        }else{
-            Iterator<Agent> ag = models.get(0).agents.iterator();
-            int i=0;
-            while (ag.hasNext()) { 
+          }
+        } else {
+          Iterator<Agent> ag = models.get(0).agents.iterator();
+          int i=0;
+          while (ag.hasNext()) { 
             Agent tmpAg = ag.next();
-              if (tmpAg.type.equals("car")) { 
-                if (i<nbNewCar-nbCars) { 
-                  ag.remove();
-                  i++;
-                }
+            if (tmpAg.type.equals("car")) { 
+              if (i<nbNewCar-nbCars) { 
+                ag.remove();
+                i++;
               }
             }
+          }
         }
-      }else{
-        if(getNbCars()>0){
+      } else {
+        if (getNbCars()>0) {
           int tmp = getNbCars(); 
           Iterator<Agent> ag = models.get(0).agents.iterator();
-            int i=0;
-            while (ag.hasNext()) { 
+          int i=0;
+          while (ag.hasNext()) { 
             Agent tmpAg = ag.next();
-              if (tmpAg.type.equals("car")) { 
-                if (i<tmp) { 
-                  ag.remove();
-                  i++;
-                }
+            if (tmpAg.type.equals("car")) { 
+              if (i<tmp) { 
+                ag.remove();
+                i++;
               }
             }
+          }
         }
       }
     }
@@ -290,20 +296,20 @@ public class Agent {
 
     if (type.equals("car")) {
       speed= 0.3 + random(0.5);
-      size= 5 + random(5);
+      size= 7;// + random(5);
     }
     if (type.equals("people")) {
       speed= 0.05 + random(0.1);
-      size= 3 + random(8);
+      size= 5;// + random(8);
     }
-    if(type.equals("static")){
+    if (type.equals("static")) {
       speed= 0.1 + random(0.5);
-      size= 3 + random(8);
-      if(usage.equals("living")){
+      size= 5 ;//+ random(8);
+      if (usage.equals("living")) {
         Building tmp= (buildings.getLivingBuilding().get(int(random(buildings.getLivingBuilding().size()))));
         pos.x = tmp.shape.getVertex(0).x;
         pos.y = tmp.shape.getVertex(0).y;
-      }else{
+      } else {
         Building tmp= (buildings.getWorkingBuilding().get(int(random(buildings.getWorkingBuilding().size()))));
         pos.x = tmp.shape.getVertex(0).x;
         pos.y = tmp.shape.getVertex(0).y;
@@ -329,7 +335,6 @@ public class Agent {
         p.noFill();
         p.ellipse(pos.x, pos.y, size, size);
       }
-
     }
   }
 
@@ -356,10 +361,10 @@ public class Agent {
       calcRoute( srcNode, destNode );
     }
     PVector toNodePos = new PVector();
-    if(modelId==0){
+    if (modelId==0) {
       toNodePos = new PVector(toNode.x, toNode.y);
     }
-    if(modelId==1){
+    if (modelId==1) {
       //toNodePos= new PVector(mouseX + random(-grid.cellSize,grid.cellSize), mouseY + random(-grid.cellSize,grid.cellSize));
       toNodePos = new PVector(toNode.x, toNode.y);
     }
