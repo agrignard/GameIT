@@ -41,9 +41,7 @@ void draw() {
 
 /* Draw ------------------------------------------------------ */
 void drawScene() {
-  if (!drawer.timelapse) {
-    background(0);
-  }
+  background(0);
   drawer.drawSurface();
 }
 
@@ -84,8 +82,6 @@ void keyPressed() {
   case 'r':  
     drawer.toggleRoad();
     break;
-  case 't':  
-    drawer.toggleTimelapse();
   case 'm':  
     models.get(0).initModel();
     break;

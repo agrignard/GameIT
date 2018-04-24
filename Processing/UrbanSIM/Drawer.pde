@@ -12,7 +12,6 @@ public class Drawer{
                  showBuilding = false,
                  showRoad=false,
                  useLeap=false,
-                 timelapse=false,
                  showInteraction=false,
                  showSlider=false,
                  keystoneMode=false,
@@ -35,11 +34,8 @@ public class Drawer{
   
   void drawSurface(){
       offscreenSurface.beginDraw();
-      if(!drawer.timelapse){
-        offscreenSurface.clear();
-        offscreenSurface.background(0);
-      }
-      
+      offscreenSurface.clear();
+      offscreenSurface.background(0);
       drawTableBackGround(offscreenSurface);
       drawLegend(offscreenSurface);
       roads.draw(offscreenSurface);
@@ -49,8 +45,6 @@ public class Drawer{
       models.get(0).run(offscreenSurface);
       models.get(0).updateGlobalPop(0);
       models.get(0).updateCarPop();
-    
-      //slider.draw(offscreenSurface);
       offscreenSurface.endDraw();
       for (int i=0; i<nbProjector;i++){
         subSurface.beginDraw();
@@ -82,7 +76,7 @@ public class Drawer{
     if(keystoneMode){
       p.text("Keystone: [L] load keystone - [S] save keystone  ", 30, 30);
     }else{
-      p.text("[A] Agent - [B] Building - [R] Road - [U] Usage - [H] Heatmap - [T] Timelapse", 30, 30);
+      p.text("[A] Agent - [B] Building - [R] Road - [U] Usage - [H] Heatmap", 30, 30);
       p.text("[I] Interaction (Mouse) (and [F] Leap)) - [K] keystone", 30, 50);
     }
     p.textAlign(CENTER);
@@ -115,7 +109,6 @@ public class Drawer{
   public void toggleBuilding() { showBuilding = !showBuilding;}
   public void toggleRoad() { showRoad = !showRoad;}
   public void toggleLeap() { useLeap = !useLeap;}
-  public void toggleTimelapse() { timelapse = !timelapse;}
   public void toggleInteraction() { showInteraction = !showInteraction;}
   public void toggleSlider() { showSlider = !showSlider;}
   public void toggleUsage() { showUsage = !showUsage;}
