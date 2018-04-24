@@ -39,7 +39,6 @@ public class Drawer{
       drawTableBackGround(offscreenSurface);
       drawLegend(offscreenSurface);
       roads.draw(offscreenSurface);
-      rivers.draw(offscreenSurface);
       buildings.draw(offscreenSurface);
       grid.draw(offscreenSurface);
       models.get(0).run(offscreenSurface);
