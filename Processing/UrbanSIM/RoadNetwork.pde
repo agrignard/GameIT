@@ -115,6 +115,19 @@ public class RoadNetwork {
     );
   }
   
+  public ArrayList<Node> getNodeInsideROI(PVector pos, int size){
+    ArrayList<Node> tmp = new ArrayList<Node>();
+    for (int i=0;i<graph.nodes.size();i++){
+        Node tempN = (Node)graph.nodes.get(i);
+        if(((tempN.x>pos.x-size/2) && (tempN.x)<pos.x+size/2) &&
+        ((tempN.y>pos.y-size/2) && (tempN.y)<pos.y+size/2))
+        {
+          tmp.add(tempN);
+        }       
+      }
+    return tmp;
+  }
+  
   public void draw(PGraphics p){ 
     if(drawer.showRoad){
       for(int i = 0; i < graph.nodes.size(); i++){

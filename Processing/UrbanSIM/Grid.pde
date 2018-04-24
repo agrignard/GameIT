@@ -3,6 +3,7 @@ public class Grid {
   int cellSize = playGroundWidth/20;
   int[][] heatmapCells;
   int heatMapcellSize = playGroundWidth/100;
+  PVector curActiveGridPos;
   
   Grid(){
     cells = new int[width/cellSize][height/cellSize];
@@ -13,6 +14,7 @@ public class Grid {
         cells[x][y] = 0;
       }
     }
+    curActiveGridPos = new PVector(0,0);
   }
   
   public void draw(PGraphics p){
@@ -49,6 +51,8 @@ public class Grid {
             p.noFill();
             p.rect (x*cellSize+cellSize/2, y*cellSize+cellSize/2, cellSize, cellSize);
             if(cells[x][y]==1){
+              curActiveGridPos.x=x*cellSize;
+              curActiveGridPos.y=y*cellSize;
               if(drawer.useLeap){
                  drawMicroSquare(p, x*cellSize+cellSize/2,y*cellSize+cellSize/2);
               }
@@ -59,6 +63,8 @@ public class Grid {
       else{
          p.fill(255);
          p.rect (mouseX, mouseY, cellSize, cellSize,cellSize/20);
+         curActiveGridPos.x=mouseX;
+         curActiveGridPos.y=mouseY;
          drawMicroSquare(p, mouseX,mouseY);
       }      
     }
@@ -83,11 +89,10 @@ public class Grid {
       p.fill(255);
       p.rect (x, y, cellSize, cellSize,cellSize/20);
       PVector toCompare= new PVector(x,y);
-      ArrayList<PShape> tmp = getBuildingInsideROI(toCompare,cellSize);
+      ArrayList<Building> tmp = (buildings.getBuildingInsideROI(toCompare,cellSize));
       for (int i=0;i<tmp.size();i++){
         p.fill(255,0,0);
-        p.shape(tmp.get(i), 0, 0);
-        createStaticAgent(p,tmp.get(i));
+        p.shape(tmp.get(i).shape, 0, 0);
       }
       ArrayList<Agent> tmp2 = getAgentInsideROI(models.get(0),toCompare,cellSize);
       for (int i=0;i<tmp2.size();i++){
@@ -96,30 +101,7 @@ public class Grid {
          p.ellipse(tmp2.get(i).pos.x, tmp2.get(i).pos.y, tmp2.get(i).size, tmp2.get(i).size);
       }
   }
-  
-  public void createStaticAgent(PGraphics p,PShape shape){
-    //if(frameCount %30 ==0){
-    PVector pos = shape.getVertex(0);//int(random(shape.getVertexCount())));
-    p.fill(#FF0000);
-    //p.fill(models.get(0).colors.get(int(random(9))));
-    //models.get(0).agents.add( new Agent(0, roads, models.get(0).profiles.get(int(random(models.get(0).profiles.size()))), "people", "living"));
-    p.ellipse(pos.x,pos.y,10,10); 
-    //}
-    //p.ellipse(pos.x,pos.y,10,10); 
-  }
-  
-  public ArrayList<PShape> getBuildingInsideROI(PVector pos, int size){
-    ArrayList<PShape> tmp = new ArrayList<PShape>();
-    for (int i=0;i<buildings.buildings.size();i++){
-        if(((buildings.buildings.get(i).shape.getVertex(0).x>pos.x-size/2) && (buildings.buildings.get(i).shape.getVertex(0).x)<pos.x+size/2) &&
-        ((buildings.buildings.get(i).shape.getVertex(0).y>pos.y-size/2) && (buildings.buildings.get(i).shape.getVertex(0).y)<pos.y+size/2))
-        {
-          tmp.add(buildings.buildings.get(i).shape);
-        }       
-      }
-    return tmp;
-  }
-  
+
   public ArrayList<Agent> getAgentInsideROI(ABM model,PVector pos, int size){
     ArrayList<Agent> tmp = new ArrayList<Agent>();
     for (int i=0;i<model.agents.size();i++){

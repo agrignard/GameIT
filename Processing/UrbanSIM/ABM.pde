@@ -18,28 +18,16 @@ public class ABM {
     agents = new ArrayList<Agent>();
     profiles = new ArrayList<String>();
     colors = new ArrayList<Integer>();
-    /* colors.add(#FFFFB2);
-     colors.add(#FFFFB2);
-     colors.add(#0B5038);
-     colors.add(#8CAB13);
-     colors.add(#FFFFFF);
-     colors.add(#FECC5C);
-     colors.add(#FD8D3C);
-     colors.add(#F03B20);
-     colors.add(#BD0026);
-     colors.add(#FF0000);*/
-
-
-    colors.add(color(167, 177, 60));
-    colors.add(color(148, 177, 60));
-    colors.add(color(90, 177, 60));
-    colors.add(color(60, 177, 132));
-    colors.add(color(3, 201, 68));
-    colors.add(color(115, 177, 60));
-    colors.add(color(42, 139, 190));
-    colors.add(color(51, 91, 193));
-    colors.add(color(83, 70, 212));
-    colors.add(color(196, 60, 177));
+    colors.add(color(167, 177, 60));//#FFFFB2
+    colors.add(color(148, 177, 60));//#FFFFB2
+    colors.add(color(90, 177, 60));//#0B5038
+    colors.add(color(60, 177, 132));//#8CAB13
+    colors.add(color(3, 201, 68));//#FFFFFF
+    colors.add(color(115, 177, 60));//#FECC5C
+    colors.add(color(42, 139, 190));//#FD8D3C
+    colors.add(color(51, 91, 193));//#F03B20
+    colors.add(color(83, 70, 212));//#BD0026
+    colors.add(color(196, 60, 177));//#FF0000
 
 
 
@@ -127,13 +115,24 @@ public class ABM {
       agents.get(i).draw(p);
     }
   }
+  
+  public void relocateAgentInsideGrid(Agent a,PVector pos, int size){
+       Building tmp = buildings.getBuildingInsideROI(pos,size).get(int (random(buildings.getBuildingInsideROI(pos,size).size())));
+       a.pos = tmp.shape.getVertex(int(random(tmp.shape.getVertexCount())));
+  }
 
   public void addNAgentsPerUsage(int modelId, int num, String type, String usage) {
+    Agent ag = null;
     for (int i = 0; i < num; i++) {
       if (usage.equals("living")) {
-        models.get(modelId).agents.add( new Agent(modelId, map, profiles.get(int(random(4))), type, "living"));
+        ag= new Agent(modelId, map, profiles.get(int(random(4))), type, "living");
+        models.get(modelId).agents.add(ag);
       } else {
-        models.get(modelId).agents.add( new Agent(modelId, map, profiles.get(5+int(random(4))), type, "working"));
+        ag = new Agent(modelId, map, profiles.get(5+int(random(4))), type, "working");
+        models.get(modelId).agents.add(ag);
+      }
+      if(ag.type.equals("static") && grid.curActiveGridPos.x>0 && grid.curActiveGridPos.y>0){
+          relocateAgentInsideGrid(ag,grid.curActiveGridPos,grid.cellSize);
       }
     }
   }
@@ -277,8 +276,6 @@ public class Agent {
   private Node srcNode, destNode, toNode;
   private ArrayList<Node> path;
   private PVector dir;  
-  //map<string,rgb> color_per_type <- [ "High School Student"::#FFFFB2, "College student"::#FECC5C,"Young professional"::#FD8D3C,  "Mid-career workers"::#F03B20, "Executives"::#BD0026, "Home maker"::#0B5038, "Retirees"::#8CAB13];
-
 
   Agent(int _modelId, RoadNetwork _map, String _profile, String _type, String _usage) {
     modelId = _modelId;

@@ -46,6 +46,19 @@ public class Buildings{
     }
   }
   
+  
+  public ArrayList<Building> getBuildingInsideROI(PVector pos, int size){
+    ArrayList<Building> tmp = new ArrayList<Building>();
+    for (int i=0;i<buildings.size();i++){
+        if(((buildings.get(i).shape.getVertex(0).x>pos.x-size/2) && (buildings.get(i).shape.getVertex(0).x)<pos.x+size/2) &&
+        ((buildings.get(i).shape.getVertex(0).y>pos.y-size/2) && (buildings.get(i).shape.getVertex(0).y)<pos.y+size/2))
+        {
+          tmp.add(buildings.get(i));
+        }       
+      }
+    return tmp;
+  }
+  
   public ArrayList<Building> getWorkingBuilding(){
     ArrayList<Building> tmp = new ArrayList<Building>();
     for (int i=0;i<buildings.size();i++){
