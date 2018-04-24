@@ -23,7 +23,8 @@ public class Grid {
           for (int y=0; y<height/heatMapcellSize; y++) {
             p.rectMode(CENTER);
             PVector ratio = getLinvingAndWorkingInsideROI(models.get(0),new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize);
-            p.fill(ratio.x*50,ratio.y*50,0);
+            p.fill(lerpColor(models.get(0).workingColor, models.get(0).livingColor, ratio.x/ratio.y));
+            //p.fill(ratio.x*50,ratio.y*50,0);
             p.noStroke();
             p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);            
           }

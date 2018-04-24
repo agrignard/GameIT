@@ -10,6 +10,8 @@ public class ABM {
   private ArrayList<Integer> colors;
   HashMap<String, Integer> colorProfiles; 
   int nbPeoplePerProfile;
+  int workingColor= #165E93;
+  int livingColor= #F4A528;
   ABM(int _id, RoadNetwork _map, String _type, int _nbPeoplePerProfile) {
     id=_id;
     map=_map;
@@ -28,9 +30,6 @@ public class ABM {
     colors.add(color(51, 91, 193));//#F03B20
     colors.add(color(83, 70, 212));//#BD0026
     colors.add(color(196, 60, 177));//#FF0000
-
-
-
     profiles.add("Young Children");
     profiles.add("High School");
     profiles.add("Home maker");
@@ -224,7 +223,7 @@ public class ABM {
         if (getNbCars()<nbNewCar) {
           for (int i=0; i<nbNewCar-nbCars; i++) {
             if (living>working) {
-              agents.add( new Agent(id, map, profiles.get(4), "car", "living"));
+              agents.add( new Agent(id, map, profiles.get(int(random(4))), "car", "living"));
             } else {
               agents.add( new Agent(id, map, profiles.get(int(5+random(4))), "car", "working"));
             }
@@ -289,7 +288,7 @@ public class Agent {
     path=null;
     dir = new PVector(0.0, 0.0);
     myProfileColor= (int)(models.get(0).colorProfiles.get(profile));
-    myUsageColor = (usage.equals("working")) ? #165E93 : #F4A528;
+    myUsageColor = (usage.equals("working")) ? color(models.get(0).workingColor) : models.get(0).livingColor;
 
     if (type.equals("car")) {
       speed= 0.3 + random(0.5);
