@@ -33,7 +33,7 @@ public class ABM {
     
 
     colors.add(#AA6839);//#FFFFB2
-    colors.add(#FFCDAA);//#FFFFB2
+    colors.add(#FFCDAA);//#FFFFB2     
     colors.add(#D4966A);//#0B5038
     colors.add(#804115);//#8CAB13
     colors.add(#552300);//#FFFFFF

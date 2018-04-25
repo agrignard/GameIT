@@ -36,11 +36,12 @@ public class Drawer{
       offscreenSurface.beginDraw();
       offscreenSurface.clear();
       offscreenSurface.background(0);
+      grid.draw(offscreenSurface);
       drawTableBackGround(offscreenSurface);
       drawLegend(offscreenSurface);
       roads.draw(offscreenSurface);
       buildings.draw(offscreenSurface);
-      grid.draw(offscreenSurface);
+      
       models.get(0).run(offscreenSurface);
       models.get(0).updateGlobalPop(0);
       models.get(0).updateLocalPop(0);
@@ -59,6 +60,7 @@ public class Drawer{
     //p.fill(125);  
     //p.rect(0, 0, displayWidth, displayHeight);
     if(showBG){
+      p.tint(255, 100);
       p.image(bg,0,0,displayWidth,displayHeight);
     }
   }

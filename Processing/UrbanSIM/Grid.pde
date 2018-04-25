@@ -39,6 +39,7 @@ public class Grid {
             p.fill(lerpColor(#000000, #FF0000, nbCar/5.0));
             p.noStroke();
             p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);            
+            
           }
         }
     }
@@ -86,10 +87,11 @@ public class Grid {
           }
         }
       }
-    
-      
-      p.fill(255);
+      p.stroke(255,0,0,125);
+      p.strokeWeight(2);
+      p.fill(255,255,255,125);
       p.rect (x, y, cellSize, cellSize,cellSize/20);
+      
       PVector toCompare= new PVector(x,y);
       ArrayList<Building> tmp = (buildings.getBuildingInsideROI(toCompare,cellSize));
       for (int i=0;i<tmp.size();i++){
