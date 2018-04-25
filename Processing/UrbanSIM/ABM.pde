@@ -10,8 +10,8 @@ public class ABM {
   private ArrayList<Integer> colors;
   HashMap<String, Integer> colorProfiles; 
   int nbPeoplePerProfile;
-  int workingColor= #165E93;//#283c86;//#165E93;//
-  int livingColor= #F4A528;//#45a247;//#F4A528;//
+  int workingColor= #061439;//#283c86;//#165E93;//
+  int livingColor= #804115;//#45a247;//#F4A528;//
   ABM(int _id, RoadNetwork _map, String _type, int _nbPeoplePerProfile) {
     id=_id;
     map=_map;

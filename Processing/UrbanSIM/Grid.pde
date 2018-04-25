@@ -35,17 +35,25 @@ public class Grid {
           for (int y=0; y<height/heatMapcellSize; y++) {
             p.rectMode(CENTER);
             //int ratio = getAgentInsideROI(models.get(0),new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize).size();
-            float nbCar = getCarInsideROI(models.get(0),new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize).size();
-            p.fill(lerpColor(#000000, #FF0000, nbCar/5.0));
-            p.noStroke();
-            p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);            
+            float nbCar = getAgentInsideROI(models.get(0),new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize,"car").size();
+            if(nbCar>0){
+              p.fill(lerpColor(#000000, #FF0000, nbCar/5.0));
+              p.noStroke();
+              p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);
+            }
+            
+            float nbPeople = getAgentInsideROI(models.get(0),new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize,"people").size();
+            if(nbPeople>0){
+              p.fill(lerpColor(#000000, #00FF00, nbPeople/5.0));
+              p.noStroke();
+              p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);
+            }
             
           }
         }
     }
+
     if(drawer.showInteraction){
-      p.fill(0,0,0,100);
-      p.rect(width/2,height/2,width,height);
       p.noFill();      
       if(drawer.useLeap){
         for (int x=0; x<width/cellSize; x++) {
@@ -119,13 +127,13 @@ public class Grid {
     return tmp;
   }
   
-  public ArrayList<Agent> getCarInsideROI(ABM model,PVector pos, int size){
+  public ArrayList<Agent> getAgentInsideROI(ABM model,PVector pos, int size, String type){
     ArrayList<Agent> tmp = new ArrayList<Agent>();
     for (int i=0;i<model.agents.size();i++){
         if(((model.agents.get(i).pos.x>pos.x-size/2) && (model.agents.get(i).pos.x)<pos.x+size/2) &&
         ((model.agents.get(i).pos.y>pos.y-size/2) && (model.agents.get(i).pos.y)<pos.y+size/2))
         { 
-          if(model.agents.get(i).type.equals("car")){
+          if(model.agents.get(i).type.equals(type)){
             tmp.add(model.agents.get(i));
           }
           
@@ -133,7 +141,7 @@ public class Grid {
       }
     return tmp;
   }
-  
+    
   public PVector getLinvingAndWorkingInsideROI(ABM model,PVector pos, int size){
     PVector tmp = new PVector();
     for (int i=0;i<model.agents.size();i++){
