@@ -34,8 +34,9 @@ public class Grid {
         for (int x=0; x<width/heatMapcellSize; x++) {
           for (int y=0; y<height/heatMapcellSize; y++) {
             p.rectMode(CENTER);
-            int ratio = getAgentInsideROI(models.get(0),new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize).size();
-            p.fill(ratio*20,0,0);
+            //int ratio = getAgentInsideROI(models.get(0),new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize).size();
+            float nbCar = getCarInsideROI(models.get(0),new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize).size();
+            p.fill(lerpColor(#000000, #FF0000, nbCar/5.0));
             p.noStroke();
             p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);            
           }
@@ -111,6 +112,21 @@ public class Grid {
         ((model.agents.get(i).pos.y>pos.y-size/2) && (model.agents.get(i).pos.y)<pos.y+size/2))
         {
           tmp.add(model.agents.get(i));
+        }       
+      }
+    return tmp;
+  }
+  
+  public ArrayList<Agent> getCarInsideROI(ABM model,PVector pos, int size){
+    ArrayList<Agent> tmp = new ArrayList<Agent>();
+    for (int i=0;i<model.agents.size();i++){
+        if(((model.agents.get(i).pos.x>pos.x-size/2) && (model.agents.get(i).pos.x)<pos.x+size/2) &&
+        ((model.agents.get(i).pos.y>pos.y-size/2) && (model.agents.get(i).pos.y)<pos.y+size/2))
+        { 
+          if(model.agents.get(i).type.equals("car")){
+            tmp.add(model.agents.get(i));
+          }
+          
         }       
       }
     return tmp;
