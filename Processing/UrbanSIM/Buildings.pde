@@ -25,7 +25,8 @@ public class Buildings{
         JSONArray points= polygons.getJSONArray(j);
         PShape s = createShape();
         s.beginShape();
-        s.fill(hm.get(usage));
+        //s.fill(hm.get(usage));
+        s.fill(#FFFFFF);
         s.noStroke();       
         for(int k=0; k<points.size(); k++) {
           PVector pos = roads.toXY(points.getJSONArray(k).getFloat(1),points.getJSONArray(k).getFloat(0));

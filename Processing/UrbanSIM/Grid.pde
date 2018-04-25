@@ -1,6 +1,6 @@
 public class Grid {
   int[][] cells;
-  int cellSize = playGroundWidth/20;
+  int cellSize = playGroundWidth/10;
   int[][] heatmapCells;
   int heatMapcellSize = playGroundWidth/100;
   PVector curActiveGridPos;
@@ -93,11 +93,12 @@ public class Grid {
       ArrayList<Building> tmp = (buildings.getBuildingInsideROI(toCompare,cellSize));
       for (int i=0;i<tmp.size();i++){
         p.fill(255,0,0);
-        p.shape(tmp.get(i).shape, 0, 0);
+        //p.shape(tmp.get(i).shape, 0, 0);
       }
       ArrayList<Agent> tmp2 = getAgentInsideROI(models.get(0),toCompare,cellSize);
       for (int i=0;i<tmp2.size();i++){
-         p.fill(255,0,0);
+         //p.fill(255,0,0);
+         p.noStroke();
          p.fill(tmp2.get(i).myProfileColor);
          p.ellipse(tmp2.get(i).pos.x, tmp2.get(i).pos.y, tmp2.get(i).size, tmp2.get(i).size);
       }

@@ -1,7 +1,7 @@
 Drawer drawer;
 public int nbProjector=1;
-public int displayWidth = int(1920)*nbProjector;
-public int displayHeight = int(1080)*nbProjector;
+public int displayWidth = int(1920/2)*nbProjector;
+public int displayHeight = int(1080/2)*nbProjector;
 
 public int playGroundWidth = displayWidth;
 public int playGroundHeight = displayHeight;
