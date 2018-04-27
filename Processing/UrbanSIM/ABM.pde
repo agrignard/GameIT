@@ -1,5 +1,7 @@
 import java.util.Map;
 import java.util.Iterator;
+import java.util.Collections;
+import java.util.Arrays;
 /* ABM CLASS ------------------------------------------------------------*/
 public class ABM {
   private int id;
@@ -18,51 +20,12 @@ public class ABM {
     type=_type;
     nbPeoplePerProfile= _nbPeoplePerProfile;
     agents = new ArrayList<Agent>();
-    profiles = new ArrayList<String>();
-    colors = new ArrayList<Integer>();
-    /*colors.add(color(167, 177, 60));//#FFFFB2
-    colors.add(color(148, 177, 60));//#FFFFB2
-    colors.add(color(90, 177, 60));//#0B5038
-    colors.add(color(60, 177, 132));//#8CAB13
-    colors.add(color(3, 201, 68));//#FFFFFF
-    colors.add(color(115, 177, 60));//#FECC5C
-    colors.add(color(42, 139, 190));//#FD8D3C
-    colors.add(color(51, 91, 193));//#F03B20
-    colors.add(color(83, 70, 212));//#BD0026
-    colors.add(color(196, 60, 177));//#FF0000*/
-    
-
-    colors.add(#AA6839);//#FFFFB2
-    colors.add(#FFCDAA);//#FFFFB2     
-    colors.add(#D4966A);//#0B5038
-    colors.add(#804115);//#8CAB13
-    colors.add(#552300);//#FFFFFF
-    colors.add(#2F4172 );//#FECC5C
-    colors.add(#7986AC);//#FD8D3C
-    colors.add(#4F608F);//#F03B20
-    colors.add(#162756);//#BD0026
-    colors.add(#061439);//#FF0000
-    profiles.add("Young Children");
-    profiles.add("High School");
-    profiles.add("Home maker");
-    profiles.add("Retirees");
-    profiles.add("Artist");
-    profiles.add("College"); 
-    profiles.add("Young professional");
-    profiles.add("Mid-career workers");
-    profiles.add("Executives"); 
-    profiles.add("Workforce");
+    colors = new ArrayList<Integer>(Arrays.asList(#AA6839,#FFCDAA,#D4966A,#804115,#552300,#2F4172,#7986AC,#4F608F,#162756,#061439));
+    profiles = new ArrayList<String>(Arrays.asList("Young Children","High School","Home maker","Retirees","Artist","College","Young professional","Mid-career workers","Executives","Workforce"));
     colorProfiles = new HashMap<String, Integer>();
-    colorProfiles.put(profiles.get(0), colors.get(0));
-    colorProfiles.put(profiles.get(1), colors.get(1));
-    colorProfiles.put(profiles.get(2), colors.get(2));
-    colorProfiles.put(profiles.get(3), colors.get(3));
-    colorProfiles.put(profiles.get(4), colors.get(4));
-    colorProfiles.put(profiles.get(5), colors.get(5));
-    colorProfiles.put(profiles.get(6), colors.get(6));
-    colorProfiles.put(profiles.get(7), colors.get(7));
-    colorProfiles.put(profiles.get(8), colors.get(8));
-    colorProfiles.put(profiles.get(9), colors.get(9));
+    for (int i=0;i<profiles.size();i++){
+      colorProfiles.put(profiles.get(i), colors.get(i));
+    }
   }
 
   public void initModel() {
