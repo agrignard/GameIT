@@ -5,31 +5,29 @@ public int displayHeight = int(1080)*nbProjector;
 
 public int playGroundWidth = displayWidth;
 public int playGroundHeight = displayHeight;
+String city="Hanghzhou";
 PImage bg;
+JSONObject JSONBounds;
 RoadNetwork roads;
-RoadNetwork rivers;
 Buildings buildings;
-ArrayList<ABM> models;
+ABM model;
 Grid grid;
 InterFace interfaceLeap;
 SliderHandler sliderHandler;
 
 void setup() {
-  //fullScreen(P3D, 1);
+  fullScreen(P3D, 1);
   width=displayWidth;
   height=displayHeight;
-  //smooth(3);
-  size(displayWidth, displayHeight, P3D);
+  //size(displayWidth, displayHeight, P3D);
   drawer = new Drawer(this);
-  bg = loadImage("data/Table_Video_Frame_Template_4k.jpg");
+  bg = loadImage("data/GIS/"+city+"/background.png");
   drawer.initSurface();
-
-  roads = new RoadNetwork("GIS/RoadNetwork/LLL_Roads.geojson");
-  rivers = new RoadNetwork("GIS/RoadNetwork/LLL_Rivers.geojson");
-  buildings = new Buildings("GIS/Buildings.geojson");
-  models = new ArrayList<ABM>();
-  models.add(new ABM(0,roads, "people", 100));
-  models.get(0).initModel();
+  JSONBounds = loadJSONObject("GIS/"+city+"/Bounds.geojson");
+  roads = new RoadNetwork("GIS/"+city+"/Roads.geojson");
+  buildings = new Buildings("GIS/"+city+"/Buildings.geojson");
+  model = new ABM(0,roads, "people", 100);
+  model.initModel();
   grid = new Grid();
   interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();
@@ -83,7 +81,7 @@ void keyPressed() {
     drawer.toggleRoad();
     break;
   case 'm':  
-    models.get(0).initModel();
+    model.initModel();
     break;
   case 'u':  
     drawer.toggleUsage();

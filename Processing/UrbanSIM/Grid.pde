@@ -21,32 +21,34 @@ public class Grid {
     if(drawer.showHeatmap){
         for (int x=0; x<width/heatMapcellSize; x++) {
           for (int y=0; y<height/heatMapcellSize; y++) {
-            p.rectMode(CENTER);
-            PVector ratio = getLinvingAndWorkingInsideROI(models.get(0),new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize);
-            p.fill(lerpColor(models.get(0).workingColor, models.get(0).livingColor, ratio.x/ratio.y));
+            p.rectMode(CORNER);
+            PVector ratio = getLinvingAndWorkingInsideROI(new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize);
+            p.fill(lerpColor(model.workingColor, model.livingColor, ratio.x/ratio.y));
             //p.fill(ratio.x*50,ratio.y*50,0);
             p.noStroke();
-            p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);            
+            p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);
+            p.rectMode(CENTER);
           }
         }
     }
     if(drawer.showMobilityHeatmap){
         for (int x=0; x<width/heatMapcellSize; x++) {
           for (int y=0; y<height/heatMapcellSize; y++) {
-            p.rectMode(CENTER);
-            //int ratio = getAgentInsideROI(models.get(0),new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize).size();
-            float nbCar = getAgentInsideROI(models.get(0),new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize,"car").size();
+            p.rectMode(CORNER);
+            //int ratio = getAgentInsideROI(model,new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize).size();
+            float nbCar = getAgentInsideROI(new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize,"car").size();
             if(nbCar>0){
               p.fill(lerpColor(#000000, #FF0000, nbCar/5.0));
               p.noStroke();
               p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);
             }
             
-            float nbPeople = getAgentInsideROI(models.get(0),new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize,"people").size();
+            float nbPeople = getAgentInsideROI(new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize,"people").size();
             if(nbPeople>0){
               p.fill(lerpColor(#000000, #00FF00, nbPeople/5.0));
               p.noStroke();
               p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);
+              p.rectMode(CENTER);
             }
             
           }
@@ -106,7 +108,7 @@ public class Grid {
         p.fill(255,0,0);
         //p.shape(tmp.get(i).shape, 0, 0);
       }
-      ArrayList<Agent> tmp2 = getAgentInsideROI(models.get(0),toCompare,cellSize);
+      ArrayList<Agent> tmp2 = getAgentInsideROI(toCompare,cellSize);
       for (int i=0;i<tmp2.size();i++){
          //p.fill(255,0,0);
          p.noStroke();
@@ -115,7 +117,7 @@ public class Grid {
       }
   }
 
-  public ArrayList<Agent> getAgentInsideROI(ABM model,PVector pos, int size){
+  public ArrayList<Agent> getAgentInsideROI(PVector pos, int size){
     ArrayList<Agent> tmp = new ArrayList<Agent>();
     for (int i=0;i<model.agents.size();i++){
         if(((model.agents.get(i).pos.x>pos.x-size/2) && (model.agents.get(i).pos.x)<pos.x+size/2) &&
@@ -127,7 +129,7 @@ public class Grid {
     return tmp;
   }
   
-  public ArrayList<Agent> getAgentInsideROI(ABM model,PVector pos, int size, String type){
+  public ArrayList<Agent> getAgentInsideROI(PVector pos, int size, String type){
     ArrayList<Agent> tmp = new ArrayList<Agent>();
     for (int i=0;i<model.agents.size();i++){
         if(((model.agents.get(i).pos.x>pos.x-size/2) && (model.agents.get(i).pos.x)<pos.x+size/2) &&
@@ -142,7 +144,7 @@ public class Grid {
     return tmp;
   }
     
-  public PVector getLinvingAndWorkingInsideROI(ABM model,PVector pos, int size){
+  public PVector getLinvingAndWorkingInsideROI(PVector pos, int size){
     PVector tmp = new PVector();
     for (int i=0;i<model.agents.size();i++){
         if(((model.agents.get(i).pos.x>pos.x-size/2) && (model.agents.get(i).pos.x)<pos.x+size/2) &&

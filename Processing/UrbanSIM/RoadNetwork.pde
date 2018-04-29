@@ -13,9 +13,6 @@ public class RoadNetwork {
     // Load file -->
     JSONObject JSON = loadJSONObject(GeoJSONfile);
     JSONArray JSONlines = JSON.getJSONArray("features");
-    
-
-    JSONObject JSONBounds = loadJSONObject("GIS/Bounds.geojson");
     JSONArray JSONBoundslines = JSONBounds.getJSONArray("features");
     setBoundingBox(JSONBoundslines);
     

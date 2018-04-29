@@ -12,8 +12,8 @@ public class ABM {
   private ArrayList<Integer> colors;
   HashMap<String, Integer> colorProfiles; 
   int nbPeoplePerProfile;
-  int workingColor= #061439;//#283c86;//#165E93;//
-  int livingColor= #804115;//#45a247;//#F4A528;//
+  int workingColor= #000095;//#283c86;//#165E93;//
+  int livingColor= #FD710A;//#45a247;//#F4A528;//
   ABM(int _id, RoadNetwork _map, String _type, int _nbPeoplePerProfile) {
     id=_id;
     map=_map;
@@ -21,6 +21,7 @@ public class ABM {
     nbPeoplePerProfile= _nbPeoplePerProfile;
     agents = new ArrayList<Agent>();
     colors = new ArrayList<Integer>(Arrays.asList(#AA6839,#FFCDAA,#D4966A,#804115,#552300,#2F4172,#7986AC,#4F608F,#162756,#061439));
+    //colors = new ArrayList<Integer>(Arrays.asList(#FD710A,#FD710A,#AB4E05,#6F3603,#E96809,#1400F1,#0000D4,#00006E,#000049,#000095)); 
     profiles = new ArrayList<String>(Arrays.asList("Young Children","High School","Home maker","Retirees","Artist","College","Young professional","Mid-career workers","Executives","Workforce"));
     colorProfiles = new HashMap<String, Integer>();
     for (int i=0;i<profiles.size();i++){
@@ -100,23 +101,23 @@ public class ABM {
     for (int i = 0; i < num; i++) {
       if (usage.equals("living")) {
         ag= new Agent(modelId, map, profiles.get(int(random(4))), type, "living");
-        models.get(modelId).agents.add(ag);
+        model.agents.add(ag);
       } else {
         ag = new Agent(modelId, map, profiles.get(5+int(random(4))), type, "working");
-        models.get(modelId).agents.add(ag);
+        model.agents.add(ag);
       }
-      if(ag.type.equals("static") && grid.curActiveGridPos.x>0 && grid.curActiveGridPos.y>0){
+      if(ag.type.equals("static") && drawer.showInteraction){
           relocateAgentInsideGrid(ag,grid.curActiveGridPos,grid.cellSize);
       }
     }
   }
 
   public void removeNAgentsPerUsage(int modelId, int n, String type, String usage) {
-    Iterator<Agent> ag = models.get(modelId).agents.iterator();
+    Iterator<Agent> ag = model.agents.iterator();
     int i=0;
     while (ag.hasNext()) { 
       Agent tmpAg = ag.next();
-      if(grid.curActiveGridPos.x>0 && grid.curActiveGridPos.y>0){
+      if(drawer.showInteraction){
         if(((tmpAg.pos.x>grid.curActiveGridPos.x-grid.cellSize/2) && (tmpAg.pos.x)<grid.curActiveGridPos.x+grid.cellSize/2) &&
         ((tmpAg.pos.y>grid.curActiveGridPos.y-grid.cellSize/2) && (tmpAg.pos.y)<grid.curActiveGridPos.y+grid.cellSize/2)){
           if (usage.equals(tmpAg.usage) && type.equals(tmpAg.type)) { 
@@ -142,8 +143,8 @@ public class ABM {
     Agent ag = null;
     for (int i = 0; i < num; i++) {
       ag = new Agent(modelId, map, profile, type, usage);
-      models.get(modelId).agents.add(ag);
-      if(ag.type.equals("static") && grid.curActiveGridPos.x>0 && grid.curActiveGridPos.y>0){
+      model.agents.add(ag);
+      if(ag.type.equals("static") && drawer.showInteraction){
           relocateAgentInsideGrid(ag,grid.curActiveGridPos,grid.cellSize);
       }
     }
@@ -151,12 +152,12 @@ public class ABM {
 
   public void removeNAgentsPerProfiles(int modelId, int n, String type, String profile) {
     
-    Iterator<Agent> ag = models.get(modelId).agents.iterator();
+    Iterator<Agent> ag = model.agents.iterator();
 
     int i=0;
     while (ag.hasNext()) { 
       Agent tmpAg = ag.next();
-      if(grid.curActiveGridPos.x>0 && grid.curActiveGridPos.y>0){
+      if(drawer.showInteraction){
         if(((tmpAg.pos.x>grid.curActiveGridPos.x-grid.cellSize/2) && (tmpAg.pos.x)<grid.curActiveGridPos.x+grid.cellSize/2) &&
         ((tmpAg.pos.y>grid.curActiveGridPos.y-grid.cellSize/2) && (tmpAg.pos.y)<grid.curActiveGridPos.y+grid.cellSize/2)){
           if (profile.equals(tmpAg.profile) && type.equals(tmpAg.type)) { 
@@ -292,7 +293,7 @@ public class ABM {
             }
           }
         } else {
-          Iterator<Agent> ag = models.get(0).agents.iterator();
+          Iterator<Agent> ag = model.agents.iterator();
           int i=0;
           while (ag.hasNext()) { 
             Agent tmpAg = ag.next();
@@ -308,7 +309,7 @@ public class ABM {
       } else {
         if (getNbCars()>0) {
           int tmp = getNbCars(); 
-          Iterator<Agent> ag = models.get(0).agents.iterator();
+          Iterator<Agent> ag = model.agents.iterator();
           int i=0;
           while (ag.hasNext()) { 
             Agent tmpAg = ag.next();
@@ -351,8 +352,8 @@ public class Agent {
     pos= new PVector(srcNode.x, srcNode.y);
     path=null;
     dir = new PVector(0.0, 0.0);
-    myProfileColor= (int)(models.get(0).colorProfiles.get(profile));
-    myUsageColor = (usage.equals("working")) ? color(models.get(0).workingColor) : models.get(0).livingColor;
+    myProfileColor= (int)(model.colorProfiles.get(profile));
+    myUsageColor = (usage.equals("working")) ? color(model.workingColor) : model.livingColor;
 
     if (type.equals("car")) {
       speed= 0.3 + random(0.5);
@@ -395,6 +396,8 @@ public class Agent {
         p.noFill();
         p.ellipse(pos.x, pos.y, size, size);
       }
+      
+      
     }
   }
 
@@ -421,14 +424,7 @@ public class Agent {
       calcRoute( srcNode, destNode );
     }
     PVector toNodePos = new PVector();
-    if (modelId==0) {
-      toNodePos = new PVector(toNode.x, toNode.y);
-    }
-    if (modelId==1) {
-      //toNodePos= new PVector(mouseX + random(-grid.cellSize,grid.cellSize), mouseY + random(-grid.cellSize,grid.cellSize));
-      toNodePos = new PVector(toNode.x, toNode.y);
-    }
-    //PVector toNodePos= new PVector(mouseX, mouseY);
+    toNodePos = new PVector(toNode.x, toNode.y);
     PVector destNodePos= new PVector(destNode.x, destNode.y);
     dir = PVector.sub(toNodePos, pos);  // Direction to go
     // Arrived to node -->
