@@ -16,7 +16,7 @@ InterFace interfaceLeap;
 SliderHandler sliderHandler;
 
 void setup() {
-  fullScreen(P3D, 1);
+  fullScreen(P3D, 2);
   width=displayWidth;
   height=displayHeight;
   //size(displayWidth, displayHeight, P3D);

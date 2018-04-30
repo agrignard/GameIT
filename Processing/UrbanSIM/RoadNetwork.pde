@@ -88,7 +88,7 @@ public class RoadNetwork {
     PVector coordsTL = toWebMercator(minLat, minLng);
     PVector coordsBR = toWebMercator(maxLat, maxLng);
     this.bounds = new PVector[] { coordsTL, coordsBR };
-    
+    println("coordsTL" + coordsTL + "coordsBR" + coordsBR);
     // Resize map keeping ratio -->
     float mapRatio = (coordsBR.x - coordsTL.x) / (coordsBR.y - coordsTL.y);
     this.size = mapRatio < 1 ? new PVector( height * mapRatio, height ) : new PVector( width , width / mapRatio ) ;

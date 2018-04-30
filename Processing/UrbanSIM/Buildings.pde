@@ -8,8 +8,8 @@ public class Buildings{
     buildings = new ArrayList<Building>();
     hm = new HashMap<String,Integer>();
     hm.put("Restaurant",#2B6A89);hm.put("Night",#1B2D36);hm.put("Restaurant",#2B6A89);hm.put("GP",#244251);hm.put( "Cultural",#2A7EA6);
-    hm.put("Shopping",#1D223A);hm.put("HS",#111111);hm.put("Uni",#807F30);hm.put(  "O",#545425);
-    hm.put("R",#222222);hm.put("Park",#24461F);
+    hm.put("Shopping",#1D223A);hm.put("HS",#111111);hm.put("Uni",#807F30);hm.put("O",#000095);
+    hm.put("R",#FD710A);hm.put("Park",#24461F);
     JSONObject JSON = loadJSONObject(GeoJSONfile);
     JSONArray JSONpolygons = JSON.getJSONArray("features");
     
@@ -25,8 +25,8 @@ public class Buildings{
         JSONArray points= polygons.getJSONArray(j);
         PShape s = createShape();
         s.beginShape();
-        //s.fill(hm.get(usage));
-        s.fill(#FEEA0A);
+        s.fill(hm.get(usage));
+        //s.fill(#FEEA0A);
         s.noStroke();       
         for(int k=0; k<points.size(); k++) {
           PVector pos = roads.toXY(points.getJSONArray(k).getFloat(1),points.getJSONArray(k).getFloat(0));

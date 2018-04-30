@@ -110,11 +110,8 @@ public class Drawer{
     }
     p.textAlign(CENTER);
     p.textSize(10);
-    p.fill(0);
-    p.text("UrbanABM InnovaCity - LLL & GAME IT - 2018 ", 0, height*0.99);
-    p.text(" © Arnaud Grignard 2018 ", width*0.95, height*0.99);
-    
-    
+    //p.text("UrbanSim InnovaCity - LLL & GAME IT - 2018 ", 0, height*0.99);
+    p.text(" © Arnaud Grignard 2018 ", width*0.96, height*0.99);
  }
  
   public PVector GetTotalLivingWorkingNumber(){
