@@ -17,7 +17,8 @@ public class Drawer{
                  keystoneMode=false,
                  showUsage=false,
                  showHeatmap=false,
-                 showMobilityHeatmap=false;
+                 showMobilityHeatmap=false,
+                 showLegend=true;
   
   
   Drawer(PApplet parent){
@@ -38,7 +39,9 @@ public class Drawer{
       offscreenSurface.background(0);
       grid.draw(offscreenSurface);
       drawTableBackGround(offscreenSurface);
-      drawLegend(offscreenSurface);
+      if(showLegend){
+        drawLegend(offscreenSurface);
+      }
       roads.draw(offscreenSurface);
       buildings.draw(offscreenSurface);
       
@@ -102,7 +105,7 @@ public class Drawer{
       p.text("Keystone: [L] load keystone - [S] save keystone  ", 30, 30);
     }else{
       p.text("[A] Agent - [B] Building - [R] Road - [U] Usage - [H] Heatmap - [J] Mobility Heatmap", 30, 30);
-      p.text("[G] Interaction (Mouse) (and [F] Leap)) - [K] keystone", 30, 50);
+      p.text("[G] Interaction (Mouse) (and [F] Leap)) - [K] keystone - [Z] legend", 30, 50);
       p.text("FRAMERATE: " + int(frameRate) + " fps", 30, 70);
     }
     p.textAlign(CENTER);
@@ -140,6 +143,7 @@ public class Drawer{
   public void toggleUsage() { showUsage = !showUsage;}
   public void toggleHeatmap() { showHeatmap = !showHeatmap;}
   public void toggleMobilityHeatmap() { showMobilityHeatmap = !showMobilityHeatmap;}
+  public void toggleLegend() { showLegend = !showLegend;}
   
   
   

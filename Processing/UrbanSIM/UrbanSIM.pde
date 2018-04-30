@@ -86,5 +86,8 @@ void keyPressed() {
   case 'u':  
     drawer.toggleUsage();
     break;
+  case 'z':  
+    drawer.toggleLegend();
+    break;
   }
 }

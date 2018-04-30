@@ -1,6 +1,6 @@
 public class Grid {
   int[][] cells;
-  int cellSize = playGroundWidth/10;
+  int cellSize = playGroundWidth/20;
   int[][] heatmapCells;
   int heatMapcellSize = playGroundWidth/100;
   PVector curActiveGridPos;
@@ -24,7 +24,6 @@ public class Grid {
             p.rectMode(CORNER);
             PVector ratio = getLinvingAndWorkingInsideROI(new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize);
             p.fill(lerpColor(model.workingColor, model.livingColor, ratio.x/ratio.y));
-            //p.fill(ratio.x*50,ratio.y*50,0);
             p.noStroke();
             p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);
             p.rectMode(CENTER);
@@ -35,7 +34,6 @@ public class Grid {
         for (int x=0; x<width/heatMapcellSize; x++) {
           for (int y=0; y<height/heatMapcellSize; y++) {
             p.rectMode(CORNER);
-            //int ratio = getAgentInsideROI(model,new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize).size();
             float nbCar = getAgentInsideROI(new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize,"car").size();
             if(nbCar>0){
               p.fill(lerpColor(#000000, #FF0000, nbCar/5.0));
