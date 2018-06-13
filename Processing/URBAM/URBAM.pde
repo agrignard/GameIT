@@ -12,14 +12,15 @@ RoadNetwork roads;
 Buildings buildings;
 ABM model;
 Grid grid;
+LegoGrid legoGrid;
 InterFace interfaceLeap;
 SliderHandler sliderHandler;
 
 void setup() {
-  fullScreen(P3D, 2);
+  //fullScreen(P3D, 2);
   width=displayWidth;
   height=displayHeight;
-  //size(displayWidth, displayHeight, P3D);
+  size(displayWidth, displayHeight, P3D);
   drawer = new Drawer(this);
   bg = loadImage("data/GIS/"+city+"/background.png");
   drawer.initSurface();
@@ -29,6 +30,7 @@ void setup() {
   model = new ABM(0,roads, "people", 100);
   model.initModel();
   grid = new Grid();
+  legoGrid = new LegoGrid(20, 20, 300, 10, 10, -1);
   interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();
 } 

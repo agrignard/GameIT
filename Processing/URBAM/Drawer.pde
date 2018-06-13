@@ -38,6 +38,7 @@ public class Drawer{
       offscreenSurface.clear();
       offscreenSurface.background(0);
       grid.draw(offscreenSurface);
+      legoGrid.draw(offscreenSurface);
       drawTableBackGround(offscreenSurface);
       if(showLegend){
         drawLegend(offscreenSurface);
@@ -48,6 +49,7 @@ public class Drawer{
       model.updateGlobalPop(0);
       model.updateLocalPop(0);
       model.updateCarPop();
+      
       offscreenSurface.endDraw();
       for (int i=0; i<nbProjector;i++){
         subSurface.beginDraw();
@@ -56,6 +58,7 @@ public class Drawer{
         subSurface.endDraw();
         surface[i].render(subSurface);
       }
+      
   }
   
   void drawTableBackGround(PGraphics p) {
