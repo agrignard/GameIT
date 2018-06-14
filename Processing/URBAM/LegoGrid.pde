@@ -5,13 +5,11 @@ public class LegoGrid {
   float yllcorner;
   float cellsize;
   float NODATA_value;
-
   int[][] blocks;
-  int n=160;
-  color c;
-  
-  
-  LegoGrid(String[] lines){
+  String type;
+
+   
+  LegoGrid(String[] lines, String _type){
     ncols= int(split(lines[0], ' '))[9];
     nrows= int(split(lines[1], ' '))[9];
     xllcorner= float(split(lines[2], ' '))[5];
@@ -34,33 +32,25 @@ public class LegoGrid {
         blocks[i][j] = int(nums[j]);
       }
     }
+    type=_type;
   }
-  
-  LegoGrid(  int _ncols, int _nrows, int _xllcorner, int _yllcorner, int _cellsize, int _NODATA_value){
-    ncols=_ncols;
-    nrows=_nrows;
-    xllcorner= _xllcorner;
-    yllcorner= _yllcorner;
-    cellsize = _cellsize;
-    NODATA_value = _NODATA_value;
-    blocks = new int[n][n/2];
-    for (int x=0; x<n; x++) {
-      for (int y=0; y<n/2; y++) {
-        blocks[x][y] = 0;
-      }
-    }
-  }
-  
+    
   public void draw(PGraphics p){
     for (int i=0; i<ncols; i++) {
       for (int j=0; j<nrows; j++) {
-            p.rectMode(CORNER);
-            p.stroke(#AAAAAA);
-            p.fill(blocks[j][i],0,0);
-            //p.fill(random(255), random(255), random(255));
-            //p.fill(random(255), random(255), random(255));
-            p.rect (xllcorner + i*cellsize,yllcorner+j*cellsize, cellsize, cellsize);
-          }
+        if (type.equals("regular") && drawer.showLegoGrid){
+          p.stroke(#AAAAAA);
+          p.rectMode(CORNER);
+          p.fill(blocks[j][i],0,0);
+          p.rect (xllcorner + i*cellsize,yllcorner+j*cellsize, cellsize, cellsize);
         }
+        if (type.equals("interactive") && drawer.showInteractiveGrid){
+          p.rectMode(CORNER);
+          p.stroke(#AAAAAA);
+          p.fill(blocks[j][i],0,0);
+          p.rect (xllcorner + i*(cellsize + cellsize/4),yllcorner+j*(cellsize+cellsize/4), cellsize, cellsize);
+        } 
+     }
+    }
   }
 }

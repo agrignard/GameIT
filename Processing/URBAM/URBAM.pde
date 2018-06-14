@@ -13,6 +13,7 @@ Buildings buildings;
 ABM model;
 Grid grid;
 LegoGrid legoGrid;
+LegoGrid interactiveGrid;
 InterFace interfaceLeap;
 SliderHandler sliderHandler;
 
@@ -30,8 +31,8 @@ void setup() {
   model = new ABM(0,roads, "people", 100);
   model.initModel();
   grid = new Grid();
-  //legoGrid = new LegoGrid(624, 384, 300, 10, 10, -1);
-  legoGrid = new LegoGrid(loadStrings("data/Grid/InteractiveGrid.asc"));
+  legoGrid = new LegoGrid(loadStrings("data/Grid/legoGridBlock.asc"),"regular");
+  interactiveGrid = new LegoGrid(loadStrings("data/Grid/InteractiveGrid.asc"),"interactive");
   interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();
 } 
@@ -91,6 +92,12 @@ void keyPressed() {
     break;
   case 'z':  
     drawer.toggleLegend();
+    break;
+  case 'q':  
+    drawer.toggleInteractiveGrid();
+    break;
+  case 'w':  
+    drawer.toggleLegoGrid();
     break;
   }
 }

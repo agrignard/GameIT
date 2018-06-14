@@ -18,7 +18,9 @@ public class Drawer{
                  showUsage=false,
                  showHeatmap=false,
                  showMobilityHeatmap=false,
-                 showLegend=true;
+                 showLegend=true,
+                 showInteractiveGrid=false,
+                 showLegoGrid=false;
   
   
   Drawer(PApplet parent){
@@ -39,6 +41,7 @@ public class Drawer{
       offscreenSurface.background(0);
       grid.draw(offscreenSurface);
       legoGrid.draw(offscreenSurface);
+      interactiveGrid.draw(offscreenSurface);
       drawTableBackGround(offscreenSurface);
       if(showLegend){
         drawLegend(offscreenSurface);
@@ -106,8 +109,8 @@ public class Drawer{
     if(keystoneMode){
       p.text("Keystone: [L] load keystone - [S] save keystone  ", 30, 30);
     }else{
-      p.text("[A] Agent - [B] Building - [R] Road - [U] Usage - [H] Heatmap - [J] Mobility Heatmap", 30, 30);
-      p.text("[G] Interaction (Mouse) (and [F] Leap)) - [K] keystone - [Z] legend", 30, 50);
+      p.text("[a] Agent - [b] Building - [r] Road - [u] Usage - [h] Heatmap - [j] Mobility Heatmap - [q] Interactive Grid - [w] LegoGrid", 30, 30);
+      p.text("[g] Interaction (Mouse) (and [f] Leap)) - [k] keystone - [z] legend", 30, 50);
       p.text("FRAMERATE: " + int(frameRate) + " fps", 30, 70);
     }
     p.textAlign(CENTER);
@@ -143,4 +146,6 @@ public class Drawer{
   public void toggleHeatmap() { showHeatmap = !showHeatmap;}
   public void toggleMobilityHeatmap() { showMobilityHeatmap = !showMobilityHeatmap;}
   public void toggleLegend() { showLegend = !showLegend;}
+  public void toggleInteractiveGrid() { showInteractiveGrid = !showInteractiveGrid;}
+  public void toggleLegoGrid() { showLegoGrid = !showLegoGrid;}
 }
