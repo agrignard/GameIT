@@ -30,7 +30,8 @@ void setup() {
   model = new ABM(0,roads, "people", 100);
   model.initModel();
   grid = new Grid();
-  legoGrid = new LegoGrid(20, 20, 300, 10, 10, -1);
+  //legoGrid = new LegoGrid(624, 384, 300, 10, 10, -1);
+  legoGrid = new LegoGrid(loadStrings("data/Grid/InteractiveGrid.asc"));
   interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();
 } 
