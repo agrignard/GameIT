@@ -40,6 +40,7 @@ public class Drawer{
       offscreenSurface.clear();
       offscreenSurface.background(0);
       grid.draw(offscreenSurface);
+      heatmap.draw(offscreenSurface);
       legoGrid.draw(offscreenSurface);
       interactiveGrid.draw(offscreenSurface);
       drawTableBackGround(offscreenSurface);

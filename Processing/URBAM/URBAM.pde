@@ -12,6 +12,7 @@ RoadNetwork roads;
 Buildings buildings;
 ABM model;
 Grid grid;
+Heatmap heatmap;
 LegoGrid legoGrid;
 LegoGrid interactiveGrid;
 InterFace interfaceLeap;
@@ -31,6 +32,7 @@ void setup() {
   model = new ABM(0,roads, "people", 100);
   model.initModel();
   grid = new Grid();
+  heatmap = new Heatmap();
   legoGrid = new LegoGrid(loadStrings("data/Grid/legoGridBlock.asc"),"regular");
   interactiveGrid = new LegoGrid(loadStrings("data/Grid/InteractiveGrid.asc"),"interactive");
   interfaceLeap = new InterFace();

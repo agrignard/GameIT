@@ -324,6 +324,49 @@ public class ABM {
       }
     }
   }
+  
+    public ArrayList<Agent> getAgentInsideROI(PVector pos, int size){
+    ArrayList<Agent> tmp = new ArrayList<Agent>();
+    for (int i=0;i<agents.size();i++){
+        if(((agents.get(i).pos.x>pos.x-size/2) && (agents.get(i).pos.x)<pos.x+size/2) &&
+        ((agents.get(i).pos.y>pos.y-size/2) && (agents.get(i).pos.y)<pos.y+size/2))
+        {
+          tmp.add(agents.get(i));
+        }       
+      }
+    return tmp;
+  }
+  
+  public ArrayList<Agent> getAgentInsideROI(PVector pos, int size, String type){
+    ArrayList<Agent> tmp = new ArrayList<Agent>();
+    for (int i=0;i<agents.size();i++){
+        if(((agents.get(i).pos.x>pos.x-size/2) && (agents.get(i).pos.x)<pos.x+size/2) &&
+        ((agents.get(i).pos.y>pos.y-size/2) && (agents.get(i).pos.y)<pos.y+size/2))
+        { 
+          if(agents.get(i).type.equals(type)){
+            tmp.add(agents.get(i));
+          }
+          
+        }       
+      }
+    return tmp;
+  }
+    
+  public PVector getLinvingAndWorkingInsideROI(PVector pos, int size){
+    PVector tmp = new PVector();
+    for (int i=0;i<agents.size();i++){
+        if(((agents.get(i).pos.x>pos.x-size/2) && (agents.get(i).pos.x)<pos.x+size/2) &&
+        ((agents.get(i).pos.y>pos.y-size/2) && (agents.get(i).pos.y)<pos.y+size/2))
+        {
+          if(agents.get(i).usage.equals("living")){
+            tmp.x++;
+          }else{
+            tmp.y++;
+          }
+        }       
+      }
+    return tmp;
+  }
 }
 
 public class Agent {
