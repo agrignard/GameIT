@@ -27,9 +27,7 @@ public class LegoGrid {
     for (int i = 0 ; i < lines.length -6; i++) {
       float[] nums = float(split(lines[i+6], ' '));
       for (int j = 0 ; j < nums.length-1; j++) {
-        //println(nums[j]);
-        //println("i:" + i + " j:" + j);
-        blocks[i][j] = int(nums[j]);
+        blocks[(nrows-1)-i][j] = int(nums[j]);
       }
     }
     type=_type;
@@ -39,9 +37,9 @@ public class LegoGrid {
     for (int i=0; i<ncols; i++) {
       for (int j=0; j<nrows; j++) {
         if (type.equals("regular") && drawer.showLegoGrid){
-          p.stroke(#AAAAAA);
+          //p.stroke(#AAAAAA);
           p.rectMode(CORNER);
-          p.fill(blocks[j][i],0,0);
+          p.fill(blocks[j][i]*10,0,0);
           p.rect (xllcorner + i*cellsize,yllcorner+j*cellsize, cellsize, cellsize);
         }
         if (type.equals("interactive") && drawer.showInteractiveGrid){

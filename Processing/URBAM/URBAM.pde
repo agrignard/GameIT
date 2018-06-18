@@ -33,7 +33,7 @@ void setup() {
   model.initModel();
   grid = new Grid();
   heatmap = new Heatmap();
-  legoGrid = new LegoGrid(loadStrings("data/Grid/legoGridBlock.asc"),"regular");
+  legoGrid = new LegoGrid(loadStrings("data/Grid/legoGridUnit.asc"),"regular");
   interactiveGrid = new LegoGrid(loadStrings("data/Grid/InteractiveGrid.asc"),"interactive");
   interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();
