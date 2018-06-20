@@ -13,6 +13,7 @@ Buildings buildings;
 ABM model;
 Grid grid;
 Heatmap heatmap;
+ContinousHeatmap instantHeatmap;
 LegoGrid legoGrid;
 LegoGrid interactiveGrid;
 InterFace interfaceLeap;
@@ -33,6 +34,10 @@ void setup() {
   model.initModel();
   grid = new Grid();
   heatmap = new Heatmap();
+  instantHeatmap = new ContinousHeatmap(0, 0, width, height);
+  instantHeatmap.setBrush("data/HeatMap/heatmapBrush.png", 80);
+  instantHeatmap.addGradient("cold", "HeatMap/heatmapColors.png");
+  instantHeatmap.addGradient("hot", "HeatMap/hot_transp.png");
   legoGrid = new LegoGrid(loadStrings("data/Grid/legoGridUnit.asc"),"regular");
   interactiveGrid = new LegoGrid(loadStrings("data/Grid/InteractiveGrid.asc"),"interactive");
   interfaceLeap = new InterFace();
@@ -100,6 +105,9 @@ void keyPressed() {
     break;
   case 'w':  
     drawer.toggleLegoGrid();
+    break;
+  case 'd':
+    drawer.toggleInstantHeatMap();
     break;
   }
 }

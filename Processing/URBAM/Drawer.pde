@@ -41,6 +41,7 @@ public class Drawer{
       offscreenSurface.background(0);
       grid.draw(offscreenSurface);
       heatmap.draw(offscreenSurface);
+      instantHeatmap.draw(offscreenSurface);
       legoGrid.draw(offscreenSurface);
       interactiveGrid.draw(offscreenSurface);
       drawTableBackGround(offscreenSurface);
@@ -149,4 +150,15 @@ public class Drawer{
   public void toggleLegend() { showLegend = !showLegend;}
   public void toggleInteractiveGrid() { showInteractiveGrid = !showInteractiveGrid;}
   public void toggleLegoGrid() { showLegoGrid = !showLegoGrid;}
+  public void toggleInstantHeatMap() { 
+    instantHeatmap.visible(Visibility.TOGGLE);
+    if ( instantHeatmap.isVisible() ) {
+      instantHeatmap.clear();
+      ArrayList<Agent> people = new ArrayList();
+      for (Agent agent : model.agents) {
+        people.add(agent);
+      }
+      instantHeatmap.update("People Density", people, "cold", false);
+    }
+  }
 }
