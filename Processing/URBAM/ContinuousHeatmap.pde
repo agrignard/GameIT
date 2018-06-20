@@ -103,8 +103,7 @@ public class ContinousHeatmap{
     public PImage colorize(PImage gradientMap, PImage heatmapColors) {
         PImage heatmap = createImage(width, height, ARGB);
         heatmap.loadPixels();
-        for(int i=0; i< gradientMap.pixels.length; i++) {
-            
+        for(int i=0; i< gradientMap.pixels.length; i++) {  
             int c = heatmapColors.pixels[ (int) map(gradientMap.pixels[i], 0, maxValue, 0, heatmapColors.pixels.length-1) ];
             heatmap.pixels[i] = c;
         }    
@@ -113,14 +112,18 @@ public class ContinousHeatmap{
     }
 
     public void draw(PGraphics p) {
+       if (frameCount % 10 == 0) {
+        aggregatedHeatmap.clear();
+        aggregatedHeatmap.update("Aggregated", model.agents, "hot", false);
+       }
         if (visible) {
-                p.beginShape();
-                p.texture(heatmap);
-                p.vertex(0,0,0,0);
-                p.vertex(playGroundWidth, 0, playGroundWidth, 0);
-                p.vertex(playGroundWidth, playGroundHeight, playGroundWidth, playGroundHeight);
-                p.vertex(0, playGroundHeight, 0, playGroundHeight);
-                p.endShape();
+          p.beginShape();
+          p.texture(heatmap);
+          p.vertex(0,0,0,0);
+          p.vertex(playGroundWidth, 0, playGroundWidth, 0);
+          p.vertex(playGroundWidth, playGroundHeight, playGroundWidth, playGroundHeight);
+          p.vertex(0, playGroundHeight, 0, playGroundHeight);
+          p.endShape();
         }
     }
 }

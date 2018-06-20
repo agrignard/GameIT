@@ -17,7 +17,6 @@ public class Drawer{
                  keystoneMode=false,
                  showUsage=false,
                  showHeatmap=false,
-                 showMobilityHeatmap=false,
                  showLegend=true,
                  showInteractiveGrid=false,
                  showLegoGrid=false;
@@ -41,7 +40,7 @@ public class Drawer{
       offscreenSurface.background(0);
       grid.draw(offscreenSurface);
       heatmap.draw(offscreenSurface);
-      instantHeatmap.draw(offscreenSurface);
+      aggregatedHeatmap.draw(offscreenSurface);
       legoGrid.draw(offscreenSurface);
       interactiveGrid.draw(offscreenSurface);
       drawTableBackGround(offscreenSurface);
@@ -54,6 +53,7 @@ public class Drawer{
       model.updateGlobalPop(0);
       model.updateLocalPop(0);
       model.updateCarPop();
+      
       
       offscreenSurface.endDraw();
       for (int i=0; i<nbProjector;i++){
@@ -111,8 +111,8 @@ public class Drawer{
     if(keystoneMode){
       p.text("Keystone: [L] load keystone - [S] save keystone  ", 30, 30);
     }else{
-      p.text("[a] Agent - [b] Building - [r] Road - [u] Usage - [h] Heatmap - [j] Mobility Heatmap - [q] Interactive Grid - [w] LegoGrid", 30, 30);
-      p.text("[g] Interaction (Mouse) (and [f] Leap)) - [k] keystone - [z] legend", 30, 50);
+      p.text("[a] Agent - [b] Building - [r] Road - [u] Usage - [h] Heatmap - [d] Density", 30, 30);
+      p.text("[g] Interaction (Mouse) (and [f] Leap)) - [q] Interactive Grid - [w] LegoGrid -[k] keystone - [z] legend", 30, 50);
       p.text("FRAMERATE: " + int(frameRate) + " fps", 30, 70);
     }
     p.textAlign(CENTER);
@@ -146,19 +146,8 @@ public class Drawer{
   public void toggleSlider() { showSlider = !showSlider;}
   public void toggleUsage() { showUsage = !showUsage;}
   public void toggleHeatmap() { showHeatmap = !showHeatmap;}
-  public void toggleMobilityHeatmap() { showMobilityHeatmap = !showMobilityHeatmap;}
   public void toggleLegend() { showLegend = !showLegend;}
   public void toggleInteractiveGrid() { showInteractiveGrid = !showInteractiveGrid;}
   public void toggleLegoGrid() { showLegoGrid = !showLegoGrid;}
-  public void toggleInstantHeatMap() { 
-    instantHeatmap.visible(Visibility.TOGGLE);
-    if ( instantHeatmap.isVisible() ) {
-      instantHeatmap.clear();
-      ArrayList<Agent> people = new ArrayList();
-      for (Agent agent : model.agents) {
-        people.add(agent);
-      }
-      instantHeatmap.update("People Density", people, "cold", false);
-    }
-  }
+  public void toggleInstantHeatMap() { aggregatedHeatmap.visible(Visibility.TOGGLE);}   
 }

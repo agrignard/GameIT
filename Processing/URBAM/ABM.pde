@@ -399,11 +399,11 @@ public class Agent {
     myUsageColor = (usage.equals("working")) ? color(model.workingColor) : model.livingColor;
 
     if (type.equals("car")) {
-      speed= 0.3 + random(0.5);
+      speed= 10*0.3 + random(0.5);
       size= 7;// + random(5);
     }
     if (type.equals("people")) {
-      speed= 0.05 + random(0.1);
+      speed= 10*0.05 + random(0.1);
       size= 5;// + random(8);
     }
     if (type.equals("static")) {

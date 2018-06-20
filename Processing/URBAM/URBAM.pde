@@ -13,7 +13,7 @@ Buildings buildings;
 ABM model;
 Grid grid;
 Heatmap heatmap;
-ContinousHeatmap instantHeatmap;
+ContinousHeatmap instantHeatmap,aggregatedHeatmap;
 LegoGrid legoGrid;
 LegoGrid interactiveGrid;
 InterFace interfaceLeap;
@@ -30,14 +30,13 @@ void setup() {
   JSONBounds = loadJSONObject("GIS/"+city+"/Bounds.geojson");
   roads = new RoadNetwork("GIS/"+city+"/Roads.geojson");
   buildings = new Buildings("GIS/"+city+"/Buildings.geojson");
+  heatmap = new Heatmap();
+  aggregatedHeatmap = new ContinousHeatmap(0, 0, width, height);
+  aggregatedHeatmap.setBrush("HeatMap/heatmapBrush.png", 80);
+  aggregatedHeatmap.addGradient("hot", "HeatMap/hot_transp.png");
   model = new ABM(0,roads, "people", 100);
   model.initModel();
   grid = new Grid();
-  heatmap = new Heatmap();
-  instantHeatmap = new ContinousHeatmap(0, 0, width, height);
-  instantHeatmap.setBrush("data/HeatMap/heatmapBrush.png", 80);
-  instantHeatmap.addGradient("cold", "HeatMap/heatmapColors.png");
-  instantHeatmap.addGradient("hot", "HeatMap/hot_transp.png");
   legoGrid = new LegoGrid(loadStrings("data/Grid/legoGridUnit.asc"),"regular");
   interactiveGrid = new LegoGrid(loadStrings("data/Grid/InteractiveGrid.asc"),"interactive");
   interfaceLeap = new InterFace();
@@ -78,9 +77,6 @@ void keyPressed() {
     break;
   case 'h':  
     drawer.toggleHeatmap();
-    break;
-  case 'j':  
-    drawer.toggleMobilityHeatmap();
     break;
   case ' ':  
     drawer.toggleBG();
