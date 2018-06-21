@@ -19,7 +19,8 @@ public class Drawer{
                  showHeatmap=false,
                  showLegend=true,
                  showInteractiveGrid=false,
-                 showLegoGrid=false;
+                 showLegoGrid=false,
+                 showContinousHeatMap=false;
   
   
   Drawer(PApplet parent){
@@ -149,5 +150,5 @@ public class Drawer{
   public void toggleLegend() { showLegend = !showLegend;}
   public void toggleInteractiveGrid() { showInteractiveGrid = !showInteractiveGrid;}
   public void toggleLegoGrid() { showLegoGrid = !showLegoGrid;}
-  public void toggleInstantHeatMap() { aggregatedHeatmap.visible(Visibility.TOGGLE);}   
+  public void toggleInstantHeatMap() { showContinousHeatMap=!showContinousHeatMap;}   
 }

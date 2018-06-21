@@ -68,7 +68,7 @@ public class ContinousHeatmap{
     
     public void update(String title, ArrayList<Agent> agents, String gradient, boolean persistance) {
         this.title = title;
-        if(visible) {
+        if(drawer.showContinousHeatMap) {
             gradientMap.loadPixels();
             for(int i = 0; i < agents.size(); i++) {
                 PVector position = agents.get(i).pos;
@@ -116,7 +116,7 @@ public class ContinousHeatmap{
         aggregatedHeatmap.clear();
         aggregatedHeatmap.update("Aggregated", model.agents, "hot", false);
        }
-        if (visible) {
+        if (drawer.showContinousHeatMap) {
           p.beginShape();
           p.texture(heatmap);
           p.vertex(0,0,0,0);
