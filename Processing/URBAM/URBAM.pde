@@ -18,12 +18,19 @@ LegoGrid legoGrid;
 LegoGrid interactiveGrid;
 InterFace interfaceLeap;
 SliderHandler sliderHandler;
+ControlFrame cf;
+float s1;
+
+
+void settings() {
+  size(displayWidth, displayHeight, P3D);
+}
 
 void setup() {
   //fullScreen(P3D, 2);
   width=displayWidth;
   height=displayHeight;
-  size(displayWidth, displayHeight, P3D);
+  
   drawer = new Drawer(this);
   bg = loadImage("data/GIS/"+city+"/background.png");
   drawer.initSurface();
@@ -41,10 +48,12 @@ void setup() {
   interactiveGrid = new LegoGrid(loadStrings("data/Grid/InteractiveGrid.asc"),"interactive");
   interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();
+  cf = new ControlFrame(this,400,400,"box");
 } 
 
 void draw() {
   drawScene();
+  println(cf.s.getValue());
 }
 
 /* Draw ------------------------------------------------------ */
