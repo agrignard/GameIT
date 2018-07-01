@@ -6,7 +6,9 @@ class ControlFrame extends PApplet {
   PApplet parent;
   ControlP5 cp5;
   DropdownList d1;
-  int currentHeatMap;
+  DropdownList d2;
+  String currentHeatMap;
+  String currentHeatMapType;
  
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
     super();   
@@ -21,19 +23,21 @@ class ControlFrame extends PApplet {
   }
  
   public void setup() {
-    cp5 = new ControlP5(this);
-     // create a DropdownList, 
-  d1 = cp5.addDropdownList("Heatmaps").setPosition(100, 100);       
-  customize(d1); // customize the first list
+  cp5 = new ControlP5(this);
+  d1 = cp5.addDropdownList("HeatmapsHome").setPosition(50, 100);       
+  customize(d1,"HeatMaps from Home to"); 
+  
+  d2 = cp5.addDropdownList("HeatmapsJobs").setPosition(250, 100);       
+  customize(d2,"HeatMaps from Jobs to"); 
   }
   
-  void customize(DropdownList ddl) {
+  void customize(DropdownList ddl, String title) {
     ddl.setBackgroundColor(color(190));
     ddl.setItemHeight(20);
     ddl.setBarHeight(15);
-    ddl.getCaptionLabel().set("HeatMaps");
-    for (int i=0;i<40;i++) {
-      ddl.addItem("HeatMap "+i, i);
+    ddl.getCaptionLabel().set(title);
+    for (int i=0;i<heatmap.heatmapTypesPerCategory.size();i++) {
+      ddl.addItem(heatmap.heatmapTypesPerCategory.get(i), i);
      }
     ddl.setColorBackground(color(60));
     ddl.setColorActive(color(255, 128));
@@ -52,7 +56,11 @@ class ControlFrame extends PApplet {
     } 
     else if (theEvent.isController()) {
       println("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController());
-      currentHeatMap = int(theEvent.getController().getValue());
+      println("event from controller string : "+d1.getItem(int(theEvent.getController().getValue())).get("name").toString());
+      currentHeatMap = theEvent.getController().toString();
+      currentHeatMapType= d1.getItem(int(theEvent.getController().getValue())).get("name").toString();
+      //currentHeatMapType = int(theEvent.getController().getValue());  
+      //currentHeatMapType = cp5.get(ScrollableList.class, "HeatmapsHome").getItem(int(theEvent.getController().getValue())).get("name").toString();
     }
   }
  

@@ -3,6 +3,7 @@ public class Buildings{
   ArrayList<Building> buildings;
   HashMap<String,Integer> hm = new HashMap<String,Integer>();
   private String usage;
+  private String category;
   
   Buildings (String GeoJSONfile){
     buildings = new ArrayList<Building>();
@@ -18,7 +19,7 @@ public class Buildings{
       String type = props.isNull("type") ? "null" : props.getString("type");
       usage = props.isNull("Usage") ? "null" : props.getString("Usage");
       String scale = props.isNull("Scale") ? "null" : props.getString("Scale");
-      String category = props.isNull("Category") ? "null" : props.getString("Category");
+      category = props.isNull("Category") ? "null" : props.getString("Category");
             
       JSONArray polygons = JSONpolygons.getJSONObject(i).getJSONObject("geometry").getJSONArray("coordinates");
       for(int j=0; j<polygons.size(); j++) {
@@ -33,7 +34,7 @@ public class Buildings{
           s.vertex(pos.x,pos.y);
         }
         s.endShape(CLOSE);
-        Building b= new Building(s,usage);
+        Building b= new Building(s,usage,category);
         buildings.add(b);
       }
     }
@@ -55,6 +56,19 @@ public class Buildings{
         ((buildings.get(i).shape.getVertex(0).y>pos.y-size/2) && (buildings.get(i).shape.getVertex(0).y)<pos.y+size/2))
         {
           tmp.add(buildings.get(i));
+        }       
+      }
+    return tmp;
+  }
+  
+  public ArrayList<Building> getBuildingInsideROIWithType(PVector pos, int size, String category){
+    ArrayList<Building> tmp = new ArrayList<Building>();
+    for (int i=0;i<buildings.size();i++){
+        if(((buildings.get(i).shape.getVertex(0).x>pos.x-size/2) && (buildings.get(i).shape.getVertex(0).x)<pos.x+size/2) &&
+        ((buildings.get(i).shape.getVertex(0).y>pos.y-size/2) && (buildings.get(i).shape.getVertex(0).y)<pos.y+size/2))
+        { if(buildings.get(i).category.equals(category)){
+          tmp.add(buildings.get(i));
+        }  
         }       
       }
     return tmp;
@@ -87,8 +101,10 @@ public class Buildings{
 public class Building{
   PShape shape;
   String usage;
-  Building(PShape _shape, String _usage){
+  String category;
+  Building(PShape _shape, String _usage, String _category){
     shape=_shape;
     usage= _usage;
+    category=_category;
   }
 }
