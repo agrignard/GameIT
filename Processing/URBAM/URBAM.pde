@@ -48,7 +48,7 @@ void setup() {
   interactiveGrid = new LegoGrid(loadStrings("data/Grid/InteractiveGrid.asc"),"interactive");
   interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();
-  //cf = new ControlFrame(this,400,400,"box");
+  cf = new ControlFrame(this,400,400,"box");
 } 
 
 void draw() {

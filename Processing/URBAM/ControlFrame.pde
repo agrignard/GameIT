@@ -6,8 +6,6 @@ class ControlFrame extends PApplet {
   PApplet parent;
   ControlP5 cp5;
   DropdownList d1;
-  DropdownList d2;
-  String currentHeatMap;
   String currentHeatMapType;
  
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
@@ -24,11 +22,8 @@ class ControlFrame extends PApplet {
  
   public void setup() {
   cp5 = new ControlP5(this);
-  d1 = cp5.addDropdownList("HeatmapsHome").setPosition(50, 100);       
-  customize(d1,"HeatMaps from Home to"); 
-  
-  d2 = cp5.addDropdownList("HeatmapsJobs").setPosition(250, 100);       
-  customize(d2,"HeatMaps from Jobs to"); 
+  d1 = cp5.addDropdownList("Heatmaps").setPosition(50, 100);       
+  customize(d1,"HeatMaps from Home to");  
   }
   
   void customize(DropdownList ddl, String title) {
@@ -52,15 +47,12 @@ class ControlFrame extends PApplet {
   void controlEvent(ControlEvent theEvent) {
     if (theEvent.isGroup()) {
       // check if the Event was triggered from a ControlGroup
-      println("event from group : "+theEvent.getGroup().getValue()+" from "+theEvent.getGroup());
+      //println("event from group : "+theEvent.getGroup().getValue()+" from "+theEvent.getGroup());
     } 
     else if (theEvent.isController()) {
-      println("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController());
-      println("event from controller string : "+d1.getItem(int(theEvent.getController().getValue())).get("name").toString());
-      currentHeatMap = theEvent.getController().toString();
+      //println("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController());
+      //println("event from controller string : "+d1.getItem(int(theEvent.getController().getValue())).get("name").toString());
       currentHeatMapType= d1.getItem(int(theEvent.getController().getValue())).get("name").toString();
-      //currentHeatMapType = int(theEvent.getController().getValue());  
-      //currentHeatMapType = cp5.get(ScrollableList.class, "HeatmapsHome").getItem(int(theEvent.getController().getValue())).get("name").toString();
     }
   }
  
