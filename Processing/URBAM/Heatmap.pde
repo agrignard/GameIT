@@ -16,39 +16,41 @@ public class Heatmap {
   
   public void draw(PGraphics p){
     if(drawer.showHeatmap || (cf.currentHeatMapType!=null)){
-     computeHeatMapType(p,cf.currentHeatMapType);
-     drawHeatMapsLegend(p,new PVector(100,height*0.9));
+     drawHeatmap(p);
     }
     if(drawer.showHeatmap){
-      computeHeatMap(p);
+      if(frameCount % 100 ==0){
+        computeHeatMap();
+      }
+      drawHeatmap(p);
+    }
+  }
+  
+  public void drawHeatmap(PGraphics p){
+    for (int x=0; x<width/heatMapcellSize; x++) {
+      for (int y=0; y<height/heatMapcellSize; y++) {
+        p.rectMode(CORNER);
+        p.fill(lerpColor(#FFFFFF, #00FF00, heatmapCells[x][y]/10.0));
+        p.noStroke();
+        p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);
+        p.rectMode(CENTER);
+      }
     }
   }
   
   
-  public void computeHeatMap(PGraphics p){
+  public void computeHeatMap(){
     for (int x=0; x<width/heatMapcellSize; x++) {
-          for (int y=0; y<height/heatMapcellSize; y++) {
-            p.rectMode(CORNER);
-            float nbPeople= model.getAgentInsideROI(new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize).size();
-            p.fill(lerpColor(#000000, #0000FF, nbPeople/10.0));
-            p.noStroke();
-            p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);
-            p.rectMode(CENTER);
+      for (int y=0; y<height/heatMapcellSize; y++) {
+        heatmapCells[x][y]= model.getAgentInsideROI(new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize).size();
       }
     }
   }
     
-  
-  
-  public void computeHeatMapType(PGraphics p,String type){
+  public void computeHeatMapType(String type){
     for (int x=0; x<width/heatMapcellSize; x++) {
       for (int y=0; y<height/heatMapcellSize; y++) {
-        p.rectMode(CORNER);
-        float nbBuilding= buildings.getBuildingInsideROIWithType(new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize,type).size(); 
-        p.fill(lerpColor(#000000, #0000FF, nbBuilding));
-        p.noStroke();
-        p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);
-        p.rectMode(CENTER);
+        heatmapCells[x][y]= buildings.getBuildingInsideROIWithType(new PVector(x*heatMapcellSize,y*heatMapcellSize),heatMapcellSize,type).size(); 
       }
     }
   }

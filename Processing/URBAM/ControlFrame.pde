@@ -51,8 +51,9 @@ class ControlFrame extends PApplet {
     } 
     else if (theEvent.isController()) {
       //println("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController());
-      //println("event from controller string : "+d1.getItem(int(theEvent.getController().getValue())).get("name").toString());
+      println("event from controller string : "+d1.getItem(int(theEvent.getController().getValue())).get("name").toString());
       currentHeatMapType= d1.getItem(int(theEvent.getController().getValue())).get("name").toString();
+      heatmap.computeHeatMapType(currentHeatMapType);
     }
   }
  
