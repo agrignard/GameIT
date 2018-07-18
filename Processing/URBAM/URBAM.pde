@@ -30,7 +30,6 @@ void setup() {
   //fullScreen(P3D, 2);
   width=displayWidth;
   height=displayHeight;
-  
   drawer = new Drawer(this);
   bg = loadImage("data/GIS/"+city+"/background.png");
   drawer.initSurface();
@@ -48,7 +47,7 @@ void setup() {
   interactiveGrid = new LegoGrid(loadStrings("data/Grid/InteractiveGrid.asc"),"interactive");
   interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();
-  cf = new ControlFrame(this,400,400,"box");
+  //cf = new ControlFrame(this,400,400,"box");
 } 
 
 void draw() {

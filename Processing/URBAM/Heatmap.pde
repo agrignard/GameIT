@@ -15,7 +15,7 @@ public class Heatmap {
   }
   
   public void draw(PGraphics p){
-    if(drawer.showHeatmap || (cf.currentHeatMapType!=null)){
+    if(drawer.showHeatmap){
      drawHeatmap(p);
     }
     if(drawer.showHeatmap){

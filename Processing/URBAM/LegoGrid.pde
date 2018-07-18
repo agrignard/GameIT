@@ -52,3 +52,24 @@ public class LegoGrid {
     }
   }
 }
+
+public class Block{
+  PVector location;
+  int size;
+  int id;
+  int data;
+  
+   Block(PVector l, int _size, int _id, int _data) {
+    location = l.copy();
+    size = _size;
+    id= _id;
+    data= _data;
+  }
+  void run(){
+  }
+  
+  void display(PGraphics p){
+    p.fill(data*10);
+      p.rect(location.x, location.y, size, size); 
+  }
+}
