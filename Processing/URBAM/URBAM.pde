@@ -43,7 +43,8 @@ void setup() {
   model = new ABM(0,roads, "people", 100);
   model.initModel();
   grid = new Grid();
-  legoGrid = new LegoGrid(loadStrings("data/Grid/legoGridUnit.asc"),"regular");
+  //legoGrid = new LegoGrid(loadStrings("data/Grid/legoGridBlock.asc"),"regular");
+  legoGrid = new LegoGrid(loadStrings("data/Grid/LegoGrid_LLL_Code_from_GIS_the_One.asc"),"regular");
   interactiveGrid = new LegoGrid(loadStrings("data/Grid/InteractiveGrid.asc"),"interactive");
   interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();
