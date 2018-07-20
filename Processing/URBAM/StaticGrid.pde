@@ -1,4 +1,4 @@
-public class LegoGrid {
+public class StaticGrid {
   int ncols;
   int nrows;         
   float xllcorner;
@@ -7,9 +7,10 @@ public class LegoGrid {
   float NODATA_value;
   int[][] blocks;
   String type;
+  HashMap<Integer,Integer> colorMap = new HashMap<Integer,Integer>();
 
    
-  LegoGrid(String[] lines, String _type){
+  StaticGrid(String[] lines){
     ncols= int(split(lines[0], ' '))[9];
     nrows= int(split(lines[1], ' '))[9];
     xllcorner= float(split(lines[2], ' '))[5];
@@ -24,6 +25,10 @@ public class LegoGrid {
     println("cellsize" + cellsize);
     println("NODATA_value" + NODATA_value);
     blocks= new int[nrows][ncols];
+    colorMap = new HashMap<Integer,Integer>();
+    //colorMap.put(0,#000000);colorMap.put(999,#000000);colorMap.put(1,#ff00ff);colorMap.put(9,#b802ff);colorMap.put(19,#a200ff);colorMap.put(43,#00ffff);colorMap.put( 63,#0099ff);colorMap.put(126,#00ffd5);colorMap.put(138,#a2ff00);
+    colorMap.put(0,#000000);colorMap.put(999,#000000);colorMap.put(1,color(230, 0, 255, 255));colorMap.put(9,color(230, 0, 255, 255));colorMap.put(19,color(230, 0, 255, 255));colorMap.put(43,color(0, 230, 230, 255));colorMap.put( 63,color(0, 230, 230, 255));colorMap.put(126,color(0, 230, 230, 255));colorMap.put(138,color(0, 230, 0, 255));
+   
     for (int i = 0 ; i < lines.length -6; i++) {
       float[] nums = float(split(lines[i+6], ' '));
       for (int j = 0 ; j < nums.length-1; j++) {
@@ -33,24 +38,16 @@ public class LegoGrid {
         
       }
     }
-    type=_type;
   }
     
   public void draw(PGraphics p){
     for (int i=0; i<ncols; i++) {
       for (int j=0; j<nrows; j++) {
-        if (type.equals("regular") && drawer.showLegoGrid){
-          //p.stroke(#AAAAAA);
+        if (drawer.showStaticGrid){
           p.rectMode(CORNER);
-          p.fill(50+blocks[j][i]*10,0,0);
+          p.fill(colorMap.get(blocks[j][i]));
           p.rect (xllcorner + i*cellsize,yllcorner+j*cellsize, cellsize, cellsize);
         }
-        if (type.equals("interactive") && drawer.showInteractiveGrid){
-          p.rectMode(CORNER);
-          p.stroke(#AAAAAA);
-          p.fill(blocks[j][i],0,0);
-          p.rect (xllcorner + i*(cellsize + cellsize/4),yllcorner+j*(cellsize+cellsize/4), cellsize, cellsize);
-        } 
      }
     }
   }

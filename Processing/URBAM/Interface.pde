@@ -19,14 +19,15 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
   data = subset(data, 0, data.length-2);
   String message = new String( data );
   String[] list = split(message, ',');
-  if(drawer.useLeap){
+  //FIXME: Will be reuse for the viewcube
+  /*if(drawer.useLeap){
     for (int x=0; x<width/grid.cellSize; x++) {
         for (int y=0; y<height/grid.cellSize; y++) {
           grid.cells[x][y]=0;
         }
       }
   grid.cells[int(list[1])][int(list[2])]=1;
-  }
+  }*/
   
   
   // print the result

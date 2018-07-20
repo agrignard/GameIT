@@ -106,7 +106,7 @@ public class ABM {
         ag = new Agent(modelId, map, profiles.get(5+int(random(4))), type, "working");
         model.agents.add(ag);
       }
-      if(ag.type.equals("static") && drawer.showInteraction){
+      if(ag.type.equals("static") && drawer.showViewCube){
           relocateAgentInsideGrid(ag,grid.curActiveGridPos,grid.cellSize);
       }
     }
@@ -117,7 +117,7 @@ public class ABM {
     int i=0;
     while (ag.hasNext()) { 
       Agent tmpAg = ag.next();
-      if(drawer.showInteraction){
+      if(drawer.showViewCube){
         if(((tmpAg.pos.x>grid.curActiveGridPos.x-grid.cellSize/2) && (tmpAg.pos.x)<grid.curActiveGridPos.x+grid.cellSize/2) &&
         ((tmpAg.pos.y>grid.curActiveGridPos.y-grid.cellSize/2) && (tmpAg.pos.y)<grid.curActiveGridPos.y+grid.cellSize/2)){
           if (usage.equals(tmpAg.usage) && type.equals(tmpAg.type)) { 
@@ -144,7 +144,7 @@ public class ABM {
     for (int i = 0; i < num; i++) {
       ag = new Agent(modelId, map, profile, type, usage);
       model.agents.add(ag);
-      if(ag.type.equals("static") && drawer.showInteraction){
+      if(ag.type.equals("static") && drawer.showViewCube){
           relocateAgentInsideGrid(ag,grid.curActiveGridPos,grid.cellSize);
       }
     }
@@ -157,7 +157,7 @@ public class ABM {
     int i=0;
     while (ag.hasNext()) { 
       Agent tmpAg = ag.next();
-      if(drawer.showInteraction){
+      if(drawer.showViewCube){
         if(((tmpAg.pos.x>grid.curActiveGridPos.x-grid.cellSize/2) && (tmpAg.pos.x)<grid.curActiveGridPos.x+grid.cellSize/2) &&
         ((tmpAg.pos.y>grid.curActiveGridPos.y-grid.cellSize/2) && (tmpAg.pos.y)<grid.curActiveGridPos.y+grid.cellSize/2)){
           if (profile.equals(tmpAg.profile) && type.equals(tmpAg.type)) { 
@@ -404,11 +404,11 @@ public class Agent {
     }
     if (type.equals("people")) {
       speed= 10*0.05 + random(0.1);
-      size= 5;// + random(8);
+      size= 3;// + random(8);
     }
     if (type.equals("static")) {
       speed= 0.1 + random(0.5);
-      size= 5 ;//+ random(8);
+      size= 3 ;//+ random(8);
       if (usage.equals("living")) {
         Building tmp= (buildings.getLivingBuilding().get(int(random(buildings.getLivingBuilding().size()))));
         pos.x = tmp.shape.getVertex(0).x;
@@ -426,11 +426,7 @@ public class Agent {
     if (drawer.showAgent) {
       if (type.equals("people") || type.equals("static")) {
         p.noStroke();
-        if (drawer.showUsage) {
-          p.fill(myUsageColor);
-        } else {
-          p.fill(myProfileColor);
-        }
+        p.fill(myProfileColor);
         p.ellipse(pos.x, pos.y, size, size);
       }
       if (type.equals("car")) { 

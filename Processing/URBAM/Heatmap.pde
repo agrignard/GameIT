@@ -19,7 +19,7 @@ public class Heatmap {
      drawHeatmap(p);
     }
     if(drawer.showHeatmap){
-      if(frameCount % 100 ==0){
+      if(frameCount % 60 ==0){
         computeHeatMap();
       }
       drawHeatmap(p);
@@ -30,7 +30,7 @@ public class Heatmap {
     for (int x=0; x<width/heatMapcellSize; x++) {
       for (int y=0; y<height/heatMapcellSize; y++) {
         p.rectMode(CORNER);
-        p.fill(lerpColor(#FFFFFF, #00FF00, heatmapCells[x][y]/10.0));
+        p.fill(lerpColor(#000000, #FF0000, heatmapCells[x][y]/10.0));
         p.noStroke();
         p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);
         p.rectMode(CENTER);
