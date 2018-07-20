@@ -52,7 +52,7 @@ void setup() {
   model.initModel();
   grid = new Grid();
   //legoGrid = new LegoGrid(loadStrings("data/Grid/legoGridBlock.asc"),"regular");
-  legoGrid = new StaticGrid(loadStrings("data/Grid/LegoGrid_Block_LLL.asc"));
+  legoGrid = new StaticGrid(loadStrings("data/Grid/LegoGrid_Block_LLL_5x5.asc"));
   interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();
   tags = new InteractiveTagTable();
@@ -73,9 +73,7 @@ void draw() {
 void drawScene() {
   background(0);
   drawer.drawSurface();
-  if(drawer.showInteractiveGrid){
-    drawer.drawTags();
-  }
+
 }
 
 void keyTyped() {
@@ -176,21 +174,27 @@ void keyTyped() {
       count++;
     }
   }
-  if (key == '1'){
+  if (key == '4'){
     tagsInteraction=!tagsInteraction;
   }
   }
   else{
       switch(key) {
     //Keystone trigger  
-  case 'k':
+  case '1':
     drawer.toggleKeystone();
     break;  
-  case 'l':
+  case '2':
     drawer.ks.load();
     break; 
-  case 's':
+  case '3':
     drawer.ks.save();
+    break;
+  case '4':
+    tagsInteraction=!tagsInteraction;
+    break;
+  case '5':  
+    drawer.toggleLegend();
     break;
   case 'a':   
     drawer.toggleAgent();
@@ -213,17 +217,14 @@ void keyTyped() {
   case 'm':  
     model.initModel();
     break;
-  case 'z':  
-    drawer.toggleLegend();
-    break;
   case 'i':  
     drawer.toggleInteractiveGrid();
     break;
+  case 's':  
+    drawer.toggleStaticGrid();
+    break;
   case 'd':
     drawer.toggleInstantHeatMap();
-    break;
-  case '1':
-    tagsInteraction=!tagsInteraction;
     break;
   case 'e':
     tagViz = 'E';

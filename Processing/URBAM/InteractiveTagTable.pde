@@ -45,9 +45,7 @@ public class InteractiveTagTable {
     }
   }
   }
-  
-  
-  public void UpdateAndDraw(){
+    public void UpdateAndDraw(PGraphics p){
     //println("tagViz" + tagViz);
     for (LLLTag mod : tagList) {
     udpR.index++;
@@ -167,7 +165,7 @@ public class InteractiveTagTable {
 
     //mod.size = (parseFloat(iterrate)/parseFloat(count) * 3.0f) + 0.5f; //draw size based on list position
 
-    mod.display(tagViz);
+    mod.display(p,tagViz);
 
     //println(mod.tagType);
   }
@@ -264,10 +262,10 @@ class LLLTag {
   }
 
   // Custom method for drawing the object
-  void display(char tagVizIn) {
-    noStroke();
-    fill(255);
-    ellipse(x, y, size, size);
+  void display(PGraphics p,char tagVizIn) {
+    p.noStroke();
+    p.fill(255);
+    p.ellipse(x, y, size, size);
 
     ////////////Draw Entire Piece////////////
     // fill(weight, 255, 255);
@@ -351,9 +349,9 @@ class LLLTag {
 
 
 
-          fill(tagVoxels.get(i).voxColor);
+          p.fill(tagVoxels.get(i).voxColor);
 
-          rect(x+tagVoxels.get(i).point.x, y+tagVoxels.get(i).point.y, tempSize-0.0f, tempSize-0.0f);
+          p.rect(x+tagVoxels.get(i).point.x, y+tagVoxels.get(i).point.y, tempSize-0.0f, tempSize-0.0f);
         }//end Voxel Loop
         break;
       case 'W': 
@@ -449,42 +447,42 @@ class LLLTag {
 
 
 
-          fill(tagVoxels.get(i).voxColor);
+          p.fill(tagVoxels.get(i).voxColor);
 
-          rect(x+tagVoxels.get(i).point.x, y+tagVoxels.get(i).point.y, tempSize-0.0f, tempSize-0.0f);
+          p.rect(x+tagVoxels.get(i).point.x, y+tagVoxels.get(i).point.y, tempSize-0.0f, tempSize-0.0f);
         }//end Voxel Loop
 
         //Override Offices
 
         if (tagID==43 || tagID==63 || tagID==126) {
-          fill(0, 230, 230, 255);
-          rect(x+tagWidth/3, y+tagWidth/3, tagWidth/3, tagHeight/3);
+          p.fill(0, 230, 230, 255);
+          p.rect(x+tagWidth/3, y+tagWidth/3, tagWidth/3, tagHeight/3);
         }
 
         if (tagID==0 || tagID==9 || tagID==19) {
-          fill(230, 0, 255, 255);
-          rect(x+tagWidth/3, y+tagWidth/3, tagWidth/3, tagHeight/3);
+          p.fill(230, 0, 255, 255);
+          p.rect(x+tagWidth/3, y+tagWidth/3, tagWidth/3, tagHeight/3);
         }
 
         break;
       case 'T': 
         //println("Type");  // Prints 
-        fill(0, 80, 80, 200);
+        p.fill(0, 80, 80, 200);
 
         if (tagID==138) {
-          fill(0, 230, 0, 255);
+          p.fill(0, 230, 0, 255);
         }
 
         if (tagID==0 || tagID==9 || tagID==19) {
-          fill(230, 0, 255, 255);
+          p.fill(230, 0, 255, 255);
         }
 
         if (tagID==43 || tagID==63 || tagID==126) {
-          fill(0, 230, 230, 255);
+          p.fill(0, 230, 230, 255);
         }
 
 
-        rect(x, y, tagWidth, tagHeight);
+        p.rect(x, y, tagWidth, tagHeight);
         break;
       default:
         // println("Nothing");   // Does not execute
@@ -492,8 +490,8 @@ class LLLTag {
       }
     }//end if tagID
     else {
-      fill(80, 80, 80, 80);
-      rect(x, y, tagWidth, tagHeight);
+      p.fill(80, 80, 80, 80);
+      p.rect(x, y, tagWidth, tagHeight);
     }
     //always reset update flags
     updateWeights=false;

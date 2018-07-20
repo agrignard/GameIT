@@ -5,8 +5,6 @@ public class Drawer{
   CornerPinSurface[] surface = new CornerPinSurface[nbProjector];
   PGraphics offscreenSurface;
   PGraphics subSurface;
-  //int nbProjector=1;
-  
   public boolean showBG = true,
                  showAgent = true,
                  showBuilding = false,
@@ -17,6 +15,7 @@ public class Drawer{
                  showHeatmap=false,
                  showLegend=true,
                  showInteractiveGrid=true,
+                 showStaticGrid=true,
                  showContinousHeatMap=false;
   
   
@@ -36,11 +35,14 @@ public class Drawer{
       offscreenSurface.beginDraw();
       offscreenSurface.clear();
       offscreenSurface.background(0);
+      drawTableBackGround(offscreenSurface);
       grid.draw(offscreenSurface);
       heatmap.draw(offscreenSurface);
       aggregatedHeatmap.draw(offscreenSurface);
       legoGrid.draw(offscreenSurface);
-      drawTableBackGround(offscreenSurface);
+      if(drawer.showInteractiveGrid){
+        drawTags(offscreenSurface);
+      }
       if(showLegend){
         drawLegend(offscreenSurface);
       }
@@ -62,20 +64,21 @@ public class Drawer{
       }
       
   }
-  
-  void drawTags(){
+  void drawTags(PGraphics p){
+    p.rectMode(CORNER);
+    p.fill(#000000);
+    p.rect (tags.startPoint.x,tags.startPoint.y, tags.wideCount*tags.unit, tags.highCount*tags.unit);
     udpR.updateGridValue();
-    tags.UpdateAndDraw();
+    tags.UpdateAndDraw(p);
     messageDelta= false;
     mouseClicked = false;
     started = true;
-  }
-  
+  } 
   void drawTableBackGround(PGraphics p) {
     //p.fill(125);  
     //p.rect(0, 0, displayWidth, displayHeight);
     if(showBG){
-      p.tint(255, 100);
+      //tint(255, 100);
       p.image(bg,0,0,displayWidth,displayHeight);
     }
   }
@@ -118,12 +121,12 @@ public class Drawer{
     }else{
       
       if(tagsInteraction){
-        p.text("[d] delta 1 - [f] delta 2 - [t] Type - [p] Park Heatmap - [w] Walkability - [l] - Display Grid string - [1] - Model Interaction", 30, 50);
+        p.text("[d] delta 1 - [f] delta 2 - [t] Type - [p] Park Heatmap - [w] Walkability - [l] - Display Grid string - [4] - Normal Interaction", 30, 50);
       }else{
         p.text("Simulation: [a] Agent - [b] Building - [r] Road - [h] Heatmap - [d] Density - [m] Init model", 30, 30);
         p.text("HeatMap: [e] No Heatmap -[p] Park Heatmap - [w] Walkability - [t] type", 30, 50);
         p.text("Interaction: [i] Interactive Grid - [v] ViewCube - [w] LegoGrid", 30, 70);
-        p.text("Settings : [k] keystone - [z] legend - [1] - Tags Interaction", 30, 90);
+        p.text("Settings : [1] keystone - [2] load keystone - [3] save keystone - [4] - Tags Interaction - [5] legend", 30, 90);
       }
       
       p.text("FRAMERATE: " + int(frameRate) + " fps", 30, 110);
@@ -158,6 +161,7 @@ public class Drawer{
   public void toggleSlider() { showSlider = !showSlider;}
   public void toggleHeatmap() { showHeatmap = !showHeatmap;}
   public void toggleLegend() { showLegend = !showLegend;}
+  public void toggleStaticGrid() { showStaticGrid = !showStaticGrid;}
   public void toggleInteractiveGrid() { showInteractiveGrid = !showInteractiveGrid;}
   public void toggleInstantHeatMap() { showContinousHeatMap=!showContinousHeatMap;}   
 }

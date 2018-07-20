@@ -88,7 +88,6 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
 void updateGridValue(){
   ///////////////Only parse values if something changed/////////////
   if (!messageIn.equals(oldMessage) || !started) {
-    println("ca check ou quoi?");
     oldSplitParts = oldMessage.split(" ");
     oldMessage = messageIn;
     splitParts = messageIn.split(" ");
@@ -108,7 +107,7 @@ void updateGridValue(){
       int maskID = parseInt(maskParts[index]);
       if (maskID==-2) {
         mod.tagID = -2;
-        println("Found a -2 void");
+        //println("Found a -2 void");
       } else {
         mod.tagID = parseInt(splitParts[index]);
       }

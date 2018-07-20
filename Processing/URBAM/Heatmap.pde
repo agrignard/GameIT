@@ -1,6 +1,7 @@
 public class Heatmap {
   int[][] heatmapCells;
-  int heatMapcellSize = playGroundWidth/100;
+  //int heatMapcellSize = playGroundWidth/150;
+  int heatMapcellSize = 14;
   ArrayList<String> heatmapTypesPerCategory;
     
   
@@ -30,7 +31,7 @@ public class Heatmap {
     for (int x=0; x<width/heatMapcellSize; x++) {
       for (int y=0; y<height/heatMapcellSize; y++) {
         p.rectMode(CORNER);
-        p.fill(lerpColor(#000000, #FF0000, heatmapCells[x][y]/10.0));
+        p.fill(lerpColor(#00FF00, #FF0000, heatmapCells[x][y]/10.0));
         p.noStroke();
         p.rect (x*heatMapcellSize,y*heatMapcellSize, heatMapcellSize, heatMapcellSize);
         p.rectMode(CENTER);
