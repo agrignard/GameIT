@@ -16,8 +16,7 @@ public class Drawer{
                  keystoneMode=false,
                  showHeatmap=false,
                  showLegend=true,
-                 showInteractiveGrid=false,
-                 showStaticGrid=false,
+                 showInteractiveGrid=true,
                  showContinousHeatMap=false;
   
   
@@ -122,7 +121,7 @@ public class Drawer{
         p.text("[d] delta 1 - [f] delta 2 - [t] Type - [p] Park Heatmap - [w] Walkability - [l] - Display Grid string - [1] - Model Interaction", 30, 50);
       }else{
         p.text("Simulation: [a] Agent - [b] Building - [r] Road - [h] Heatmap - [d] Density - [m] Init model", 30, 30);
-        p.text("HeatMap: [p] Park Heatmap - [w] Walkability - [t] type", 30, 50);
+        p.text("HeatMap: [e] No Heatmap -[p] Park Heatmap - [w] Walkability - [t] type", 30, 50);
         p.text("Interaction: [i] Interactive Grid - [v] ViewCube - [w] LegoGrid", 30, 70);
         p.text("Settings : [k] keystone - [z] legend - [1] - Tags Interaction", 30, 90);
       }
@@ -160,6 +159,5 @@ public class Drawer{
   public void toggleHeatmap() { showHeatmap = !showHeatmap;}
   public void toggleLegend() { showLegend = !showLegend;}
   public void toggleInteractiveGrid() { showInteractiveGrid = !showInteractiveGrid;}
-  public void toggleStaticGrid() { showStaticGrid = !showStaticGrid;}
   public void toggleInstantHeatMap() { showContinousHeatMap=!showContinousHeatMap;}   
 }

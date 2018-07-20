@@ -25,7 +25,7 @@ float s1;
 //INTERFACE VARIABLES
 boolean messageDelta = false;
 boolean mouseClicked = false;
-char tagViz = 'P';
+char tagViz = 'E';
 boolean started = false;
 boolean tagsInteraction=false;
 
@@ -225,6 +225,10 @@ void keyTyped() {
   case '1':
     tagsInteraction=!tagsInteraction;
     break;
+  case 'e':
+    tagViz = 'E';
+    messageDelta = true;
+    break;
   case 'p':
     tagViz = 'P';
     messageDelta = true;
@@ -235,7 +239,6 @@ void keyTyped() {
     break;
   case 't':
     tagViz = 'T';
-    drawer.toggleStaticGrid();
     break;
   }
   }

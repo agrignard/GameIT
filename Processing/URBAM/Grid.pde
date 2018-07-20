@@ -15,6 +15,7 @@ public class Grid {
   
   public void draw(PGraphics p){
    if(drawer.showViewCube){
+      p.rectMode(CENTER); 
       p.noFill();      
       p.fill(255);
       p.rect (mouseX, mouseY, cellSize, cellSize,cellSize/20);
@@ -38,7 +39,7 @@ public class Grid {
   }
   
   public void drawViewCubeMicroSquare(PGraphics p, int x, int y){
-      p.rectMode(CENTER);      
+           
       //Draw ViewCube Area
       p.stroke(255,0,0,125);
       p.strokeWeight(2);

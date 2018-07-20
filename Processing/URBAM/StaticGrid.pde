@@ -17,13 +17,13 @@ public class StaticGrid {
     yllcorner= float(split(lines[3], ' '))[5];
     cellsize = float(split(lines[4], ' '))[6];    
     NODATA_value = float(split(lines[5], ' '))[2];
-    println("---------- Reading ASCII GRID --------------");
+    /*println("---------- Reading ASCII GRID --------------");
     println("nrows" + nrows);
     println("ncols" + ncols);
     println("xllcorner" + xllcorner);
     println("yllcorner" + yllcorner);
     println("cellsize" + cellsize);
-    println("NODATA_value" + NODATA_value);
+    println("NODATA_value" + NODATA_value);*/
     blocks= new int[nrows][ncols];
     colorMap = new HashMap<Integer,Integer>();
     //colorMap.put(0,#000000);colorMap.put(999,#000000);colorMap.put(1,#ff00ff);colorMap.put(9,#b802ff);colorMap.put(19,#a200ff);colorMap.put(43,#00ffff);colorMap.put( 63,#0099ff);colorMap.put(126,#00ffd5);colorMap.put(138,#a2ff00);
@@ -43,11 +43,27 @@ public class StaticGrid {
   public void draw(PGraphics p){
     for (int i=0; i<ncols; i++) {
       for (int j=0; j<nrows; j++) {
-        if (drawer.showStaticGrid){
           p.rectMode(CORNER);
-          p.fill(colorMap.get(blocks[j][i]));
-          p.rect (xllcorner + i*cellsize,yllcorner+j*cellsize, cellsize, cellsize);
-        }
+          switch(tagViz) {
+          case 'E':
+          break;
+          case 'T':
+            p.fill(colorMap.get(blocks[j][i]));
+            p.rect (xllcorner + i*cellsize,yllcorner+j*cellsize, cellsize, cellsize);
+            break;
+          case 'W':
+            if(blocks[j][i]== 43 || blocks[j][i]== 63 || blocks[j][i]== 126 ){
+              p.fill(colorMap.get(blocks[j][i]));
+              p.rect (xllcorner + i*cellsize,yllcorner+j*cellsize, cellsize, cellsize);
+            }
+          break;
+          case 'P':
+            if(blocks[j][i]== 138){
+              p.fill(colorMap.get(blocks[j][i]));
+              p.rect (xllcorner + i*cellsize,yllcorner+j*cellsize, cellsize, cellsize);
+            }
+          break;
+          }
      }
     }
   }

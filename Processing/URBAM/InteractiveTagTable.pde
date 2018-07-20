@@ -65,6 +65,8 @@ public class InteractiveTagTable {
         //println(dist);
 
         switch(tagViz) {
+        case 'E':
+        break;
         case 'P': 
           //println("Parks");  // Does not execute
           if (mod2.tagID == 138) {
