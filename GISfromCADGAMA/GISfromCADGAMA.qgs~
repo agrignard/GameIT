@@ -18,16 +18,10 @@
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Buildings20180331190236594" name="Buildings">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="legoGrid_Template_ASC_Park20180719175449376" name="legoGrid_Template_ASC_Park">
-      <customproperties/>
-    </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="legoGrid_Template_ASC_Park20180719175108822" name="legoGrid_Template_ASC_Park">
-      <customproperties/>
-    </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="legoGrid_Template_ASC20180719174502091" name="legoGrid_Template_ASC">
-      <customproperties/>
-    </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="Buildings_LLL_Code20180719093327844" name="Buildings_LLL_Code">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="LegoGrid_LLL_Code_Raster_5x520180720114257031" name="LegoGrid_LLL_Code_Raster_5x5">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Bounds20180404164330952" name="Bounds">
@@ -41,10 +35,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>12299.5619095639049192</xmin>
-      <ymin>1020.2119571812418144</ymin>
-      <xmax>22854.60206671179184923</xmax>
-      <ymax>7425.5706398690235801</ymax>
+      <xmin>11270.45540847263873729</xmin>
+      <ymin>-821.34581645879552525</ymin>
+      <xmax>26724.08970255292661022</xmax>
+      <ymax>8556.7398308645169891</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -87,6 +81,7 @@
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="LegoGrid_LLL_Code_from_GIS_the_One20180719092909064"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="USER:100008" srcDatumTransform="-1" destDatumTransform="-1" layerid="legogridRaster120180718184404708"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="roads_from_CAD20180403122804140"/>
+      <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:54004" srcDatumTransform="-1" destDatumTransform="-1" layerid="LegoGrid_LLL_Code_Raster_5x520180720113935262"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:54004" srcDatumTransform="-1" destDatumTransform="-1" layerid="LegoGrid_LLL_Code20180719085052564"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="legoGridBlock20180718175314403"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="VideoBounds20180404164412163"/>
@@ -120,6 +115,8 @@
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="VideoBounds20180405082530721"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="rivers_from_CAD20180403123042118"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="legoGridBlock20180718184902750"/>
+      <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:54004" srcDatumTransform="-1" destDatumTransform="-1" layerid="LegoGrid_LLL_Code_Raster_5x520180720114257031"/>
+      <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:54004" srcDatumTransform="-1" destDatumTransform="-1" layerid="LegoGrid_LLL_Code_Raster_5x520180720113931323"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="Wanxiang_UrbanPlan_Cropped20180612163908241"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="USER:100008" srcDatumTransform="-1" destDatumTransform="-1" layerid="legogridRaster120180718184325940"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="legoGridUnitfromASC_Georeferenced_1band20180719082824196"/>
@@ -135,9 +132,7 @@
       <item>Wanxiang_Area20180405140704383</item>
       <item>walkways20180405143826909</item>
       <item>Buildings_LLL_Code20180719093327844</item>
-      <item>legoGrid_Template_ASC20180719174502091</item>
-      <item>legoGrid_Template_ASC_Park20180719175108822</item>
-      <item>legoGrid_Template_ASC_Park20180719175449376</item>
+      <item>LegoGrid_LLL_Code_Raster_5x520180720114257031</item>
     </custom-order>
   </layer-tree-canvas>
   <legend updateDrawingOrder="true">
@@ -166,24 +161,14 @@
         <legendlayerfile isInOverview="0" layerid="Buildings20180331190236594" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="legoGrid_Template_ASC_Park" showFeatureCount="0">
-      <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="legoGrid_Template_ASC_Park20180719175449376" visible="0"/>
-      </filegroup>
-    </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="legoGrid_Template_ASC_Park" showFeatureCount="0">
-      <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="legoGrid_Template_ASC_Park20180719175108822" visible="0"/>
-      </filegroup>
-    </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="legoGrid_Template_ASC" showFeatureCount="0">
-      <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="legoGrid_Template_ASC20180719174502091" visible="0"/>
-      </filegroup>
-    </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Buildings_LLL_Code" showFeatureCount="0">
       <filegroup open="true" hidden="false">
         <legendlayerfile isInOverview="0" layerid="Buildings_LLL_Code20180719093327844" visible="1"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="LegoGrid_LLL_Code_Raster_5x5" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="LegoGrid_LLL_Code_Raster_5x520180720114257031" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Bounds" showFeatureCount="0">
@@ -475,19 +460,20 @@
       <renderer-v2 attr="LLL_Code" forceraster="0" symbollevels="0" type="categorizedSymbol" enableorderby="0">
         <categories>
           <category render="true" symbol="0" value="0" label="0"/>
-          <category render="true" symbol="1" value="9" label="9"/>
-          <category render="true" symbol="2" value="19" label="19"/>
-          <category render="true" symbol="3" value="43" label="43"/>
-          <category render="true" symbol="4" value="63" label="63"/>
-          <category render="true" symbol="5" value="126" label="126"/>
-          <category render="true" symbol="6" value="138" label="138"/>
-          <category render="false" symbol="7" value="" label=""/>
+          <category render="true" symbol="1" value="1" label="1"/>
+          <category render="true" symbol="2" value="9" label="9"/>
+          <category render="true" symbol="3" value="19" label="19"/>
+          <category render="true" symbol="4" value="43" label="43"/>
+          <category render="true" symbol="5" value="63" label="63"/>
+          <category render="true" symbol="6" value="126" label="126"/>
+          <category render="true" symbol="7" value="138" label="138"/>
+          <category render="true" symbol="8" value="" label=""/>
         </categories>
         <symbols>
           <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
             <layer pass="0" class="SimpleFill" locked="0">
               <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="color" v="255,0,255,255"/>
+              <prop k="color" v="91,109,212,255"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="offset" v="0,0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -502,7 +488,7 @@
           <symbol alpha="1" clip_to_extent="1" type="fill" name="1">
             <layer pass="0" class="SimpleFill" locked="0">
               <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="color" v="184,2,255,255"/>
+              <prop k="color" v="204,53,176,255"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="offset" v="0,0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -517,7 +503,7 @@
           <symbol alpha="1" clip_to_extent="1" type="fill" name="2">
             <layer pass="0" class="SimpleFill" locked="0">
               <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="color" v="162,0,255,255"/>
+              <prop k="color" v="44,189,221,255"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="offset" v="0,0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -532,7 +518,7 @@
           <symbol alpha="1" clip_to_extent="1" type="fill" name="3">
             <layer pass="0" class="SimpleFill" locked="0">
               <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="color" v="0,255,255,255"/>
+              <prop k="color" v="68,233,39,255"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="offset" v="0,0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -547,7 +533,7 @@
           <symbol alpha="1" clip_to_extent="1" type="fill" name="4">
             <layer pass="0" class="SimpleFill" locked="0">
               <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="color" v="0,153,255,255"/>
+              <prop k="color" v="49,237,146,255"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="offset" v="0,0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -562,7 +548,7 @@
           <symbol alpha="1" clip_to_extent="1" type="fill" name="5">
             <layer pass="0" class="SimpleFill" locked="0">
               <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="color" v="0,255,213,255"/>
+              <prop k="color" v="173,116,225,255"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="offset" v="0,0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -577,7 +563,7 @@
           <symbol alpha="1" clip_to_extent="1" type="fill" name="6">
             <layer pass="0" class="SimpleFill" locked="0">
               <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="color" v="162,255,0,255"/>
+              <prop k="color" v="224,120,136,255"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="offset" v="0,0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -592,7 +578,22 @@
           <symbol alpha="1" clip_to_extent="1" type="fill" name="7">
             <layer pass="0" class="SimpleFill" locked="0">
               <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="color" v="45,133,216,255"/>
+              <prop k="color" v="181,208,58,255"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0.26"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="style" v="solid"/>
+            </layer>
+          </symbol>
+          <symbol alpha="1" clip_to_extent="1" type="fill" name="8">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="color" v="234,172,109,255"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="offset" v="0,0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -609,7 +610,7 @@
           <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
             <layer pass="0" class="SimpleFill" locked="0">
               <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="color" v="23,227,30,255"/>
+              <prop k="color" v="255,0,255,255"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="offset" v="0,0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -622,6 +623,8 @@
             </layer>
           </symbol>
         </source-symbol>
+        <colorramp type="randomcolors" name="[source]"/>
+        <invertedcolorramp value="0"/>
         <rotation/>
         <sizescale scalemethod="diameter"/>
       </renderer-v2>
@@ -958,6 +961,57 @@ def my_form_open(dialog, layer, feature):
         <rowstyles/>
         <fieldstyles/>
       </conditionalstyles>
+    </maplayer>
+    <maplayer minimumScale="0" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
+      <id>LegoGrid_LLL_Code_Raster_5x520180720114257031</id>
+      <datasource>./LegoGrid_LLL_Code_Raster_5x5.asc</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>LegoGrid_LLL_Code_Raster_5x5</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs</proj4>
+          <srsid>27874</srsid>
+          <srid>54004</srid>
+          <authid>EPSG:54004</authid>
+          <description>World_Mercator</description>
+          <projectionacronym>merc</projectionacronym>
+          <ellipsoidacronym></ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <customproperties>
+        <property key="identify/format" value="Value"/>
+      </customproperties>
+      <provider>gdal</provider>
+      <noData>
+        <noDataList bandNo="1" useSrcNoData="0"/>
+      </noData>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <pipe>
+        <rasterrenderer opacity="1" alphaBand="-1" classificationMax="137.862" classificationMinMaxOrigin="CumulativeCutFullExtentEstimated" band="1" classificationMin="0" type="singlebandpseudocolor">
+          <rasterTransparency/>
+          <rastershader>
+            <colorrampshader colorRampType="INTERPOLATED" clip="0">
+              <item alpha="255" value="0" label="Custom color map entry" color="#1f78b4"/>
+              <item alpha="255" value="1" label="Custom color map entry" color="#ff00ff"/>
+              <item alpha="255" value="9" label="Custom color map entry" color="#3efffc"/>
+              <item alpha="255" value="19" label="Custom color map entry" color="#42ff48"/>
+              <item alpha="255" value="43" label="Custom color map entry" color="#b6ffd6"/>
+              <item alpha="255" value="63" label="Custom color map entry" color="#afa1ff"/>
+              <item alpha="255" value="126" label="Custom color map entry" color="#ffb48e"/>
+              <item alpha="255" value="138" label="Custom color map entry" color="#c8ff6e"/>
+            </colorrampshader>
+          </rastershader>
+        </rasterrenderer>
+        <brightnesscontrast brightness="0" contrast="0"/>
+        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+        <rasterresampler maxOversampling="2"/>
+      </pipe>
+      <blendMode>0</blendMode>
     </maplayer>
     <maplayer minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Line" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>Roads20180331191228709</id>
@@ -1324,138 +1378,6 @@ def my_form_open(dialog, layer, feature):
         <rowstyles/>
         <fieldstyles/>
       </conditionalstyles>
-    </maplayer>
-    <maplayer minimumScale="0" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
-      <id>legoGrid_Template_ASC20180719174502091</id>
-      <datasource>../Processing/URBAM/data/legoGrid_Template_ASC.asc</datasource>
-      <keywordList>
-        <value></value>
-      </keywordList>
-      <layername>legoGrid_Template_ASC</layername>
-      <srs>
-        <spatialrefsys>
-          <proj4>+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs</proj4>
-          <srsid>27874</srsid>
-          <srid>54004</srid>
-          <authid>EPSG:54004</authid>
-          <description>World_Mercator</description>
-          <projectionacronym>merc</projectionacronym>
-          <ellipsoidacronym></ellipsoidacronym>
-          <geographicflag>false</geographicflag>
-        </spatialrefsys>
-      </srs>
-      <customproperties>
-        <property key="identify/format" value="Value"/>
-      </customproperties>
-      <provider>gdal</provider>
-      <noData>
-        <noDataList bandNo="1" useSrcNoData="0"/>
-      </noData>
-      <map-layer-style-manager current="">
-        <map-layer-style name=""/>
-      </map-layer-style-manager>
-      <pipe>
-        <rasterrenderer gradient="BlackToWhite" opacity="1" alphaBand="-1" type="singlebandgray" grayBand="1">
-          <rasterTransparency/>
-          <contrastEnhancement>
-            <minValue>0</minValue>
-            <maxValue>137.862</maxValue>
-            <algorithm>StretchToMinimumMaximum</algorithm>
-          </contrastEnhancement>
-        </rasterrenderer>
-        <brightnesscontrast brightness="0" contrast="0"/>
-        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
-        <rasterresampler maxOversampling="2"/>
-      </pipe>
-      <blendMode>0</blendMode>
-    </maplayer>
-    <maplayer minimumScale="0" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
-      <id>legoGrid_Template_ASC_Park20180719175108822</id>
-      <datasource>../Processing/URBAM/data/legoGrid_Template_ASC_Park.asc</datasource>
-      <keywordList>
-        <value></value>
-      </keywordList>
-      <layername>legoGrid_Template_ASC_Park</layername>
-      <srs>
-        <spatialrefsys>
-          <proj4>+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs</proj4>
-          <srsid>27874</srsid>
-          <srid>54004</srid>
-          <authid>EPSG:54004</authid>
-          <description>World_Mercator</description>
-          <projectionacronym>merc</projectionacronym>
-          <ellipsoidacronym></ellipsoidacronym>
-          <geographicflag>false</geographicflag>
-        </spatialrefsys>
-      </srs>
-      <customproperties>
-        <property key="identify/format" value="Value"/>
-      </customproperties>
-      <provider>gdal</provider>
-      <noData>
-        <noDataList bandNo="1" useSrcNoData="0"/>
-      </noData>
-      <map-layer-style-manager current="">
-        <map-layer-style name=""/>
-      </map-layer-style-manager>
-      <pipe>
-        <rasterrenderer gradient="BlackToWhite" opacity="1" alphaBand="-1" type="singlebandgray" grayBand="1">
-          <rasterTransparency/>
-          <contrastEnhancement>
-            <minValue>0</minValue>
-            <maxValue>137.862</maxValue>
-            <algorithm>StretchToMinimumMaximum</algorithm>
-          </contrastEnhancement>
-        </rasterrenderer>
-        <brightnesscontrast brightness="0" contrast="0"/>
-        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
-        <rasterresampler maxOversampling="2"/>
-      </pipe>
-      <blendMode>0</blendMode>
-    </maplayer>
-    <maplayer minimumScale="0" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
-      <id>legoGrid_Template_ASC_Park20180719175449376</id>
-      <datasource>../Processing/URBAM/data/legoGrid_Template_ASC_Park.asc</datasource>
-      <keywordList>
-        <value></value>
-      </keywordList>
-      <layername>legoGrid_Template_ASC_Park</layername>
-      <srs>
-        <spatialrefsys>
-          <proj4>+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs</proj4>
-          <srsid>27874</srsid>
-          <srid>54004</srid>
-          <authid>EPSG:54004</authid>
-          <description>World_Mercator</description>
-          <projectionacronym>merc</projectionacronym>
-          <ellipsoidacronym></ellipsoidacronym>
-          <geographicflag>false</geographicflag>
-        </spatialrefsys>
-      </srs>
-      <customproperties>
-        <property key="identify/format" value="Value"/>
-      </customproperties>
-      <provider>gdal</provider>
-      <noData>
-        <noDataList bandNo="1" useSrcNoData="0"/>
-      </noData>
-      <map-layer-style-manager current="">
-        <map-layer-style name=""/>
-      </map-layer-style-manager>
-      <pipe>
-        <rasterrenderer gradient="BlackToWhite" opacity="1" alphaBand="-1" type="singlebandgray" grayBand="1">
-          <rasterTransparency/>
-          <contrastEnhancement>
-            <minValue>0</minValue>
-            <maxValue>137.862</maxValue>
-            <algorithm>StretchToMinimumMaximum</algorithm>
-          </contrastEnhancement>
-        </rasterrenderer>
-        <brightnesscontrast brightness="0" contrast="0"/>
-        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
-        <rasterresampler maxOversampling="2"/>
-      </pipe>
-      <blendMode>0</blendMode>
     </maplayer>
     <maplayer minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Line" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>rivers_from_CAD20180403123042118</id>

@@ -35,10 +35,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>11270.45540847263873729</xmin>
-      <ymin>-821.34581645879552525</ymin>
-      <xmax>26724.08970255292661022</xmax>
-      <ymax>8556.7398308645169891</ymax>
+      <xmin>12299.5619095639049192</xmin>
+      <ymin>1020.2119571812418144</ymin>
+      <xmax>22854.60206671179184923</xmax>
+      <ymax>7425.5706398690235801</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -95,6 +95,7 @@
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="Screen_Shot_2018_07_18_at_18_18_0120180718181945371"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="Roads20180331191228709"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="LLL_AutoCAD_Layer__LLL_Buildings_CAD_RoofOutlines20180403141025074"/>
+      <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:54004" srcDatumTransform="-1" destDatumTransform="-1" layerid="LegoGrid_LLL_Code_Raster_5x5_Temp20180720121401643"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="legoGridUnit20180718180206708"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="rivers_from_CAD20180403123019071"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="LLL_AutoCAD20180331190245739"/>
@@ -120,6 +121,7 @@
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="Wanxiang_UrbanPlan_Cropped20180612163908241"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="USER:100008" srcDatumTransform="-1" destDatumTransform="-1" layerid="legogridRaster120180718184325940"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="legoGridUnitfromASC_Georeferenced_1band20180719082824196"/>
+      <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:54004" srcDatumTransform="-1" destDatumTransform="-1" layerid="LegoGrid_LLL_Code_Raster_5x5_Temp20180720120311915"/>
     </layer_coordinate_transform_info>
   </mapcanvas>
   <layer-tree-canvas>
@@ -623,8 +625,6 @@
             </layer>
           </symbol>
         </source-symbol>
-        <colorramp type="randomcolors" name="[source]"/>
-        <invertedcolorramp value="0"/>
         <rotation/>
         <sizescale scalemethod="diameter"/>
       </renderer-v2>
