@@ -108,6 +108,8 @@ public class StaticGrid {
           }
         }
       }
+      // Traffic HeatMap
+      block.trafficWeight = model.getAgentInsideROI(block.location,int(block.size)).size()/2.0;
     }
   }
     
@@ -115,55 +117,6 @@ public class StaticGrid {
     if(drawer.showStaticGrid){
       for (Block block : blocks) {
         block.display(p);
-        /*p.rectMode(CORNER);
-        switch(tagViz) {
-            case 'E':
-            break;
-            case 'T':
-            p.fill(colorMap.get(block.id));
-            p.rect (xllcorner + block.location.x* block.size + block.size * 0.2,yllcorner+block.location.y* block.size + block.size * 0.2, block.size- block.size * 0.2, block.size- block.size * 0.2);
-            break;
-            case 'W':
-              if(block.id== 43 || block.id== 63 || block.id== 126 ){           
-                p.fill(colorMap.get(block.id));
-                p.rect (xllcorner + block.location.x* block.size + block.size * 0.2,yllcorner+block.location.y* block.size + block.size * 0.2, block.size- block.size * 0.2, block.size- block.size * 0.2);
-            
-              }
-            break;
-            case 'P':
-              if(block.id== 138){
-                p.fill(colorMap.get(block.id));
-                p.rect (xllcorner + block.location.x* block.size + block.size * 0.2,yllcorner+block.location.y* block.size + block.size * 0.2, block.size- block.size * 0.2, block.size- block.size * 0.2);
-              }
-            break;
-        }  */  
-        
-      }
-      /*for (int i=0; i<ncols; i++) {
-        for (int j=0; j<nrows; j++) {
-            p.rectMode(CORNER);
-            switch(tagViz) {
-            case 'E':
-            break;
-            case 'T':
-              p.fill(colorMap.get(blocks[j][i]));
-              p.rect (xllcorner + i*cellsize + cellsize * 0.2,yllcorner+j*cellsize + cellsize * 0.2, cellsize- cellsize * 0.2, cellsize- cellsize * 0.2);
-              break;
-            case 'W':
-              if(blocks[j][i]== 43 || blocks[j][i]== 63 || blocks[j][i]== 126 ){
-                p.fill(colorMap.get(blocks[j][i]));
-                p.rect (xllcorner + i*cellsize + cellsize * 0.2,yllcorner+j*cellsize + cellsize * 0.2, cellsize- cellsize * 0.2, cellsize- cellsize * 0.2);
-              }
-            break;
-            case 'P':
-              if(blocks[j][i]== 138){
-                p.fill(colorMap.get(blocks[j][i]));
-                p.rect (xllcorner + i*cellsize + cellsize * 0.2,yllcorner+j*cellsize + cellsize * 0.2, cellsize- cellsize * 0.2, cellsize- cellsize * 0.2);
-              }
-            break;
-            }
-       }
-      }*/
     }
   }
 }
@@ -174,6 +127,7 @@ public class Block{
   int id;
   float parkWeight;
   float walkabilityToOfficeweight;
+  float trafficWeight;
   color c = color(255, 255, 255);
   Block(PVector l, float _size, int _id) {
     location = l.copy();
@@ -213,7 +167,18 @@ public class Block{
               p.rect (location.x+size/4,location.y+size/4, size*0.3, size*0.3);
             }
             break;
+           case 'H':
+            if(frameCount % 60 ==0){
+              trafficWeight = model.getAgentInsideROI(location,int(size)).size()/2.0;
+            }
+            if (trafficWeight<0.5) {
+              c = lerpColor(legoGrid.c1, legoGrid.c2, trafficWeight*2);
+              } else {
+              c = lerpColor(legoGrid.c2, legoGrid.c3, (trafficWeight-0.5)*2);
+              }
+            p.fill(c);
+            p.rect (location.x,location.y, size*0.8, size*0.8);
+        }
       }
-      
-  }
+  }  
 }

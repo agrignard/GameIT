@@ -12,7 +12,6 @@ public class Drawer{
                  showViewCube=false,
                  showSlider=false,
                  keystoneMode=false,
-                 showHeatmap=false,
                  showLegend=true,
                  showInteractiveGrid=true,
                  showStaticGrid=true,
@@ -37,7 +36,6 @@ public class Drawer{
       offscreenSurface.background(0);
       drawTableBackGround(offscreenSurface);
       grid.draw(offscreenSurface);
-      heatmap.draw(offscreenSurface);
       aggregatedHeatmap.draw(offscreenSurface);
       legoGrid.draw(offscreenSurface);
       if(drawer.showInteractiveGrid){
@@ -121,7 +119,7 @@ public class Drawer{
     }else{
       
       if(tagsInteraction){
-        p.text("[d] delta 1 - [f] delta 2 - [t] Type - [p] Park Heatmap - [w] Walkability - [l] - Display Grid string - [4] - Normal Interaction", 30, 50);
+        p.text("[d] delta 1 - [f] delta 2 - [l] - Display Grid string - [4] - Normal Interaction", 30, 50);
       }else{
         p.text("Simulation: [a] Agent - [b] Building [h] Heatmap - [d] Density - [m] Init model", 30, 30);
         p.text("HeatMap: [e] No Heatmap -[p] Park Heatmap - [w] Walkability - [t] type", 30, 50);
@@ -159,7 +157,6 @@ public class Drawer{
   public void toggleRoad() { showRoad = !showRoad;}
   public void toggleViewCube() { showViewCube = !showViewCube;}
   public void toggleSlider() { showSlider = !showSlider;}
-  public void toggleHeatmap() { showHeatmap = !showHeatmap;}
   public void toggleLegend() { showLegend = !showLegend;}
   public void toggleStaticGrid() { showStaticGrid = !showStaticGrid;}
   public void toggleInteractiveGrid() { showInteractiveGrid = !showInteractiveGrid;}

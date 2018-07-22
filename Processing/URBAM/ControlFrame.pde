@@ -31,9 +31,9 @@ class ControlFrame extends PApplet {
     ddl.setItemHeight(20);
     ddl.setBarHeight(15);
     ddl.getCaptionLabel().set(title);
-    for (int i=0;i<heatmap.heatmapTypesPerCategory.size();i++) {
+    /*for (int i=0;i<heatmap.heatmapTypesPerCategory.size();i++) {
       ddl.addItem(heatmap.heatmapTypesPerCategory.get(i), i);
-     }
+     }*/
     ddl.setColorBackground(color(60));
     ddl.setColorActive(color(255, 128));
 }
@@ -53,7 +53,7 @@ class ControlFrame extends PApplet {
       //println("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController());
       println("event from controller string : "+d1.getItem(int(theEvent.getController().getValue())).get("name").toString());
       currentHeatMapType= d1.getItem(int(theEvent.getController().getValue())).get("name").toString();
-      heatmap.computeHeatMapType(currentHeatMapType);
+      //heatmap.computeHeatMapType(currentHeatMapType);
     }
   }
  

@@ -12,7 +12,6 @@ RoadNetwork roads;
 Buildings buildings;
 ABM model;
 Grid grid;
-Heatmap heatmap;
 ContinousHeatmap instantHeatmap,aggregatedHeatmap;
 StaticGrid legoGrid;
 InterFace interfaceLeap;
@@ -44,7 +43,6 @@ void setup() {
   JSONBounds = loadJSONObject("GIS/"+city+"/Bounds.geojson");
   roads = new RoadNetwork("GIS/"+city+"/Roads.geojson");
   buildings = new Buildings("GIS/"+city+"/Buildings.geojson");
-  heatmap = new Heatmap();
   aggregatedHeatmap = new ContinousHeatmap(0, 0, width, height);
   aggregatedHeatmap.setBrush("HeatMap/heatmapBrush.png", 80);
   aggregatedHeatmap.addGradient("hot", "HeatMap/hot_transp.png");
@@ -108,14 +106,12 @@ void keyTyped() {
       "126 9 63 126 126 63 -1 -1 -1 -1 -1 138 -1 0 -1 -1 19 9 19 19 19 19 19 19 126 138 138 138 126 -1 -1 0 "+
       "306 0 138 -1 -1 -1 -1 -1 -1 -1 -1 138 -1 9 -1 -1 63 0 19 19 19 19 19 19 126 126 -1 138 138 -1 -1 19 "+
       "0 0 63 -1 -1 -1 -1 138 -1 0 -1 138 0 63 -1 -1 63 63 375 19 19 19 19 19 -1 -1 -1 -1 138 138 -1";
-
     println("Test Message Delta");
   }
 
   if (key == 'f') {
     //test message delta
     udpR.messageIn = 
-
       "i -2 -2 -2 -2 -2 -2 -2 -2 -2 -2 -2 -2 -2 -2 138 -1 -1 -1 -1 460 43 63 43 645 -2 -2 -2 -2 -2 -2 -2 -2 -2 "+
       "-2 -2 -2 -2 138 -2 -2 -2 -2 -1 0 126 9 19 -1 -1 -1 138 43 63 43 0 63 0 43 460 126 43 138 0 138 -2 "+
       "-2 -2 -2 -1 63 126 0 0 126 19 126 9 0 126 43 -1 -1 138 63 63 19 19 19 43 63 63 63 0 296 63 -1 -2 "+
@@ -142,20 +138,7 @@ void keyTyped() {
       "126 9 63 126 126 63 -1 -1 -1 -1 -1 138 -1 0 -1 -1 19 9 19 19 19 19 19 19 126 138 138 138 126 -1 -1 0 "+
       "306 0 138 -1 -1 -1 -1 -1 -1 -1 -1 138 -1 9 -1 -1 63 0 19 19 19 19 19 19 126 126 -1 138 138 -1 -1 19 "+
       "0 0 63 -1 -1 -1 -1 138 -1 0 -1 138 0 63 -1 -1 63 63 375 19 19 19 19 138 -1 -1 -1 -1 138 138 -1";
-
     println("Test Message Delta");
-  }
-
-  if (key == 't') {
-    tagViz = 'T';
-  }
-  if (key == 'p') {
-    tagViz = 'P';
-    messageDelta = true;
-  }
-  if (key == 'w') {
-    tagViz = 'W';
-    messageDelta = true;
   }
 
   if (key == 'l') {
@@ -206,7 +189,7 @@ void keyTyped() {
     drawer.toggleViewCube();
     break;
   case 'h':  
-    drawer.toggleHeatmap();
+    tagViz = 'H';
     break;
   case ' ':  
     drawer.toggleBG();

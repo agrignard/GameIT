@@ -1,4 +1,4 @@
-public class Buildings{
+ public class Buildings{
   
   ArrayList<Building> buildings;
   HashMap<String,Integer> hm = new HashMap<String,Integer>();
