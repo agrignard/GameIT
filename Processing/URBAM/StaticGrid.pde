@@ -33,7 +33,8 @@ public class StaticGrid {
     //blocks= new int[nrows][ncols];
     blocks = new ArrayList<Block>();
     colorMap = new HashMap<Integer,Integer>();
-    colorMap.put(0,#000000);colorMap.put(999,#000000);colorMap.put(1,#ff00ff);colorMap.put(9,#b802ff);colorMap.put(19,#a200ff);colorMap.put(43,#00ffff);colorMap.put( 63,#0099ff);colorMap.put(126,#00ffd5);colorMap.put(138,#a2ff00);
+    colorMap.put(999,color(0, 80, 80, 200));colorMap.put(0,#ff00ff);colorMap.put(9,#b802ff);colorMap.put(19,#a200ff);
+    colorMap.put(43,#00ffff);colorMap.put( 63,#0099ff);colorMap.put(126,#00ffd5);colorMap.put(138,#a2ff00);
     //colorMap.put(0,#000000);colorMap.put(999,#000000);colorMap.put(1,color(230, 0, 255, 255));colorMap.put(9,color(230, 0, 255, 255));colorMap.put(19,color(230, 0, 255, 255));colorMap.put(43,color(0, 230, 230, 255));colorMap.put( 63,color(0, 230, 230, 255));colorMap.put(126,color(0, 230, 230, 255));colorMap.put(138,color(0, 230, 0, 255));
    
     for (int i = 0 ; i < lines.length -6; i++) {
