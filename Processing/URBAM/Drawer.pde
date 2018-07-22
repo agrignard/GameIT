@@ -123,9 +123,9 @@ public class Drawer{
       if(tagsInteraction){
         p.text("[d] delta 1 - [f] delta 2 - [t] Type - [p] Park Heatmap - [w] Walkability - [l] - Display Grid string - [4] - Normal Interaction", 30, 50);
       }else{
-        p.text("Simulation: [a] Agent - [b] Building - [r] Road - [h] Heatmap - [d] Density - [m] Init model", 30, 30);
+        p.text("Simulation: [a] Agent - [b] Building [h] Heatmap - [d] Density - [m] Init model", 30, 30);
         p.text("HeatMap: [e] No Heatmap -[p] Park Heatmap - [w] Walkability - [t] type", 30, 50);
-        p.text("Interaction: [i] Interactive Grid - [v] ViewCube - [w] LegoGrid", 30, 70);
+        p.text("Interaction: [i] Interactive Grid - [v] ViewCube ", 30, 70);
         p.text("Settings : [1] keystone - [2] load keystone - [3] save keystone - [4] - Tags Interaction - [5] legend", 30, 90);
       }
       
@@ -134,7 +134,7 @@ public class Drawer{
     p.textAlign(CENTER);
     p.textSize(10);
     //p.text("UrbanSim InnovaCity - LLL & GAME IT - 2018 ", 0, height*0.99);
-    p.text(" © Arnaud Grignard 2018 ", width*0.96, height*0.99);
+    p.text(" © LLL 2018 ", width*0.96, height*0.99);
  }
  
   public PVector GetTotalLivingWorkingNumber(){

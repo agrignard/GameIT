@@ -12,16 +12,21 @@ public class ABM {
   private ArrayList<Integer> colors;
   HashMap<String, Integer> colorProfiles; 
   int nbPeoplePerProfile;
-  int workingColor= #000095;//#283c86;//#165E93;//
-  int livingColor= #FD710A;//#45a247;//#F4A528;//
+  int workingColor= #00ffff;//#000095;//#283c86;//#165E93;//
+  int livingColor= #ff00ff;//#FD710A;//#45a247;//#F4A528;//
   ABM(int _id, RoadNetwork _map, String _type, int _nbPeoplePerProfile) {
     id=_id;
     map=_map;
     type=_type;
     nbPeoplePerProfile= _nbPeoplePerProfile;
     agents = new ArrayList<Agent>();
-    colors = new ArrayList<Integer>(Arrays.asList(#AA6839,#FFCDAA,#D4966A,#804115,#552300,#2F4172,#7986AC,#4F608F,#162756,#061439));
+    //PASTELLE ORANGE AND BLUE
+    //colors = new ArrayList<Integer>(Arrays.asList(#AA6839,#FFCDAA,#D4966A,#804115,#552300,#2F4172,#7986AC,#4F608F,#162756,#061439));
+    //Orange and Blue saturated
     //colors = new ArrayList<Integer>(Arrays.asList(#FD710A,#FD710A,#AB4E05,#6F3603,#E96809,#1400F1,#0000D4,#00006E,#000049,#000095)); 
+    // Purple and blue
+    colors = new ArrayList<Integer>(Arrays.asList(#ff00ff,#b802ff,#a200ff,#b802ff,#ff00ff,#00ffff,#0099ff,#00ffd5,#0099ff,#00ffff)); 
+    
     profiles = new ArrayList<String>(Arrays.asList("Young Children","High School","Home maker","Retirees","Artist","College","Young professional","Mid-career workers","Executives","Workforce"));
     colorProfiles = new HashMap<String, Integer>();
     for (int i=0;i<profiles.size();i++){
@@ -404,11 +409,11 @@ public class Agent {
     }
     if (type.equals("people")) {
       speed= 10*0.05 + random(0.1);
-      size= 3;// + random(8);
+      size= 4;// + random(8);
     }
     if (type.equals("static")) {
       speed= 0.1 + random(0.5);
-      size= 3 ;//+ random(8);
+      size= 4 ;//+ random(8);
       if (usage.equals("living")) {
         Building tmp= (buildings.getLivingBuilding().get(int(random(buildings.getLivingBuilding().size()))));
         pos.x = tmp.shape.getVertex(0).x;

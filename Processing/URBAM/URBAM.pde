@@ -211,9 +211,6 @@ void keyTyped() {
   case ' ':  
     drawer.toggleBG();
     break; 
-  case 'r':  
-    drawer.toggleRoad();
-    break;
   case 'm':  
     model.initModel();
     break;
