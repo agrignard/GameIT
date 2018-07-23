@@ -15,7 +15,8 @@ public class Drawer{
                  showLegend=true,
                  showInteractiveGrid=true,
                  showStaticGrid=true,
-                 showContinousHeatMap=false;
+                 showContinousHeatMap=false,
+                 showCollisionPotential;
   
   
   Drawer(PApplet parent){
@@ -121,7 +122,7 @@ public class Drawer{
       if(tagsInteraction){
         p.text("[d] delta 1 - [f] delta 2 - [l] - Display Grid string - [4] - Normal Interaction", 30, 50);
       }else{
-        p.text("Simulation: [a] Agent - [b] Building [h] Heatmap - [d] Density - [m] Init model", 30, 30);
+        p.text("Simulation: [a] Agent - [b] Building [h] Heatmap - [d] Density - [c] Collsion Potential", 30, 30);
         p.text("HeatMap: [e] No Heatmap -[p] Park Heatmap - [w] Walkability - [t] type", 30, 50);
         p.text("Interaction: [i] Interactive Grid - [v] ViewCube ", 30, 70);
         p.text("Settings : [1] keystone - [2] load keystone - [3] save keystone - [4] - Tags Interaction - [5] legend", 30, 90);
@@ -160,5 +161,6 @@ public class Drawer{
   public void toggleLegend() { showLegend = !showLegend;}
   public void toggleStaticGrid() { showStaticGrid = !showStaticGrid;}
   public void toggleInteractiveGrid() { showInteractiveGrid = !showInteractiveGrid;}
-  public void toggleInstantHeatMap() { showContinousHeatMap=!showContinousHeatMap;}   
+  public void toggleInstantHeatMap() { showContinousHeatMap=!showContinousHeatMap;}
+  public void toggleCollisionPotential() { showCollisionPotential=!showCollisionPotential;}  
 }

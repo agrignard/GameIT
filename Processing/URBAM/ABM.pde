@@ -440,8 +440,17 @@ public class Agent {
         p.noFill();
         p.ellipse(pos.x, pos.y, size, size);
       }
-      
-      
+    }
+    if( drawer.showCollisionPotential) {
+      for (Agent a: model.agents){
+        float dist = pos.dist(a.pos);
+          if (dist<20) {
+            p.stroke(lerpColor(myProfileColor, a.myProfileColor, 0.5));
+            p.strokeWeight(1);
+            p.line(pos.x, pos.y, a.pos.x, a.pos.y);
+            p.noStroke();
+          }
+      }
     }
   }
 

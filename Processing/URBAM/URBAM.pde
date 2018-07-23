@@ -221,6 +221,9 @@ void keyTyped() {
   case 't':
     tagViz = 'T';
     break;
+  case 'c':
+    drawer.toggleCollisionPotential();
+    break;
   }
   }
 }
