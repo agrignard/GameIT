@@ -47,10 +47,9 @@ void setup() {
   aggregatedHeatmap = new ContinousHeatmap(0, 0, width, height);
   aggregatedHeatmap.setBrush("HeatMap/heatmapBrush.png", 80);
   aggregatedHeatmap.addGradient("hot", "HeatMap/hot_transp.png");
-  model = new ABM(0,roads, "people", 100);
+  model = new ABM(roads, "people", 100);
   model.initModel();
   grid = new Grid();
-  //legoGrid = new LegoGrid(loadStrings("data/Grid/legoGridBlock.asc"),"regular");
   legoGrid = new StaticGrid(loadStrings("data/Grid/LegoGrid_Block_LLL_5x5.asc"));
   interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();

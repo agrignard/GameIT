@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.Arrays;
 /* ABM CLASS ------------------------------------------------------------*/
 public class ABM {
-  private int id;
   private RoadNetwork map;
   private String type;
   private ArrayList<Agent> agents;
@@ -14,8 +13,7 @@ public class ABM {
   int nbPeoplePerProfile;
   int workingColor= #00ffff;//#000095;//#283c86;//#165E93;//
   int livingColor= #ff00ff;//#FD710A;//#45a247;//#F4A528;//
-  ABM(int _id, RoadNetwork _map, String _type, int _nbPeoplePerProfile) {
-    id=_id;
+  ABM(RoadNetwork _map, String _type, int _nbPeoplePerProfile) {
     map=_map;
     type=_type;
     nbPeoplePerProfile= _nbPeoplePerProfile;
@@ -35,53 +33,53 @@ public class ABM {
 
   public void initModel() {
     agents.clear();
-    createAgents(id, nbPeoplePerProfile, type);
-    createAgents(id, nbPeoplePerProfile, "static");
-    createAgents(id, nbPeoplePerProfile/20, "bike");
-    createAgents(id, nbPeoplePerProfile/20, "dynamic_bike");
+    createAgents(nbPeoplePerProfile, type);
+    createAgents(nbPeoplePerProfile, "static");
+    createAgents(nbPeoplePerProfile/20, "bike");
+    createAgents(nbPeoplePerProfile/20, "dynamic_bike");
   }
 
-  public void updateGlobalPop(int modelId) {
+  public void updateGlobalPop() {
     if (frameCount % 30 == 0) {
       if (sliderHandler.globalSliders.get(0)>sliderHandler.tmpGlobalSliders.get(0)) {
-        addNAgentsPerUsage(modelId, (int)((sliderHandler.globalSliders.get(0) - sliderHandler.tmpGlobalSliders.get(0)))*10, "people","working");
-        addNAgentsPerUsage(modelId, (int)((sliderHandler.globalSliders.get(0) - sliderHandler.tmpGlobalSliders.get(0)))*10, "static","working");
+        addNAgentsPerUsage((int)((sliderHandler.globalSliders.get(0) - sliderHandler.tmpGlobalSliders.get(0)))*10, "people","working");
+        addNAgentsPerUsage((int)((sliderHandler.globalSliders.get(0) - sliderHandler.tmpGlobalSliders.get(0)))*10, "static","working");
         sliderHandler.tmpGlobalSliders.set(0, sliderHandler.globalSliders.get(0));
       }
       if (sliderHandler.globalSliders.get(0)<sliderHandler.tmpGlobalSliders.get(0)) {
-        removeNAgentsPerUsage(modelId, int((sliderHandler.tmpGlobalSliders.get(0) - sliderHandler.globalSliders.get(0)))*10, "people", "working");
-        removeNAgentsPerUsage(modelId, int((sliderHandler.tmpGlobalSliders.get(0) - sliderHandler.globalSliders.get(0)))*10, "static", "working");
+        removeNAgentsPerUsage(int((sliderHandler.tmpGlobalSliders.get(0) - sliderHandler.globalSliders.get(0)))*10, "people", "working");
+        removeNAgentsPerUsage(int((sliderHandler.tmpGlobalSliders.get(0) - sliderHandler.globalSliders.get(0)))*10, "static", "working");
         sliderHandler.tmpGlobalSliders.set(0, sliderHandler.globalSliders.get(0));
       }
       if (sliderHandler.globalSliders.get(1)>sliderHandler.tmpGlobalSliders.get(1)) {
-        addNAgentsPerUsage(modelId, int((sliderHandler.globalSliders.get(1) - sliderHandler.tmpGlobalSliders.get(1)))*10, "people", "living");
-        addNAgentsPerUsage(modelId, int((sliderHandler.globalSliders.get(1) - sliderHandler.tmpGlobalSliders.get(1)))*10, "static", "living");
+        addNAgentsPerUsage(int((sliderHandler.globalSliders.get(1) - sliderHandler.tmpGlobalSliders.get(1)))*10, "people", "living");
+        addNAgentsPerUsage(int((sliderHandler.globalSliders.get(1) - sliderHandler.tmpGlobalSliders.get(1)))*10, "static", "living");
         sliderHandler.tmpGlobalSliders.set(1, sliderHandler.globalSliders.get(1));
       }
       if (sliderHandler.globalSliders.get(1)<sliderHandler.tmpGlobalSliders.get(1)) {
-        removeNAgentsPerUsage(modelId, int((sliderHandler.tmpGlobalSliders.get(1) - sliderHandler.globalSliders.get(1)))*10, "people", "living");
-        removeNAgentsPerUsage(modelId, int((sliderHandler.tmpGlobalSliders.get(1) - sliderHandler.globalSliders.get(1)))*10, "static", "living");
+        removeNAgentsPerUsage(int((sliderHandler.tmpGlobalSliders.get(1) - sliderHandler.globalSliders.get(1)))*10, "people", "living");
+        removeNAgentsPerUsage(int((sliderHandler.tmpGlobalSliders.get(1) - sliderHandler.globalSliders.get(1)))*10, "static", "living");
         sliderHandler.tmpGlobalSliders.set(1, sliderHandler.globalSliders.get(1));
       }
     }
   }
 
-  public void updateLocalPop(int modelId) {
+  public void updateLocalPop() {
     if (frameCount % 30 == 0) {
       for (int i=0; i<sliderHandler.tmpLocalSliders.size(); i++) {
         if (sliderHandler.localSliders.get(i)>sliderHandler.tmpLocalSliders.get(i)) {
           if (i<5) {
-            addNAgentPerProfiles(modelId, (int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "people","living") ;
-            addNAgentPerProfiles(modelId, (int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "static","living") ;
+            addNAgentPerProfiles((int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "people","living") ;
+            addNAgentPerProfiles((int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "static","living") ;
           } else {
-            addNAgentPerProfiles(modelId, (int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "people", "working") ;
-            addNAgentPerProfiles(modelId, (int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "static", "working") ;
+            addNAgentPerProfiles((int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "people", "working") ;
+            addNAgentPerProfiles((int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "static", "working") ;
           }
           sliderHandler.tmpLocalSliders.set(i, sliderHandler.localSliders.get(i));
         }
         if (sliderHandler.localSliders.get(i)<sliderHandler.tmpLocalSliders.get(i)) {
-          removeNAgentsPerProfiles(modelId, int((sliderHandler.tmpLocalSliders.get(i) - sliderHandler.localSliders.get(i)))*2, "people", profiles.get(i));
-          removeNAgentsPerProfiles(modelId, int((sliderHandler.tmpLocalSliders.get(i) - sliderHandler.localSliders.get(i)))*2, "static", profiles.get(i));
+          removeNAgentsPerProfiles(int((sliderHandler.tmpLocalSliders.get(i) - sliderHandler.localSliders.get(i)))*2, "people", profiles.get(i));
+          removeNAgentsPerProfiles(int((sliderHandler.tmpLocalSliders.get(i) - sliderHandler.localSliders.get(i)))*2, "static", profiles.get(i));
           sliderHandler.tmpLocalSliders.set(i, sliderHandler.localSliders.get(i));
         }
       }
@@ -102,14 +100,14 @@ public class ABM {
        a.pos = tmp.shape.getVertex(int(random(tmp.shape.getVertexCount())));
   }
 
-  public void addNAgentsPerUsage(int modelId, int num, String type, String usage) {
+  public void addNAgentsPerUsage(int num, String type, String usage) {
     Agent ag = null;
     for (int i = 0; i < num; i++) {
       if (usage.equals("living")) {
-        ag= new Agent(modelId, map, profiles.get(int(random(4))), type, "living");
+        ag= new Agent(map, profiles.get(int(random(4))), type, "living");
         model.agents.add(ag);
       } else {
-        ag = new Agent(modelId, map, profiles.get(5+int(random(4))), type, "working");
+        ag = new Agent(map, profiles.get(5+int(random(4))), type, "working");
         model.agents.add(ag);
       }
       if(ag.type.equals("static") && drawer.showViewCube){
@@ -118,7 +116,7 @@ public class ABM {
     }
   }
 
-  public void removeNAgentsPerUsage(int modelId, int n, String type, String usage) {
+  public void removeNAgentsPerUsage(int n, String type, String usage) {
     Iterator<Agent> ag = model.agents.iterator();
     int i=0;
     while (ag.hasNext()) { 
@@ -145,10 +143,10 @@ public class ABM {
   }  
 
 
-  public void addNAgentPerProfiles(int modelId, int num, String profile, String type, String usage) {
+  public void addNAgentPerProfiles(int num, String profile, String type, String usage) {
     Agent ag = null;
     for (int i = 0; i < num; i++) {
-      ag = new Agent(modelId, map, profile, type, usage);
+      ag = new Agent(map, profile, type, usage);
       model.agents.add(ag);
       if(ag.type.equals("static") && drawer.showViewCube){
           relocateAgentInsideGrid(ag,grid.curActiveGridPos,grid.cellSize);
@@ -156,7 +154,7 @@ public class ABM {
     }
   }
 
-  public void removeNAgentsPerProfiles(int modelId, int n, String type, String profile) {
+  public void removeNAgentsPerProfiles(int n, String type, String profile) {
     
     Iterator<Agent> ag = model.agents.iterator();
 
@@ -186,13 +184,13 @@ public class ABM {
     
   }
 
-  public void createAgents(int id, int num, String type) {
+  public void createAgents(int num, String type) {
     for (int i = 0; i < num; i++) {
       for (int j=0; j<profiles.size()/2; j++) {
-        agents.add( new Agent(id, map, profiles.get(j), type, "living"));
+        agents.add( new Agent( map, profiles.get(j), type, "living"));
       }
       for (int j=5; j<profiles.size(); j++) {
-        agents.add( new Agent(id, map, profiles.get(j), type, "working"));
+        agents.add( new Agent(map, profiles.get(j), type, "working"));
       }
     }
   }
@@ -376,7 +374,6 @@ public class ABM {
 }
 
 public class Agent {
-  private int modelId;
   private RoadNetwork map;
   private String profile;
   private String type;
@@ -390,8 +387,7 @@ public class Agent {
   private ArrayList<Node> path;
   private PVector dir;  
 
-  Agent(int _modelId, RoadNetwork _map, String _profile, String _type, String _usage) {
-    modelId = _modelId;
+  Agent(RoadNetwork _map, String _profile, String _type, String _usage) {
     map=_map;
     type=_type;
     profile=_profile;

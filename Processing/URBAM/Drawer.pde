@@ -48,8 +48,8 @@ public class Drawer{
       roads.draw(offscreenSurface);
       buildings.draw(offscreenSurface); 
       model.run(offscreenSurface);
-      model.updateGlobalPop(0);
-      model.updateLocalPop(0);
+      model.updateGlobalPop();
+      model.updateLocalPop();
       model.updateCarPop();
       
       
