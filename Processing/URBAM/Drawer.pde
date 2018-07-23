@@ -122,9 +122,9 @@ public class Drawer{
       if(tagsInteraction){
         p.text("[d] delta 1 - [f] delta 2 - [l] - Display Grid string - [4] - Normal Interaction", 30, 50);
       }else{
-        p.text("Simulation: [a] Agent - [b] Building [h] Heatmap - [d] Density - [c] Collsion Potential", 30, 30);
-        p.text("HeatMap: [e] No Heatmap -[p] Park Heatmap - [w] Walkability - [t] type", 30, 50);
-        p.text("Interaction: [i] Interactive Grid - [v] ViewCube ", 30, 70);
+        p.text("Simulation: [a] Agent - [b] Building - [d] Density - [c] Collision Potential", 30, 30);
+        p.text("HeatMap: [e] No Heatmap - [t] type - [p] Park Heatmap -[o] Office Walkability - [r] Residential Walkability - [h] Traffic Heatmap", 30, 50);
+        p.text("Interaction: [s] static grid: " + showStaticGrid + " - [i] Interactive Grid: " +  showInteractiveGrid + "- [v] ViewCube: " + showViewCube + "- [m] map: " + showBG, 30, 70);
         p.text("Settings : [1] keystone - [2] load keystone - [3] save keystone - [4] - Tags Interaction - [5] legend", 30, 90);
       }
       

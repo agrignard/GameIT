@@ -95,37 +95,45 @@ public class InteractiveTagTable {
           }
 
           break;
-        case 'W': 
-          //println("Walkability"); 
-
+        case 'O': 
           if (mod2.tagID==43 || mod2.tagID==63 || mod2.tagID==126) {
             if (dist<130) { //distance threshold for parks
               float tempCal =  ( dist/130.0f) ;
-
               //Easing 
               float sqt = sqrt(tempCal);
               tempCal= (sqt / (2.0f * (sqt - tempCal) + 0.3f)) ;
-
-
               if (tempCal<calcWeights) {
                 calcWeights = tempCal;
-                //println(tempCal);
               };
             }
           }
 
           if (mod.delta) {
-
-            //println("Delta piece found");
-            // println(dist);
             float proximityThreshold = 180 * scaleWorld; //This is the proximity threshold of the neighbouring tags that will be impacted by this change in animation/
             if ( dist<proximityThreshold) {
-              // println("Animate wave ");
-
               mod2.animateWave((1.0f- dist/proximityThreshold ));//feed distance ratio to animation wave
             };
           }
+          break;
+        case 'R': 
+          if (mod2.tagID==0 || mod2.tagID==9 || mod2.tagID==19) {
+            if (dist<130) { //distance threshold for parks
+              float tempCal =  ( dist/130.0f) ;
+              //Easing 
+              float sqt = sqrt(tempCal);
+              tempCal= (sqt / (2.0f * (sqt - tempCal) + 0.3f)) ;
+              if (tempCal<calcWeights) {
+                calcWeights = tempCal;
+              };
+            }
+          }
 
+          if (mod.delta) {
+            float proximityThreshold = 180 * scaleWorld; //This is the proximity threshold of the neighbouring tags that will be impacted by this change in animation/
+            if ( dist<proximityThreshold) {
+              mod2.animateWave((1.0f- dist/proximityThreshold ));//feed distance ratio to animation wave
+            };
+          }
           break;
         case 'T': 
           //println("Type");  // 
@@ -147,7 +155,7 @@ public class InteractiveTagTable {
         mod.refreshAllWeights();
 
         break;
-      case 'W': 
+      case 'O': 
         mod.delta = false;
         mod.refreshAllWeights();
         mod.updateWeight(calcWeights);
@@ -353,7 +361,7 @@ class LLLTag {
           p.rect(x+tagVoxels.get(i).point.x, y+tagVoxels.get(i).point.y, tempSize-0.0f, tempSize-0.0f);
         }//end Voxel Loop
         break;
-      case 'W': 
+      case 'O': 
 
         color cWalkCyan = color(0, 200, 200, 255);
         /* 

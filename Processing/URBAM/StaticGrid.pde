@@ -59,7 +59,8 @@ public class StaticGrid {
     float wakability = 130;
     for (Block block : blocks) {
       block.parkWeight= 1;//random(100)/100.0;
-      block.walkabilityToOfficeweight= 1;
+      block.walkabilityToOfficeWeight= 1;
+      block.walkabilityToHomeWeight = 1;
       //Park HeatMap
       if(block.id == 138){
         block.parkWeight= 0;
@@ -78,7 +79,7 @@ public class StaticGrid {
       }
       //Wakability to Office HeatMap
       if(block.id==43 || block.id==63 || block.id==126){
-        block.walkabilityToOfficeweight= 0;
+        block.walkabilityToOfficeWeight= 0;
         for (Block tmpBlock : blocks) {
           float dist = tmpBlock.location.dist(block.location);
           if (dist<wakability) {
@@ -86,15 +87,15 @@ public class StaticGrid {
             //Easing 
             float sqt = sqrt(tempCal);
             tempCal= (sqt / (2.0f * (sqt - tempCal) + 0.5f)) ;
-            if (tempCal<tmpBlock.walkabilityToOfficeweight) {
-                tmpBlock.walkabilityToOfficeweight= tempCal;
+            if (tempCal<tmpBlock.walkabilityToOfficeWeight) {
+                tmpBlock.walkabilityToOfficeWeight= tempCal;
             }; 
           }
         }
       }
       //Wakability to Home HeatMap
-      if(block.id==43 || block.id==63 || block.id==126){
-        block.walkabilityToOfficeweight= 0;
+      if(block.id==0 || block.id==9 || block.id==19){
+        block.walkabilityToHomeWeight= 0;
         for (Block tmpBlock : blocks) {
           float dist = tmpBlock.location.dist(block.location);
           if (dist<wakability) {
@@ -102,8 +103,8 @@ public class StaticGrid {
             //Easing 
             float sqt = sqrt(tempCal);
             tempCal= (sqt / (2.0f * (sqt - tempCal) + 0.5f)) ;
-            if (tempCal<tmpBlock.walkabilityToOfficeweight) {
-                tmpBlock.walkabilityToOfficeweight= tempCal;
+            if (tempCal<tmpBlock.walkabilityToHomeWeight) {
+                tmpBlock.walkabilityToHomeWeight= tempCal;
             }; 
           }
         }
@@ -126,7 +127,8 @@ public class Block{
   float size;
   int id;
   float parkWeight;
-  float walkabilityToOfficeweight;
+  float walkabilityToOfficeWeight;
+  float walkabilityToHomeWeight;
   float trafficWeight;
   color c = color(255, 255, 255);
   Block(PVector l, float _size, int _id) {
@@ -154,11 +156,24 @@ public class Block{
             p.fill(c);
             p.rect (location.x,location.y, size*0.8, size*0.8);
             break;
-            case 'W':
-            if (walkabilityToOfficeweight<0.5) {
-              c = lerpColor(legoGrid.c1, legoGrid.c2, walkabilityToOfficeweight*2);
+            case 'O':
+            if (walkabilityToOfficeWeight<0.5) {
+              c = lerpColor(legoGrid.c1, legoGrid.c2, walkabilityToOfficeWeight*2);
               } else {
-              c = lerpColor(legoGrid.c2, legoGrid.c3, (walkabilityToOfficeweight-0.5)*2);
+              c = lerpColor(legoGrid.c2, legoGrid.c3, (walkabilityToOfficeWeight-0.5)*2);
+            }
+            p.fill(c);
+            p.rect (location.x,location.y, size*0.8, size*0.8);
+            if(id==0 || id==9 || id==19 || id==43 || id==63 || id==126){
+              p.fill(legoGrid.colorMap.get(id));
+              p.rect (location.x+size/4,location.y+size/4, size*0.3, size*0.3);
+            }
+            break;
+           case 'R':
+            if (walkabilityToHomeWeight<0.5) {
+              c = lerpColor(legoGrid.c1, legoGrid.c2, walkabilityToHomeWeight*2);
+              } else {
+              c = lerpColor(legoGrid.c2, legoGrid.c3, (walkabilityToHomeWeight-0.5)*2);
             }
             p.fill(c);
             p.rect (location.x,location.y, size*0.8, size*0.8);

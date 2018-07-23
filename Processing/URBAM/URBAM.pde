@@ -191,12 +191,9 @@ void keyTyped() {
   case 'h':  
     tagViz = 'H';
     break;
-  case ' ':  
+  case 'm':  
     drawer.toggleBG();
     break; 
-  case 'm':  
-    model.initModel();
-    break;
   case 'i':  
     drawer.toggleInteractiveGrid();
     break;
@@ -214,12 +211,15 @@ void keyTyped() {
     tagViz = 'P';
     messageDelta = true;
     break;
-  case 'w':
-    tagViz = 'W';
+  case 'o':
+    tagViz = 'O';
     messageDelta = true;
     break;
   case 't':
     tagViz = 'T';
+    break;
+  case 'r':
+    tagViz = 'R';
     break;
   case 'c':
     drawer.toggleCollisionPotential();
