@@ -153,13 +153,16 @@ public class InteractiveTagTable {
         mod.delta = false;
         mod.updateWeight(calcWeights);
         mod.refreshAllWeights();
-
         break;
       case 'O': 
         mod.delta = false;
         mod.refreshAllWeights();
         mod.updateWeight(calcWeights);
-        
+        break;
+      case 'R': 
+        mod.delta = false;
+        mod.refreshAllWeights();
+        mod.updateWeight(calcWeights);
         break;
       default:
         // println("Nothing");   // Does not execute
@@ -169,12 +172,7 @@ public class InteractiveTagTable {
 
       //println("new delta found");
     }
-
-    //mod.size = (parseFloat(iterrate)/parseFloat(count) * 3.0f) + 0.5f; //draw size based on list position
-
     mod.display(p,tagViz);
-
-    //println(mod.tagType);
   }
   }
   
@@ -273,194 +271,17 @@ class LLLTag {
     p.noStroke();
     p.fill(255);
     p.ellipse(x, y, size, size);
-
-    ////////////Draw Entire Piece////////////
-    // fill(weight, 255, 255);
-    // rect(x, y, tagWidth-1, tagHeight-1);
-
+    color cWalkCyan = color(0, 200, 200, 255);
+    color cW1 = color(0, 255, 0);
+    color cW2 = color(255, 255, 0);
+    color cW3 = color(255, 0, 0);
     if (tagID>-2) {
-
       switch(tagVizIn) {
       case 'P': 
-        //Draw interior grid of 4x4
-        for (int i=0; i<tagVoxels.size(); i++) {
-          //Calc block size and position
-          float tempSize = tagWidth/4;
-
-          // tagVoxels.get(i).heatColorG(c1, c2, c3, tagWeight);
-
-          /////////////RANDOMIZE COLOR HEAT//////////////
-          //tagVoxels.get(i).heatColorG(c1, c2, c3, random(0, tagWeight));
-          ///////////////////////////////////////////////
-
-          ///////////////WAVE ANIMATION/////////////////
-          float minValue = tagWeight -waveDistantRatio/2;
-          float maxValue = tagWeight+waveDistantRatio/2;
-          if (waveCount>=(0.08*16)) {
-            waveStart = waveStart + 0.08f;
-
-            if (waveStart>0 ) {
-              //println("wave animation");
-              waveCount = waveCount - 0.08f;
-              /////////////RANDOMIZE COLOR HEAT//////////////
-
-              if (minValue<0) {
-                minValue = 0;
-              }
-
-              if (maxValue>1) {
-                maxValue = 1;
-              }
-
-              tagVoxels.get(i).heatColorG(c1, c2, c3, random(minValue, maxValue));
-              ///////////////////////////////////////////////
-            }
-            //println("Running Wave");
-          } else if ( waveCount>=0  ) {
-            tagVoxels.get(i).heatColorG(c1, c2, c3, tagWeight);
-            waveCount = waveCount - 0.08f;
-            // println("Finish Wave");
-          }
-
-
-          //////////////DWELL CODE////////////////
-          else if (dwellRandom>7 ) {
-            float dwellRatio = dwellRandom/dwellStart;
-
-            if (waveDistantRatio>0.92) {
-              dwellRandom = dwellRandom - 0.025f;
-            } else {
-              dwellRandom = dwellRandom - 0.05f;
-            }
-
-            minValue = tagWeight -((waveDistantRatio*dwellRatio)/2);
-            maxValue = tagWeight+ ((waveDistantRatio * dwellRatio)/2);
-
-            if (minValue<0) {
-              minValue = 0;
-            }
-
-            if (maxValue>1) {
-              maxValue = 1;
-            }
-
-            color tempC =tagVoxels.get(i).returnHeatColorG(c1, c2, c3, random(minValue, maxValue));
-            tagVoxels.get(i).voxColor = tempC;
-            // println("Dwell Random");
-          }
-
-
-          if (updateWeights) {
-            tagVoxels.get(i).heatColorG(c1, c2, c3, tagWeight);
-          }
-
-
-
-          p.fill(tagVoxels.get(i).voxColor);
-
-          p.rect(x+tagVoxels.get(i).point.x, y+tagVoxels.get(i).point.y, tempSize-0.0f, tempSize-0.0f);
-        }//end Voxel Loop
+        updateWaveedGrid(p);
         break;
-      case 'O': 
-
-        color cWalkCyan = color(0, 200, 200, 255);
-        /* 
-         color cW1 = color(230, 230, 0, 255);
-         color cW2 = color(255, 102, 0, 255);
-         color cW3 = color(210, 0, 0, 255);
-         */
-
-        /*     
-         color cW1 = color(255, 255, 204);
-         color cW2 = color(255, 255, 102);
-         color cW3 = color(204, 0, 0);
-         */
-
-        color cW1 = color(0, 255, 0);
-        color cW2 = color(255, 255, 0);
-        color cW3 = color(255, 0, 0);
-
-        //Draw interior grid of 4x4
-        for (int i=0; i<tagVoxels.size(); i++) {
-          //Calc block size and position
-          float tempSize = tagWidth/4;
-
-          // tagVoxels.get(i).heatColorG(c1, c2, c3, tagWeight);
-
-          /////////////RANDOMIZE COLOR HEAT//////////////
-          //tagVoxels.get(i).heatColorG(c1, c2, c3, random(0, tagWeight));
-          ///////////////////////////////////////////////
-
-          ///////////////WAVE ANIMATION/////////////////
-          float minValue = tagWeight -waveDistantRatio/2;
-          float maxValue = tagWeight+waveDistantRatio/2;
-          if (waveCount>=(0.08*16)) {
-            waveStart = waveStart + 0.08f;
-
-            if (waveStart>0 ) {
-              //println("wave animation");
-              waveCount = waveCount - 0.08f;
-              /////////////RANDOMIZE COLOR HEAT//////////////
-
-              if (minValue<0) {
-                minValue = 0;
-              }
-
-              if (maxValue>1) {
-                maxValue = 1;
-              }
-
-              tagVoxels.get(i).heatColorG(cW1, cW2, cW3, random(minValue, maxValue));
-              ///////////////////////////////////////////////
-            }
-            //println("Running Wave");
-          } else if ( waveCount>=0  ) {
-            tagVoxels.get(i).heatColorG(cW1, cW2, cW3, tagWeight);
-            waveCount = waveCount - 0.08f;
-            // println("Finish Wave");
-          }
-
-
-          //////////////DWELL CODE////////////////
-          else if (dwellRandom>7 ) {
-            float dwellRatio = dwellRandom/dwellStart;
-
-            if (waveDistantRatio>0.92) {
-              dwellRandom = dwellRandom - 0.025f;
-            } else {
-              dwellRandom = dwellRandom - 0.05f;
-            }
-
-            minValue = tagWeight -((waveDistantRatio*dwellRatio)/2);
-            maxValue = tagWeight+ ((waveDistantRatio * dwellRatio)/2);
-
-            if (minValue<0) {
-              minValue = 0;
-            }
-
-            if (maxValue>1) {
-              maxValue = 1;
-            }
-
-            color tempC =tagVoxels.get(i).returnHeatColorG(cW1, cW2, cW3, random(minValue, maxValue));
-            tagVoxels.get(i).voxColor = tempC;
-            // println("Dwell Random");
-          }
-
-
-          if (updateWeights) {
-            tagVoxels.get(i).heatColorG(cW1, cW2, cW3, tagWeight);
-          }
-
-
-
-          p.fill(tagVoxels.get(i).voxColor);
-
-          p.rect(x+tagVoxels.get(i).point.x, y+tagVoxels.get(i).point.y, tempSize-0.0f, tempSize-0.0f);
-        }//end Voxel Loop
-
-        //Override Offices
-
+      case 'R': 
+        updateWaveedGrid(p);
         if (tagID==43 || tagID==63 || tagID==126) {
           p.fill(0, 230, 230, 255);
           p.rect(x+tagWidth/3, y+tagWidth/3, tagWidth/3, tagHeight/3);
@@ -470,29 +291,34 @@ class LLLTag {
           p.fill(230, 0, 255, 255);
           p.rect(x+tagWidth/3, y+tagWidth/3, tagWidth/3, tagHeight/3);
         }
+        break;
+      case 'O':
+      updateWaveedGrid(p);
+        //Override Offices
+        if (tagID==43 || tagID==63 || tagID==126) {
+          p.fill(0, 230, 230, 255);
+          p.rect(x+tagWidth/3, y+tagWidth/3, tagWidth/3, tagHeight/3);
+        }
 
+        if (tagID==0 || tagID==9 || tagID==19) {
+          p.fill(230, 0, 255, 255);
+          p.rect(x+tagWidth/3, y+tagWidth/3, tagWidth/3, tagHeight/3);
+        }
         break;
       case 'T': 
-        //println("Type");  // Prints 
         p.fill(0, 80, 80, 200);
-
         if (tagID==138) {
           p.fill(0, 230, 0, 255);
         }
-
         if (tagID==0 || tagID==9 || tagID==19) {
           p.fill(230, 0, 255, 255);
         }
-
         if (tagID==43 || tagID==63 || tagID==126) {
           p.fill(0, 230, 230, 255);
         }
-
-
         p.rect(x, y, tagWidth, tagHeight);
         break;
       default:
-        // println("Nothing");   // Does not execute
         break;
       }
     }//end if tagID
@@ -502,6 +328,61 @@ class LLLTag {
     }
     //always reset update flags
     updateWeights=false;
+  }
+  
+  void updateWaveedGrid(PGraphics p){
+        //Draw interior grid of 4x4
+        for (int i=0; i<tagVoxels.size(); i++) {
+          //Calc block size and position
+          float tempSize = tagWidth/4;
+          ///////////////WAVE ANIMATION/////////////////
+          float minValue = tagWeight -waveDistantRatio/2;
+          float maxValue = tagWeight+waveDistantRatio/2;
+          if (waveCount>=(0.08*16)) {
+            waveStart = waveStart + 0.08f;
+            if (waveStart>0 ) {
+              //println("wave animation");
+              waveCount = waveCount - 0.08f;
+              /////////////RANDOMIZE COLOR HEAT//////////////
+              if (minValue<0) {
+                minValue = 0;
+              }
+              if (maxValue>1) {
+                maxValue = 1;
+              }
+              tagVoxels.get(i).heatColorG(c1, c2, c3, random(minValue, maxValue));
+              ///////////////////////////////////////////////
+            }
+          } else if ( waveCount>=0  ) {
+            tagVoxels.get(i).heatColorG(c1, c2, c3, tagWeight);
+            waveCount = waveCount - 0.08f;
+          }
+          //////////////DWELL CODE////////////////
+          else if (dwellRandom>7 ) {
+            float dwellRatio = dwellRandom/dwellStart;
+            if (waveDistantRatio>0.92) {
+              dwellRandom = dwellRandom - 0.025f;
+            } else {
+              dwellRandom = dwellRandom - 0.05f;
+            }
+            minValue = tagWeight -((waveDistantRatio*dwellRatio)/2);
+            maxValue = tagWeight+ ((waveDistantRatio * dwellRatio)/2);
+            if (minValue<0) {
+              minValue = 0;
+            }
+            if (maxValue>1) {
+              maxValue = 1;
+            }
+            color tempC =tagVoxels.get(i).returnHeatColorG(c1, c2, c3, random(minValue, maxValue));
+            tagVoxels.get(i).voxColor = tempC;
+            // println("Dwell Random");
+          }
+          if (updateWeights) {
+            tagVoxels.get(i).heatColorG(c1, c2, c3, tagWeight);
+          }
+          p.fill(tagVoxels.get(i).voxColor);
+          p.rect(x+tagVoxels.get(i).point.x, y+tagVoxels.get(i).point.y, tempSize-0.0f, tempSize-0.0f);
+        }//end Voxel Loop
   }
 
   float waveCount = 0;

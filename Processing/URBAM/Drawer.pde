@@ -13,7 +13,7 @@ public class Drawer{
                  showSlider=false,
                  keystoneMode=false,
                  showLegend=true,
-                 showInteractiveGrid=true,
+                 showInteractiveGrid=false,
                  showStaticGrid=true,
                  showContinousHeatMap=false,
                  showCollisionPotential;
@@ -39,7 +39,7 @@ public class Drawer{
       grid.draw(offscreenSurface);
       aggregatedHeatmap.draw(offscreenSurface);
       legoGrid.draw(offscreenSurface);
-      if(drawer.showInteractiveGrid){
+      if(drawer.showInteractiveGrid && tagViz != 'H'){
         drawTags(offscreenSurface);
       }
       if(showLegend){
@@ -82,10 +82,9 @@ public class Drawer{
     }
   }
   
-  void drawLegend(PGraphics p) {
-    p.fill(#FFFFFF);
+  void drawABMInfo(PGraphics p){
     p.textAlign(RIGHT); 
-    p.textSize(10);
+    
    
     p.ellipse(width-50, 40, 10, 10);
     p.text("Moving people : " + int(model.getNbMovingPeople()), width-70, 43);
@@ -100,7 +99,6 @@ public class Drawer{
     p.fill(#FFFFFF);
     p.text("Cars : " + int(model.getNbCars()), width-70, 83);
     
-    
     p.noStroke();
     p.fill(model.livingColor);
     p.ellipse(width-50, 100, 10, 10);
@@ -113,7 +111,11 @@ public class Drawer{
     p.text("Working: " + int(GetTotalLivingWorkingNumber().y), width-70, 123);
     
     p.text("Total: " + int(model.agents.size())  + model.type , width-70, 150);
-
+  }
+  
+  void drawLegend(PGraphics p) {
+    p.fill(#FFFFFF);
+    p.textSize(10); 
     p.textAlign(LEFT); 
     if(keystoneMode){
       p.text("Keystone: [L] load keystone - [S] save keystone  ", 30, 30);
@@ -125,10 +127,22 @@ public class Drawer{
         p.text("Simulation: [a] Agent - [b] Building - [d] Density - [c] Collision Potential", 30, 30);
         p.text("HeatMap: [e] No Heatmap - [t] type - [p] Park Heatmap -[o] Office Walkability - [r] Residential Walkability - [h] Traffic Heatmap", 30, 50);
         p.text("Interaction: [s] static grid: " + showStaticGrid + " - [i] Interactive Grid: " +  showInteractiveGrid + "- [v] ViewCube: " + showViewCube + "- [m] map: " + showBG, 30, 70);
-        p.text("Settings : [1] keystone - [2] load keystone - [3] save keystone - [4] - Tags Interaction - [5] legend", 30, 90);
+        
       }
       
-      p.text("FRAMERATE: " + int(frameRate) + " fps", 30, 110);
+      p.noStroke();
+      p.fill(model.livingColor);
+      p.ellipse(50, 100, 10, 10);
+      p.fill(#FFFFFF);
+      p.text("Living", 70, 103);
+    
+      p.fill(model.workingColor);
+      p.ellipse(50, 120, 10, 10);
+      p.fill(#FFFFFF);
+      p.text("Working", 70, 123);
+      
+      p.text("Settings : [1] keystone - [2] load keystone - [3] save keystone - [4] - Tags Interaction - [5] legend", width - 500, 25);
+      p.text("fps: " + int(frameRate) + " fps", width-100, 50);
     }
     p.textAlign(CENTER);
     p.textSize(10);

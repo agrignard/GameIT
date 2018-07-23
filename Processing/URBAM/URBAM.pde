@@ -220,6 +220,7 @@ void keyTyped() {
     break;
   case 'r':
     tagViz = 'R';
+    messageDelta = true;
     break;
   case 'c':
     drawer.toggleCollisionPotential();
