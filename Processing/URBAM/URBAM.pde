@@ -30,11 +30,12 @@ boolean tagsInteraction=false;
 
 
 void settings() {
-  size(displayWidth, displayHeight, P3D);
+  //size(displayWidth, displayHeight, P3D);
+  fullScreen(P3D, 0);
 }
 
 void setup() {
-  //fullScreen(P3D, 2);
+  
   width=displayWidth;
   height=displayHeight;
   drawer = new Drawer(this);
@@ -176,21 +177,21 @@ void keyTyped() {
   case '4':
     tagsInteraction=!tagsInteraction;
     break;
-  case '5':  
+  case ' ':  
     drawer.toggleLegend();
     break;
   case 'a':   
     drawer.toggleAgent();
     break;
-  case 'b':  
+  /*case 'b':  
     drawer.toggleBuilding();
-    break;
+    break;*/
   case 'v':  
     drawer.toggleViewCube();
     break;
-  case 'h':  
+  /*case 'h':  
     tagViz = 'H';
-    break;
+    break;*/
   case 'm':  
     drawer.toggleBG();
     break; 
