@@ -25,8 +25,7 @@ public class ABM {
     //Orange and Blue saturated
     //colors = new ArrayList<Integer>(Arrays.asList(#FD710A,#FD710A,#AB4E05,#6F3603,#E96809,#1400F1,#0000D4,#00006E,#000049,#000095)); 
     // Purple and blue
-    colors = new ArrayList<Integer>(Arrays.asList(#ff00ff,#b802ff,#a200ff,#b802ff,#ff00ff,#00ffff,#0099ff,#00ffd5,#0099ff,#00ffff)); 
-    
+    colors = new ArrayList<Integer>(Arrays.asList(#ff00ff,#b802ff,#a200ff,#b802ff,#ff00ff,#00ffff,#0099ff,#00ffd5,#0099ff,#00ffff));   
     profiles = new ArrayList<String>(Arrays.asList("Young Children","High School","Home maker","Retirees","Artist","College","Young professional","Mid-career workers","Executives","Workforce"));
     colorProfiles = new HashMap<String, Integer>();
     for (int i=0;i<profiles.size();i++){
@@ -37,7 +36,9 @@ public class ABM {
   public void initModel() {
     agents.clear();
     createAgents(id, nbPeoplePerProfile, type);
-    createStaticAgents(id, nbPeoplePerProfile, "static");
+    createAgents(id, nbPeoplePerProfile, "static");
+    createAgents(id, nbPeoplePerProfile/20, "bike");
+    createAgents(id, nbPeoplePerProfile/20, "dynamic_bike");
   }
 
   public void updateGlobalPop(int modelId) {
@@ -89,7 +90,7 @@ public class ABM {
 
   public void run(PGraphics p) {
     for (int i=0; i<agents.size(); i++) {
-      if (!agents.get(i).type.equals("static")) {
+      if (agents.get(i).type.equals("people") || agents.get(i).type.equals("dynamic_bike")) {
         agents.get(i).move();
       } 
       agents.get(i).draw(p);
@@ -196,7 +197,7 @@ public class ABM {
     }
   }
 
-  public void createStaticAgents(int id, int num, String type) {
+  /*public void createStaticAgents(int id, int num, String type) {
     for (int i = 0; i < num; i++) {
       for (int j=0; j<profiles.size()/2; j++) {
         agents.add( new Agent(id, map, profiles.get(j), type, "living"));
@@ -205,7 +206,7 @@ public class ABM {
         agents.add( new Agent(id, map, profiles.get(j), type, "working"));
       }
     }
-  }
+  }*/
 
   public int getNbCars() {
     int nbCars=0;
@@ -407,11 +408,11 @@ public class Agent {
       speed= 10*0.3 + random(0.5);
       size= 7;// + random(5);
     }
-    if (type.equals("people")) {
+    if (type.equals("people") || type.equals("dynamic_bike")) {
       speed= 10*0.05 + random(0.1);
       size= 4;// + random(8);
     }
-    if (type.equals("static")) {
+    if (type.equals("static") || type.equals("bike")) {
       speed= 0.1 + random(0.5);
       size= 4 ;//+ random(8);
       if (usage.equals("living")) {
@@ -423,7 +424,7 @@ public class Agent {
         pos.x = tmp.shape.getVertex(0).x;
         pos.y = tmp.shape.getVertex(0).y;
       }
-    }
+    }    
   }
 
 
@@ -439,6 +440,15 @@ public class Agent {
         p.strokeWeight(2);
         p.noFill();
         p.ellipse(pos.x, pos.y, size, size);
+      }
+      
+      if (type.equals("bike") || type.equals("dynamic_bike")){
+        p.stroke(myProfileColor);
+        p.strokeWeight(2);
+        p.noFill();
+        p.ellipse(pos.x, pos.y, size*2, size*2);
+        p.noStroke();
+        //p.triangle(pos.x, pos.y, pos.x-1, pos.y-2, pos.x+1, pos.y-2);
       }
     }
     if( drawer.showCollisionPotential) {
