@@ -476,6 +476,12 @@ public class Agent {
       // Arrived to destination  --->
       if ( path.indexOf(toNode) == 0 ) {  
         pos = destNodePos;
+        //Re int src and dest
+        srcNode =  (Node) map.graph.nodes.get(int(random(map.graph.nodes.size())));
+        destNode =  (Node) map.graph.nodes.get(int(random(map.graph.nodes.size())));
+        pos= new PVector(srcNode.x, srcNode.y);
+        path=null;
+        dir = new PVector(0.0, 0.0);
         // Not destination. Look for next node --->
       } else {  
         srcNode = toNode;

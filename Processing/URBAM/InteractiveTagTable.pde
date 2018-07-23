@@ -41,7 +41,6 @@ public class InteractiveTagTable {
       LLLTag tempTag = new LLLTag(x*unit+startPoint.x*scaleWorld +highwaySpacer, y*unit+startPoint.y*scaleWorld, type, unit*.8, unit*.8, tagWeight);
       tagList.add(tempTag);
       tempTag.refreshAllWeights();
-      //tagList.add(new LLLTag(x*unit + random(-10,10), y*unit  + random(-10,10)));
     }
   }
   }
