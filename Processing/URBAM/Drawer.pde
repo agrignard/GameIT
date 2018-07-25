@@ -38,6 +38,7 @@ public class Drawer{
       drawTableBackGround(offscreenSurface);
       grid.draw(offscreenSurface);
       aggregatedHeatmap.draw(offscreenSurface);
+      //aggregatedHeatmap2.draw(offscreenSurface);
       legoGrid.draw(offscreenSurface);
       if(drawer.showInteractiveGrid && tagViz != 'H'){
         drawTags(offscreenSurface);
@@ -81,7 +82,7 @@ public class Drawer{
       p.image(bg,0,0,displayWidth,displayHeight);
     }
   }
-  
+    
   void drawABMInfo(PGraphics p){
     p.textAlign(RIGHT); 
     
@@ -122,14 +123,12 @@ public class Drawer{
     }else{
       
       if(tagsInteraction){
-        p.text("[d] delta 1 - [f] delta 2 - [l] - Display Grid string - [4] - Normal Interaction", 30, 50);
+        p.text("[d] delta 1 - [f] delta 2 - [l] - Display Grid string - [w] - Normal Interaction", 30, 50);
       }else{
         p.text("Simulation: [a] Agent - [c] Collision Potential - [d] Density ", 30, 30);
         p.text("HeatMap: [e] No Heatmap - [t] type - [p] Park Heatmap -[o] Office Walkability - [r] Residential Walkability ", 30, 50);
-        p.text("Interaction: [s] static grid: " + showStaticGrid + " - [i] Interactive Grid: " +  showInteractiveGrid + "- [v] ViewCube: " + showViewCube + "- [m] map: " + showBG, 30, 70);
-        
-      }
-      
+        p.text("Interaction: [g] static grid: " + showStaticGrid + " - [i] Interactive Grid: " +  showInteractiveGrid + "- [v] ViewCube: " + showViewCube + "- [m] map: " + showBG, 30, 70); 
+      }  
       p.noStroke();
       p.fill(model.livingColor);
       p.ellipse(50, 100, 10, 10);
@@ -141,7 +140,7 @@ public class Drawer{
       p.fill(#FFFFFF);
       p.text("Working", 70, 123);
       
-      p.text("Settings : [1] keystone - [2] load keystone - [3] save keystone - [4] - Tags Interaction - [space] legend", width - 500, 25);
+      p.text("Settings : [k] keystone - [l] load keystone - [s] save keystone - [w] - Tags Interaction - [space] legend", width - 500, 25);
       p.text("fps: " + int(frameRate) + " fps", width-100, 50);
     }
     p.textAlign(CENTER);

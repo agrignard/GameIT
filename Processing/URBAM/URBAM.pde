@@ -1,7 +1,8 @@
 Drawer drawer;
 public int nbProjector=1;
-public int displayWidth = int(1920)*nbProjector;
-public int displayHeight = int(1080)*nbProjector;
+public float sizeScale= 1.5;
+public int displayWidth = int(1920*sizeScale)*nbProjector;
+public int displayHeight = int(1080*sizeScale)*nbProjector;
 
 public int playGroundWidth = displayWidth;
 public int playGroundHeight = displayHeight;
@@ -12,14 +13,16 @@ RoadNetwork roads;
 Buildings buildings;
 ABM model;
 Grid grid;
-ContinousHeatmap instantHeatmap,aggregatedHeatmap;
+ContinousHeatmap aggregatedHeatmap;
+ContinousHeatmap aggregatedHeatmap2;
 StaticGrid legoGrid;
 InterFace interfaceLeap;
 SliderHandler sliderHandler;
 ControlFrame cf;
 InteractiveTagTable tags;
 UDPReceiver udpR;
-float s1;
+int currentView=0;
+boolean iterativeMode=false;
 
 //INTERFACE VARIABLES
 boolean messageDelta = false;
@@ -30,8 +33,8 @@ boolean tagsInteraction=false;
 
 
 void settings() {
-  //size(displayWidth, displayHeight, P3D);
-  fullScreen(P3D, 0);
+  size(displayWidth, displayHeight, P3D);
+  //fullScreen(P3D, 0);
 }
 
 void setup() {
@@ -46,7 +49,10 @@ void setup() {
   buildings = new Buildings("GIS/"+city+"/Buildings.geojson");
   aggregatedHeatmap = new ContinousHeatmap(0, 0, width, height);
   aggregatedHeatmap.setBrush("HeatMap/heatmapBrush.png", 80);
-  aggregatedHeatmap.addGradient("hot", "HeatMap/hot_transp.png");
+  aggregatedHeatmap.addGradient("hot", "HeatMap/cold_transp.png");
+  aggregatedHeatmap2 = new ContinousHeatmap(0, 0, width, height);
+  aggregatedHeatmap2.setBrush("HeatMap/heatmapBrush.png", 80);
+  aggregatedHeatmap2.addGradient("cold", "HeatMap/cold_transp.png");
   model = new ABM(roads, "people", 100);
   model.initModel();
   grid = new Grid();
@@ -61,6 +67,7 @@ void setup() {
   ///////////CREATE MASKING FOR MISSING GRID PIECES/////////////
   udpR.maskParts = udpR.messageMask.split(" ");
   //////////////////////////////////////////////////////////////
+  updateCurrentState(-1);
 } 
 
 void draw() {
@@ -157,119 +164,259 @@ void keyTyped() {
       count++;
     }
   }
-  if (key == '4'){
+  if (key == 'w'){
     tagsInteraction=!tagsInteraction;
   }
   }
   else{
-      switch(key) {
-    //Keystone trigger  
-  case '1':
-    drawer.toggleKeystone();
-    break;  
-  case '2':
-    drawer.ks.load();
-    break; 
-  case '3':
-    drawer.ks.save();
-    break;
-  case '4':
-    tagsInteraction=!tagsInteraction;
-    break;
-  case ' ':  
-    drawer.toggleLegend();
-    break;
-  case 'a':   
-    drawer.toggleAgent();
-    break;
-  /*case 'b':  
-    drawer.toggleBuilding();
-    break;*/
-  case 'v':  
-    drawer.toggleViewCube();
-    break;
-  /*case 'h':  
-    tagViz = 'H';
-    break;*/
-  case 'm':  
-    drawer.toggleBG();
-    break; 
-  case 'i':  
-    drawer.toggleInteractiveGrid();
-    break;
-  case 's':  
-    drawer.toggleStaticGrid();
-    break;
-  case 'd':
-    drawer.toggleInstantHeatMap();
-    break;
-  case 'e':
-    tagViz = 'E';
-    messageDelta = true;
-    break;
-  case 'p':
-    tagViz = 'P';
-    messageDelta = true;
-    break;
-  case 'o':
-    tagViz = 'O';
-    messageDelta = true;
-    break;
-  case 't':
-    tagViz = 'T';
-    break;
-  case 'r':
-    tagViz = 'R';
-    messageDelta = true;
-    break;
-  case 'c':
-    drawer.toggleCollisionPotential();
-    break;
+  if(key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9'){
+    updateCurrentState(key-48);
+  }else{
+    switch(key) {
+      //Keystone trigger  
+    case 'k':
+      drawer.toggleKeystone();
+      break;  
+    case 'l':
+      drawer.ks.load();
+      break; 
+    case 's':
+      drawer.ks.save();
+      break;
+    case 'w':
+      tagsInteraction=!tagsInteraction;
+      break;
+    case ' ':  
+      drawer.toggleLegend();
+      break;
+    case 'a':   
+      drawer.toggleAgent();
+      break;
+    case 'b':  
+      drawer.toggleBuilding();
+      break;
+    case 'n':  
+      drawer.toggleRoad();
+      break;
+    case 'v':  
+      drawer.toggleViewCube();
+      break;
+    case 'h':  
+      tagViz = 'H';
+      break;
+    case 'm':  
+      drawer.toggleBG();
+      break; 
+    case 'i':  
+      drawer.toggleInteractiveGrid();
+      break;
+    case 'g':  
+      drawer.toggleStaticGrid();
+      break;
+    case 'd':
+      drawer.toggleInstantHeatMap();
+      break;
+    case 'e':
+      tagViz = 'E';
+      messageDelta = true;
+      break;
+    case 'p':
+      tagViz = 'P';
+      messageDelta = true;
+      break;
+    case 'o':
+      tagViz = 'O';
+      messageDelta = true;
+      break;
+    case 't':
+      tagViz = 'T';
+      break;
+    case 'r':
+      tagViz = 'R';
+      messageDelta = true;
+      break;
+    case 'c':
+      drawer.toggleCollisionPotential();
+      break;
+    }
   }
   }
 }
 
-void mouseClicked() {
-  println(mouseX + " "  + mouseY);
 
-  float testDistance = 99999999; 
+void doubleClicked(MouseEvent evt){
+  /*if(iterativeMode == false){
+    currentView=0;
+  }else{
+    currentView=-1;
+  }*/
+  currentView=-1;
+  iterativeMode=!iterativeMode;
+}
 
-  mouseClicked = true;
-
-  PVector tempMouseP = new PVector(mouseX-(tags.unit/2), mouseY-(tags.unit/2), 0);
-
-  float proximityThreshold = 180 * tags.scaleWorld; //This is the proximity threshold of the neighbouring tags that will be impacted by this change in animation/
-
-  int trackloop = 0;
-  int indexFound = 0;
-  int neighbours = 0;
-
-  for (LLLTag tag : tags.tagList) {
-
-    float distance = tempMouseP.dist(tag.point);
-
-    if ( distance<testDistance) {
-      testDistance = tempMouseP.dist(tag.point);
-      indexFound = trackloop;
-      // println(tempMouseP.dist(tag.point));
-    };
-
-    if ( distance<proximityThreshold) {
-      neighbours++;
-      tag.animateWave((1.0f- distance/proximityThreshold ));//feed distance ratio to animation wave
-    };
-
-
-    trackloop++;
+void mouseClicked(MouseEvent evt) {
+  if (evt.getCount() == 2) doubleClicked(evt);
+  boolean editPark = false;
+  if(editPark){
+    println(mouseX + " "  + mouseY);
+    float testDistance = 99999999; 
+    mouseClicked = true;
+    PVector tempMouseP = new PVector(mouseX-(tags.unit/2), mouseY-(tags.unit/2), 0);
+    float proximityThreshold = 180 * tags.scaleWorld; //This is the proximity threshold of the neighbouring tags that will be impacted by this change in animation/
+  
+    int trackloop = 0;
+    int indexFound = 0;
+    int neighbours = 0;
+  
+    for (LLLTag tag : tags.tagList) {
+  
+      float distance = tempMouseP.dist(tag.point);
+  
+      if ( distance<testDistance) {
+        testDistance = tempMouseP.dist(tag.point);
+        indexFound = trackloop;
+        // println(tempMouseP.dist(tag.point));
+      };
+  
+      if ( distance<proximityThreshold) {
+        neighbours++;
+        tag.animateWave((1.0f- distance/proximityThreshold ));//feed distance ratio to animation wave
+      };
+      trackloop++;
+    }
+    print("Neighbours found: ");
+    println(neighbours);
+    tags.tagList.get(indexFound).tagID = 138;
+  }else{
+    if(iterativeMode){
+    if (mouseButton == LEFT) {
+      currentView  = (currentView + 1) % 10;
+      updateCurrentState(currentView);
+    } else if (mouseButton == RIGHT) {
+      currentView  = (currentView - 1) % 10;
+      updateCurrentState(currentView);
+      if(currentView < 0){
+        currentView=9;
+      }
   }
+  }else{
+    updateCurrentState(-1);
+  }  
+  }
+}
 
-  print("Neighbours found: ");
-  println(neighbours);
+/*void mousePressed() {
 
+}*/
 
-  //tagList.get(indexFound).tagWeight = 0.5f;
-  tags.tagList.get(indexFound).tagID = 138;
-
-
-  //println(indexFound);
+void updateCurrentState(int slideID){
+  switch(slideID) {
+    case -1:
+      drawer.showBG=true;
+      drawer.showStaticGrid=false;
+      drawer.showInteractiveGrid=true;
+      drawer.showBuilding=false;
+      drawer.showCollisionPotential=false;
+      drawer.showContinousHeatMap=false;
+      drawer.showRoad=false;
+      tagViz = 'T';
+      break;
+    case 0:  
+      drawer.showBG=false;
+      drawer.showStaticGrid=false;
+      drawer.showInteractiveGrid=false;
+      drawer.showBuilding=false;
+      drawer.showCollisionPotential=false;
+      drawer.showContinousHeatMap=false;
+      drawer.showRoad=false;
+      tagViz = 'T';
+      break;
+    case 1:
+      drawer.showBG=false;
+      drawer.showStaticGrid=false;
+      drawer.showInteractiveGrid=false;
+      drawer.showBuilding=true;
+      drawer.showCollisionPotential=false;
+      drawer.showContinousHeatMap=false;
+      drawer.showRoad=false;
+      tagViz = 'T';
+      break;
+    case 2:
+      drawer.showBG=true;
+      drawer.showStaticGrid=false;
+      drawer.showInteractiveGrid=false;
+      drawer.showBuilding=true;
+      drawer.showCollisionPotential=false;
+      drawer.showContinousHeatMap=false;
+      drawer.showRoad=false;
+      tagViz = 'T';
+      break;
+    case 3:
+      drawer.showBG=false;
+      drawer.showStaticGrid=true;
+      drawer.showInteractiveGrid=true;
+      drawer.showBuilding=false;
+      drawer.showCollisionPotential=false;
+      drawer.showContinousHeatMap=false;
+      drawer.showRoad=false;
+      tagViz = 'T';
+      break;
+    case 4:
+      drawer.showBG=false;
+      drawer.showStaticGrid=true;
+      drawer.showInteractiveGrid=true;
+      drawer.showBuilding=false;
+      drawer.showCollisionPotential=false;
+      drawer.showContinousHeatMap=false;
+      drawer.showRoad=false;
+      tagViz = 'O';
+      break;
+    case 5:
+      drawer.showBG=false;
+      drawer.showStaticGrid=true;
+      drawer.showInteractiveGrid=true;
+      drawer.showBuilding=false;
+      drawer.showCollisionPotential=false;
+      drawer.showContinousHeatMap=false;
+      drawer.showRoad=false;
+      tagViz = 'R';
+      break;
+    case 6:
+      drawer.showBG=false;
+      drawer.showStaticGrid=true;
+      drawer.showInteractiveGrid=true;
+      drawer.showBuilding=false;
+      drawer.showCollisionPotential=false;
+      drawer.showContinousHeatMap=false;
+      drawer.showRoad=false;
+      tagViz = 'P';
+      break;
+    case 7:
+      drawer.showBG=false;
+      drawer.showStaticGrid=false;
+      drawer.showInteractiveGrid=false;
+      drawer.showBuilding=false;
+      drawer.showCollisionPotential=false;
+      drawer.showContinousHeatMap=false;
+      drawer.showRoad=true;
+      break;
+    case 8:
+      drawer.showBG=false;
+      drawer.showStaticGrid=false;
+      drawer.showInteractiveGrid=false;
+      drawer.showBuilding=false;
+      drawer.showCollisionPotential=false;
+      drawer.showContinousHeatMap=false;
+      drawer.showRoad=true;
+      break;
+    case 9:
+      drawer.showBG=false;
+      drawer.showStaticGrid=false;
+      drawer.showInteractiveGrid=false;
+      drawer.showBuilding=false;
+      drawer.showCollisionPotential=true;
+      drawer.showContinousHeatMap=true;
+      drawer.showRoad=true;
+      break;
+    }
 }

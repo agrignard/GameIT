@@ -72,7 +72,17 @@ public class ContinousHeatmap{
             gradientMap.loadPixels();
             for(int i = 0; i < agents.size(); i++) {
                 PVector position = agents.get(i).pos;
-                gradientMap = addGradientPoint(gradientMap, position.x, position.y);
+                if(gradient.equals("hot")){
+                  if(agents.get(i).type.equals("people") || agents.get(i).type.equals("static")){
+                    gradientMap = addGradientPoint(gradientMap, position.x, position.y);
+                  }
+                }
+                if(gradient.equals("cold")){
+                  if(agents.get(i).type.equals("dynamic_bike")){
+                    gradientMap = addGradientPoint(gradientMap, position.x, position.y);
+                  }
+                }
+                
             }
             gradientMap.updatePixels();
             PImage gradientColors = gradients.containsKey(gradient) ? gradients.get(gradient) : gradients.get("default");
@@ -115,6 +125,8 @@ public class ContinousHeatmap{
        if (frameCount % 10 == 0) {
         aggregatedHeatmap.clear();
         aggregatedHeatmap.update("Aggregated", model.agents, "hot", false);
+        aggregatedHeatmap2.clear();
+        aggregatedHeatmap2.update("Aggregated2", model.agents, "cold", false);
        }
         if (drawer.showContinousHeatMap) {
           p.beginShape();

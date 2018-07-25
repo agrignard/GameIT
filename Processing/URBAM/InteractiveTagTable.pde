@@ -10,10 +10,10 @@
 public class InteractiveTagTable {
   ArrayList<LLLTag> tagList = new ArrayList<LLLTag>();
   //float unit = 11.95f;
-  float unit = 14.175f;
+  float unit = 14.175f*sizeScale;
   int wideCount=32;
   int highCount=26;
-  PVector startPoint = new PVector(630, 35, 0);
+  PVector startPoint = new PVector(630*sizeScale, 35*sizeScale, 0);
   int scaleWorld = 1;
   
   

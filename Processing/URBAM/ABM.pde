@@ -405,7 +405,7 @@ public class Agent {
       size= 7;// + random(5);
     }
     if (type.equals("people") || type.equals("dynamic_bike")) {
-      speed= 10*0.05 + random(0.1);
+      speed= 5*0.05 + random(0.1);
       size= 4;// + random(8);
     }
     if (type.equals("static") || type.equals("bike")) {

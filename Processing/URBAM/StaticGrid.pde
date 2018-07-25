@@ -19,9 +19,9 @@ public class StaticGrid {
   StaticGrid(String[] lines){
     ncols= int(split(lines[0], ' '))[9];
     nrows= int(split(lines[1], ' '))[9];
-    xllcorner= float(split(lines[2], ' '))[5];
-    yllcorner= float(split(lines[3], ' '))[5];
-    cellsize = float(split(lines[4], ' '))[6];    
+    xllcorner= float(split(lines[2], ' '))[5]*sizeScale;
+    yllcorner= float(split(lines[3], ' '))[5]*sizeScale;
+    cellsize = float(split(lines[4], ' '))[6]*sizeScale;    
     NODATA_value = float(split(lines[5], ' '))[2];
     /*println("---------- Reading ASCII GRID --------------");
     println("nrows" + nrows);
