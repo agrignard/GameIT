@@ -37,6 +37,8 @@ public class ABM {
     createAgents(nbPeoplePerProfile, "static");
     createAgents(nbPeoplePerProfile/20, "bike");
     createAgents(nbPeoplePerProfile/20, "dynamic_bike");
+    createAgents(nbPeoplePerProfile/20, "mobike");
+    createAgents(nbPeoplePerProfile/20, "static_mobike");
   }
 
   public void updateGlobalPop() {
@@ -88,7 +90,7 @@ public class ABM {
 
   public void run(PGraphics p) {
     for (int i=0; i<agents.size(); i++) {
-      if (agents.get(i).type.equals("people") || agents.get(i).type.equals("dynamic_bike")) {
+      if (agents.get(i).type.equals("people") || agents.get(i).type.equals("dynamic_bike") || agents.get(i).type.equals("mobike")) {
         agents.get(i).move();
       } 
       agents.get(i).draw(p);
@@ -404,11 +406,19 @@ public class Agent {
       speed= 10*0.3 + random(0.5);
       size= 7;// + random(5);
     }
-    if (type.equals("people") || type.equals("dynamic_bike")) {
+    if (type.equals("people")) {
       speed= 5*0.05 + random(0.1);
       size= 4;// + random(8);
     }
-    if (type.equals("static") || type.equals("bike")) {
+    if (type.equals("dynamic_bike")) {
+      speed= 10*0.05 + random(0.1);
+      size= 4;// + random(8);
+    }
+    if (type.equals("mobike")) {
+      speed= 5*0.05 + random(0.1);
+      size= 4;// + random(8);
+    }
+    if (type.equals("static") || type.equals("bike") || type.equals("static_mobike")) {
       speed= 0.1 + random(0.5);
       size= 4 ;//+ random(8);
       if (usage.equals("living")) {
@@ -444,7 +454,13 @@ public class Agent {
         p.noFill();
         p.ellipse(pos.x, pos.y, size*2, size*2);
         p.noStroke();
-        //p.triangle(pos.x, pos.y, pos.x-1, pos.y-2, pos.x+1, pos.y-2);
+      }
+      if (type.equals("mobike") || type.equals("static_mobike")){
+        if(drawer.showMoBike){
+          p.fill(#FFFF00);
+          p.ellipse(pos.x, pos.y, size*2, size*2);
+          p.noStroke();
+        }
       }
     }
     if( drawer.showCollisionPotential) {

@@ -190,8 +190,8 @@ public class Block{
               c = lerpColor(legoGrid.c1, legoGrid.c2, trafficWeight*2);
               } else {
               c = lerpColor(legoGrid.c2, legoGrid.c3, (trafficWeight-0.5)*2);
-              }
-            p.fill(c);
+              } 
+            p.fill(c,100);
             p.rect (location.x,location.y, size*0.8, size*0.8);
         }
       }

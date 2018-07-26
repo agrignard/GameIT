@@ -68,7 +68,7 @@ public class ContinousHeatmap{
     
     public void update(String title, ArrayList<Agent> agents, String gradient, boolean persistance) {
         this.title = title;
-        if(drawer.showContinousHeatMap) {
+        if(drawer.showContinousHeatMap || drawer.showMoBike) {
             gradientMap.loadPixels();
             for(int i = 0; i < agents.size(); i++) {
                 PVector position = agents.get(i).pos;
@@ -78,7 +78,7 @@ public class ContinousHeatmap{
                   }
                 }
                 if(gradient.equals("cold")){
-                  if(agents.get(i).type.equals("dynamic_bike")){
+                  if(agents.get(i).type.equals("mobike")){
                     gradientMap = addGradientPoint(gradientMap, position.x, position.y);
                   }
                 }
@@ -128,7 +128,7 @@ public class ContinousHeatmap{
         aggregatedHeatmap2.clear();
         aggregatedHeatmap2.update("Aggregated2", model.agents, "cold", false);
        }
-        if (drawer.showContinousHeatMap) {
+        if (drawer.showContinousHeatMap || drawer.showMoBike) {
           p.beginShape();
           p.texture(heatmap);
           p.vertex(0,0,0,0);

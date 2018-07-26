@@ -130,8 +130,22 @@ public class RoadNetwork {
       for(int i = 0; i < graph.nodes.size(); i++){
       Node tempN = (Node)graph.nodes.get(i);
       for(int j = 0; j < tempN.links.size(); j++){
-        p.stroke(#AAAAAA); p.strokeWeight(1);
+        color c= #FFFFFF;
+        if(drawer.showCongestedRoad){
+          float weight = model.getAgentInsideROI(new PVector(tempN.x,tempN.y),int(legoGrid.cellsize)).size()/5.0;
+          //float dist = dist(tempN.x, tempN.y, ((Connector)tempN.links.get(j)).n.x, ((Connector)tempN.links.get(j)).n.y);
+          //weight = dist/50.0;
+          //println(weight);
+          if (weight<0.5) {
+            c = lerpColor(legoGrid.c1, legoGrid.c2, weight*2);
+          } 
+          else {
+            c = lerpColor(legoGrid.c2, legoGrid.c3, (weight-0.5)*2);
+          }
+        }
+        p.stroke(c); p.strokeWeight(3);
         p.line(tempN.x, tempN.y, ((Connector)tempN.links.get(j)).n.x, ((Connector)tempN.links.get(j)).n.y);
+        p.noStroke();
       }
     }
     }

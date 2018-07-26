@@ -10,13 +10,16 @@ public class Drawer{
                  showBuilding = false,
                  showRoad=false,
                  showViewCube=false,
+                 showMagicTrackPad=true,
                  showSlider=false,
                  keystoneMode=false,
                  showLegend=false,
                  showInteractiveGrid=false,
                  showStaticGrid=true,
                  showContinousHeatMap=false,
-                 showCollisionPotential;
+                 showCollisionPotential=false,
+                 showCongestedRoad=true,
+                 showMoBike=false;
   
   
   Drawer(PApplet parent){
@@ -35,10 +38,15 @@ public class Drawer{
       offscreenSurface.beginDraw();
       offscreenSurface.clear();
       offscreenSurface.background(0);
+      //offscreenSurface.background(#C7D2E0);
       drawTableBackGround(offscreenSurface);
       grid.draw(offscreenSurface);
-      aggregatedHeatmap.draw(offscreenSurface);
-      //aggregatedHeatmap2.draw(offscreenSurface);
+      if(drawer.showContinousHeatMap){
+        aggregatedHeatmap.draw(offscreenSurface);
+      }
+      if(drawer.showMoBike){
+        aggregatedHeatmap2.draw(offscreenSurface);
+      }
       legoGrid.draw(offscreenSurface);
       if(drawer.showInteractiveGrid && tagViz != 'H'){
         drawTags(offscreenSurface);
@@ -48,12 +56,12 @@ public class Drawer{
       }
       roads.draw(offscreenSurface);
       buildings.draw(offscreenSurface); 
+      drawMagicTrackPad(offscreenSurface);
       model.run(offscreenSurface);
       model.updateGlobalPop();
       model.updateLocalPop();
       model.updateCarPop();
-      
-      
+    
       offscreenSurface.endDraw();
       for (int i=0; i<nbProjector;i++){
         subSurface.beginDraw();
@@ -80,6 +88,18 @@ public class Drawer{
     if(showBG){
       //tint(255, 100);
       p.image(bg,0,0,displayWidth,displayHeight);
+    }
+  }
+  
+  void drawMagicTrackPad(PGraphics p){
+    if(showMagicTrackPad && currentView !=-1){
+      p.rectMode(CORNER);
+      p.fill(#FFFFFF);
+      p.rect (1100*sizeScale,355*sizeScale, 63*sizeScale, 45*sizeScale);
+      p.fill(color(0, 80, 80, 200));
+      p.textAlign(CENTER); 
+      p.textSize(20); 
+      p.text(currentView, 1100*sizeScale + (63/2)*sizeScale, 355*sizeScale + (45/2+45/4)*sizeScale);
     }
   }
     
@@ -126,7 +146,7 @@ public class Drawer{
         p.text("[d] delta 1 - [f] delta 2 - [l] - Display Grid string - [w] - Normal Interaction", 30, 50);
       }else{
         p.text("Simulation: [a] Agent - [c] Collision Potential - [d] Density ", 30, 30);
-        p.text("HeatMap: [e] No Heatmap - [t] type - [p] Park Heatmap -[o] Office Walkability - [r] Residential Walkability ", 30, 50);
+        p.text("HeatMap: [e] No Heatmap - [t] type - [p] Park Heatmap -[o] Office Walkability - [r] Residential Walkability - [n] Road Network - [q] Congested Road ", 30, 50);
         p.text("Interaction: [g] static grid: " + showStaticGrid + " - [i] Interactive Grid: " +  showInteractiveGrid + "- [v] ViewCube: " + showViewCube + "- [m] map: " + showBG, 30, 70); 
       }  
       p.noStroke();
@@ -140,7 +160,7 @@ public class Drawer{
       p.fill(#FFFFFF);
       p.text("Working", 70, 123);
       
-      p.text("Settings : [k] keystone - [l] load keystone - [s] save keystone - [w] - Tags Interaction - [space] legend", width - 500, 25);
+      p.text("Settings : [k] keystone - [l] load keystone - [s] save keystone - [x] Trackpad -[w] - Tags Interaction - [space] legend", width - 500, 25);
       p.text("fps: " + int(frameRate) + " fps", width-100, 50);
     }
     p.textAlign(CENTER);
@@ -175,5 +195,8 @@ public class Drawer{
   public void toggleStaticGrid() { showStaticGrid = !showStaticGrid;}
   public void toggleInteractiveGrid() { showInteractiveGrid = !showInteractiveGrid;}
   public void toggleInstantHeatMap() { showContinousHeatMap=!showContinousHeatMap;}
-  public void toggleCollisionPotential() { showCollisionPotential=!showCollisionPotential;}  
+  public void toggleCollisionPotential() { showCollisionPotential=!showCollisionPotential;}
+  public void toggleMagicTrackpad() { showMagicTrackPad=!showMagicTrackPad;} 
+  public void toggleCongestedRoad() { showCongestedRoad=!showCongestedRoad;} 
+  public void toggleMoBike() { showMoBike=!showMoBike;} 
 }

@@ -1,6 +1,6 @@
 Drawer drawer;
 public int nbProjector=1;
-public float sizeScale= 1.5;
+public float sizeScale= 1;
 public int displayWidth = int(1920*sizeScale)*nbProjector;
 public int displayHeight = int(1080*sizeScale)*nbProjector;
 
@@ -21,7 +21,7 @@ SliderHandler sliderHandler;
 ControlFrame cf;
 InteractiveTagTable tags;
 UDPReceiver udpR;
-int currentView=0;
+int currentView=-1;
 boolean iterativeMode=false;
 
 //INTERFACE VARIABLES
@@ -31,10 +31,16 @@ char tagViz = 'E';
 boolean started = false;
 boolean tagsInteraction=false;
 
+///////////VIDEO Stuff////////////
+import codeanticode.syphon.*;
+SyphonServer server;
+/////////////////////////////////
+
+
 
 void settings() {
-  size(displayWidth, displayHeight, P3D);
-  //fullScreen(P3D, 0);
+  //size(displayWidth, displayHeight, P3D);
+  fullScreen(P3D, 0);
 }
 
 void setup() {
@@ -52,7 +58,7 @@ void setup() {
   aggregatedHeatmap.addGradient("hot", "HeatMap/cold_transp.png");
   aggregatedHeatmap2 = new ContinousHeatmap(0, 0, width, height);
   aggregatedHeatmap2.setBrush("HeatMap/heatmapBrush.png", 80);
-  aggregatedHeatmap2.addGradient("cold", "HeatMap/cold_transp.png");
+  aggregatedHeatmap2.addGradient("cold", "HeatMap/hot_transp.png");
   model = new ABM(roads, "people", 100);
   model.initModel();
   grid = new Grid();
@@ -68,6 +74,9 @@ void setup() {
   udpR.maskParts = udpR.messageMask.split(" ");
   //////////////////////////////////////////////////////////////
   updateCurrentState(-1);
+  
+  //syphon
+  server = new SyphonServer(this, "grid");
 } 
 
 void draw() {
@@ -76,8 +85,11 @@ void draw() {
 
 /* Draw ------------------------------------------------------ */
 void drawScene() {
+  //background(#C7D2E0);
   background(0);
   drawer.drawSurface();
+  //syphon
+  server.sendScreen();
 
 }
 
@@ -174,7 +186,7 @@ void keyTyped() {
   }else{
     switch(key) {
       //Keystone trigger  
-    case 'k':
+    /*case 'k':
       drawer.toggleKeystone();
       break;  
     case 'l':
@@ -182,7 +194,7 @@ void keyTyped() {
       break; 
     case 's':
       drawer.ks.save();
-      break;
+      break;*/
     case 'w':
       tagsInteraction=!tagsInteraction;
       break;
@@ -238,7 +250,16 @@ void keyTyped() {
     case 'c':
       drawer.toggleCollisionPotential();
       break;
-    }
+    case 'x':
+      drawer.toggleMagicTrackpad();
+      break;
+    case 'q':
+      drawer.toggleCongestedRoad();
+      break;
+    case 'j':
+      drawer.toggleMoBike();
+      break;
+}
   }
   }
 }
@@ -294,10 +315,11 @@ void mouseClicked(MouseEvent evt) {
       updateCurrentState(currentView);
     } else if (mouseButton == RIGHT) {
       currentView  = (currentView - 1) % 10;
-      updateCurrentState(currentView);
       if(currentView < 0){
         currentView=9;
       }
+      updateCurrentState(currentView);
+      
   }
   }else{
     updateCurrentState(-1);
@@ -312,6 +334,7 @@ void mouseClicked(MouseEvent evt) {
 void updateCurrentState(int slideID){
   switch(slideID) {
     case -1:
+      drawer.showAgent=true;
       drawer.showBG=true;
       drawer.showStaticGrid=false;
       drawer.showInteractiveGrid=true;
@@ -319,9 +342,11 @@ void updateCurrentState(int slideID){
       drawer.showCollisionPotential=false;
       drawer.showContinousHeatMap=false;
       drawer.showRoad=false;
+      drawer.showMoBike=false;
       tagViz = 'T';
       break;
-    case 0:  
+    case 0:
+      drawer.showAgent=true;
       drawer.showBG=false;
       drawer.showStaticGrid=false;
       drawer.showInteractiveGrid=false;
@@ -329,9 +354,11 @@ void updateCurrentState(int slideID){
       drawer.showCollisionPotential=false;
       drawer.showContinousHeatMap=false;
       drawer.showRoad=false;
+      drawer.showMoBike=false;
       tagViz = 'T';
       break;
     case 1:
+      drawer.showAgent=true;
       drawer.showBG=false;
       drawer.showStaticGrid=false;
       drawer.showInteractiveGrid=false;
@@ -339,9 +366,11 @@ void updateCurrentState(int slideID){
       drawer.showCollisionPotential=false;
       drawer.showContinousHeatMap=false;
       drawer.showRoad=false;
+      drawer.showMoBike=false;
       tagViz = 'T';
       break;
     case 2:
+      drawer.showAgent=true;
       drawer.showBG=true;
       drawer.showStaticGrid=false;
       drawer.showInteractiveGrid=false;
@@ -349,9 +378,11 @@ void updateCurrentState(int slideID){
       drawer.showCollisionPotential=false;
       drawer.showContinousHeatMap=false;
       drawer.showRoad=false;
+      drawer.showMoBike=false;
       tagViz = 'T';
       break;
     case 3:
+      drawer.showAgent=true;
       drawer.showBG=false;
       drawer.showStaticGrid=true;
       drawer.showInteractiveGrid=true;
@@ -359,9 +390,11 @@ void updateCurrentState(int slideID){
       drawer.showCollisionPotential=false;
       drawer.showContinousHeatMap=false;
       drawer.showRoad=false;
+      drawer.showMoBike=false;
       tagViz = 'T';
       break;
     case 4:
+      drawer.showAgent=true;
       drawer.showBG=false;
       drawer.showStaticGrid=true;
       drawer.showInteractiveGrid=true;
@@ -369,9 +402,11 @@ void updateCurrentState(int slideID){
       drawer.showCollisionPotential=false;
       drawer.showContinousHeatMap=false;
       drawer.showRoad=false;
+      drawer.showMoBike=false;
       tagViz = 'O';
       break;
     case 5:
+      drawer.showAgent=true;
       drawer.showBG=false;
       drawer.showStaticGrid=true;
       drawer.showInteractiveGrid=true;
@@ -379,9 +414,11 @@ void updateCurrentState(int slideID){
       drawer.showCollisionPotential=false;
       drawer.showContinousHeatMap=false;
       drawer.showRoad=false;
+      drawer.showMoBike=false;
       tagViz = 'R';
       break;
     case 6:
+      drawer.showAgent=true;
       drawer.showBG=false;
       drawer.showStaticGrid=true;
       drawer.showInteractiveGrid=true;
@@ -389,34 +426,42 @@ void updateCurrentState(int slideID){
       drawer.showCollisionPotential=false;
       drawer.showContinousHeatMap=false;
       drawer.showRoad=false;
+      drawer.showMoBike=false;
       tagViz = 'P';
       break;
     case 7:
+      drawer.showAgent=false;
       drawer.showBG=false;
-      drawer.showStaticGrid=false;
+      drawer.showStaticGrid=true;
       drawer.showInteractiveGrid=false;
       drawer.showBuilding=false;
       drawer.showCollisionPotential=false;
       drawer.showContinousHeatMap=false;
       drawer.showRoad=true;
+      drawer.showMoBike=false;
+      tagViz = 'H';
       break;
     case 8:
+      drawer.showAgent=true;
       drawer.showBG=false;
       drawer.showStaticGrid=false;
       drawer.showInteractiveGrid=false;
       drawer.showBuilding=false;
       drawer.showCollisionPotential=false;
       drawer.showContinousHeatMap=false;
-      drawer.showRoad=true;
+      drawer.showRoad=false;
+      drawer.showMoBike=true;
       break;
     case 9:
+      drawer.showAgent=true;
       drawer.showBG=false;
       drawer.showStaticGrid=false;
       drawer.showInteractiveGrid=false;
       drawer.showBuilding=false;
       drawer.showCollisionPotential=true;
       drawer.showContinousHeatMap=true;
-      drawer.showRoad=true;
+      drawer.showRoad=false;
+      drawer.showMoBike=false;
       break;
     }
 }
