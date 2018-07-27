@@ -37,8 +37,8 @@ public class ABM {
     createAgents(nbPeoplePerProfile, "static");
     createAgents(nbPeoplePerProfile/20, "bike");
     createAgents(nbPeoplePerProfile/20, "dynamic_bike");
-    createAgents(nbPeoplePerProfile/20, "mobike");
-    createAgents(nbPeoplePerProfile/20, "static_mobike");
+    createAgents(nbPeoplePerProfile, "mobike");
+    createAgents(nbPeoplePerProfile, "static_mobike");
   }
 
   public void updateGlobalPop() {
@@ -458,7 +458,7 @@ public class Agent {
       if (type.equals("mobike") || type.equals("static_mobike")){
         if(drawer.showMoBike){
           p.fill(#FFFF00);
-          p.ellipse(pos.x, pos.y, size*2, size*2);
+          p.ellipse(pos.x, pos.y, size, size);
           p.noStroke();
         }
       }

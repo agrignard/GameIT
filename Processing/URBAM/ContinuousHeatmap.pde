@@ -78,7 +78,7 @@ public class ContinousHeatmap{
                   }
                 }
                 if(gradient.equals("cold")){
-                  if(agents.get(i).type.equals("mobike")){
+                  if(agents.get(i).type.equals("mobike") || agents.get(i).type.equals("static_mobike")){
                     gradientMap = addGradientPoint(gradientMap, position.x, position.y);
                   }
                 }

@@ -38,7 +38,7 @@ public class Drawer{
       offscreenSurface.beginDraw();
       offscreenSurface.clear();
       offscreenSurface.background(0);
-      //offscreenSurface.background(#C7D2E0);
+      //  offscreenSurface.background(#C7D2E0);
       drawTableBackGround(offscreenSurface);
       grid.draw(offscreenSurface);
       if(drawer.showContinousHeatMap){
