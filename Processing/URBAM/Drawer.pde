@@ -10,7 +10,7 @@ public class Drawer{
                  showBuilding = false,
                  showRoad=false,
                  showViewCube=false,
-                 showMagicTrackPad=true,
+                 showMagicTrackPad=false,
                  showSlider=false,
                  keystoneMode=false,
                  showLegend=false,

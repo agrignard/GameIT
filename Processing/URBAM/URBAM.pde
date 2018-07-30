@@ -48,10 +48,10 @@ void setup() {
   width=displayWidth;
   height=displayHeight;
   drawer = new Drawer(this);
-  bg = loadImage("data/GIS/"+city+"/background.png");
+  bg = loadImage("data/GIS/"+city+"/Table_Video_Frame_Template_4k_BG_No building.png");
   drawer.initSurface();
   JSONBounds = loadJSONObject("GIS/"+city+"/Bounds.geojson");
-  roads = new RoadNetwork("GIS/"+city+"/Roads.geojson");
+  roads = new RoadNetwork("GIS/"+city+"/LLL_Roads.geojson");
   buildings = new Buildings("GIS/"+city+"/Buildings.geojson");
   aggregatedHeatmap = new ContinousHeatmap(0, 0, width, height);
   aggregatedHeatmap.setBrush("HeatMap/heatmapBrush.png", 80);
@@ -186,7 +186,7 @@ void keyTyped() {
   }else{
     switch(key) {
       //Keystone trigger  
-    /*case 'k':
+    case 'k':
       drawer.toggleKeystone();
       break;  
     case 'l':
@@ -194,7 +194,7 @@ void keyTyped() {
       break; 
     case 's':
       drawer.ks.save();
-      break;*/
+      break;
     case 'w':
       tagsInteraction=!tagsInteraction;
       break;
