@@ -9,7 +9,10 @@
     <layer-tree-layer expanded="0" checked="Qt::Unchecked" id="Roads20180331191228709" name="Roads">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Checked" id="walkways20180405143826909" name="walkways">
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="Roads_copy20180728165359625" name="Roads copy">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="walkways20180405143826909" name="walkways">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="0" checked="Qt::Unchecked" id="Wanxiang_Area20180405140704383" name="Wanxiang_Area">
@@ -18,7 +21,10 @@
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Buildings20180331190236594" name="Buildings">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Checked" id="Buildings_LLL_Code20180719093327844" name="Buildings_LLL_Code">
+    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Buildings_LLL_Code20180719093327844" name="Buildings_LLL_Code">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="Screen_Shot_2018_07_27_at_17_10_34_modified20180728165332599" name="Screen Shot 2018-07-27 at 17.10.34_modified">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Bounds20180404164330952" name="Bounds">
@@ -32,10 +38,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>12281.17457200741773704</xmin>
-      <ymin>1035.88095299769793201</ymin>
-      <xmax>22839.42434435464383569</xmax>
-      <ymax>7445.02070154997181817</ymax>
+      <xmin>14415.7171853233485308</xmin>
+      <ymin>4018.67938612067155191</ymin>
+      <xmax>19649.37117339897304191</xmax>
+      <ymax>7062.5749964329188515</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -88,6 +94,7 @@
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="USER:100008" srcDatumTransform="-1" destDatumTransform="-1" layerid="fullHDFRAME20180405080527221"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="LLL_AutoCAD_Layer__LLL_Buildings_CAD_RoofOutlines20180403141025074"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="Roads20180331191228709"/>
+      <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="USER:100008" srcDatumTransform="-1" destDatumTransform="-1" layerid="Screen_Shot_2018_07_27_at_17_10_34_modified20180728165332599"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="VideoBounds20180404164412163"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:54004" srcDatumTransform="-1" destDatumTransform="-1" layerid="LegoGrid_LLL_Code_Raster_5x520180720113935262"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="walkways20180405143826909"/>
@@ -107,6 +114,7 @@
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="roads_centerlines_merged20180331191239198"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="Bounds20180404164330952"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:54004" srcDatumTransform="-1" destDatumTransform="-1" layerid="LegoGrid_LLL_Code_Raster_5x5_Temp20180720121401643"/>
+      <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="Roads_copy20180728165359625"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="Buildings20180331190236594"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="USER:100008" srcDatumTransform="-1" destDatumTransform="-1" layerid="legogridRaster20180718182957494"/>
       <layer_coordinate_transform destAuthId="EPSG:3857" srcAuthId="USER:100008" srcDatumTransform="-1" destDatumTransform="-1" layerid="legogridRaster120180718184325940"/>
@@ -140,6 +148,8 @@
       <item>Wanxiang_Area20180405140704383</item>
       <item>walkways20180405143826909</item>
       <item>Buildings_LLL_Code20180719093327844</item>
+      <item>Screen_Shot_2018_07_27_at_17_10_34_modified20180728165332599</item>
+      <item>Roads_copy20180728165359625</item>
     </custom-order>
   </layer-tree-canvas>
   <legend updateDrawingOrder="true">
@@ -153,9 +163,14 @@
         <legendlayerfile isInOverview="0" layerid="Roads20180331191228709" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="walkways" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Roads copy" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="walkways20180405143826909" visible="1"/>
+        <legendlayerfile isInOverview="0" layerid="Roads_copy20180728165359625" visible="1"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="walkways" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="walkways20180405143826909" visible="0"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="Wanxiang_Area" showFeatureCount="0">
@@ -168,9 +183,14 @@
         <legendlayerfile isInOverview="0" layerid="Buildings20180331190236594" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Buildings_LLL_Code" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Buildings_LLL_Code" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="Buildings_LLL_Code20180719093327844" visible="1"/>
+        <legendlayerfile isInOverview="0" layerid="Buildings_LLL_Code20180719093327844" visible="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Screen Shot 2018-07-27 at 17.10.34_modified" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="Screen_Shot_2018_07_27_at_17_10_34_modified20180728165332599" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Bounds" showFeatureCount="0">
@@ -1065,6 +1085,152 @@ def my_form_open(dialog, layer, feature):
         <rowstyles/>
         <fieldstyles/>
       </conditionalstyles>
+    </maplayer>
+    <maplayer minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Line" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+      <id>Roads_copy20180728165359625</id>
+      <datasource>./Roads.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>Roads copy</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid>
+          <srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="System">ogr</provider>
+      <previewExpression></previewExpression>
+      <vectorjoins/>
+      <layerDependencies/>
+      <expressionfields/>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <edittypes>
+        <edittype widgetv2type="TextEdit" name="ET_ID">
+          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
+        </edittype>
+      </edittypes>
+      <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+        <symbols>
+          <symbol alpha="1" clip_to_extent="1" type="line" name="0">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="capstyle" v="square"/>
+              <prop k="customdash" v="5;2"/>
+              <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="customdash_unit" v="MM"/>
+              <prop k="draw_inside_polygon" v="0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="line_color" v="157,242,220,255"/>
+              <prop k="line_style" v="solid"/>
+              <prop k="line_width" v="0.26"/>
+              <prop k="line_width_unit" v="MM"/>
+              <prop k="offset" v="0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="use_custom_dash" v="0"/>
+              <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale scalemethod="diameter"/>
+      </renderer-v2>
+      <labeling type="simple"/>
+      <customproperties/>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerTransparency>0</layerTransparency>
+      <displayfield>id</displayfield>
+      <label>0</label>
+      <labelattributes>
+        <label fieldname="" text="Label"/>
+        <family fieldname="" name=".SF NS Text"/>
+        <size fieldname="" units="pt" value="12"/>
+        <bold fieldname="" on="0"/>
+        <italic fieldname="" on="0"/>
+        <underline fieldname="" on="0"/>
+        <strikeout fieldname="" on="0"/>
+        <color fieldname="" red="0" blue="0" green="0"/>
+        <x fieldname=""/>
+        <y fieldname=""/>
+        <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+        <angle fieldname="" value="0" auto="0"/>
+        <alignment fieldname="" value="center"/>
+        <buffercolor fieldname="" red="255" blue="255" green="255"/>
+        <buffersize fieldname="" units="pt" value="1"/>
+        <bufferenabled fieldname="" on=""/>
+        <multilineenabled fieldname="" on=""/>
+        <selectedonly on=""/>
+      </labelattributes>
+      <annotationform>.</annotationform>
+      <aliases>
+        <alias field="ET_ID" index="0" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <attributeactions/>
+      <editform>.</editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath>.</editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <widgets/>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+    </maplayer>
+    <maplayer minimumScale="0" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
+      <id>Screen_Shot_2018_07_27_at_17_10_34_modified20180728165332599</id>
+      <datasource>../../../../Desktop/Screen Shot 2018-07-27 at 17.10.34_modified.tif</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>Screen Shot 2018-07-27 at 17.10.34_modified</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=6378137 +b=6378137 +units=m +no_defs</proj4>
+          <srsid>100008</srsid>
+          <srid>0</srid>
+          <authid>USER:100008</authid>
+          <description> * Generated CRS (+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=6378137 +b=6378137 +units=m +no_defs)</description>
+          <projectionacronym>merc</projectionacronym>
+          <ellipsoidacronym></ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <customproperties>
+        <property key="identify/format" value="Value"/>
+      </customproperties>
+      <provider>gdal</provider>
+      <noData>
+        <noDataList bandNo="1" useSrcNoData="0"/>
+        <noDataList bandNo="2" useSrcNoData="0"/>
+        <noDataList bandNo="3" useSrcNoData="0"/>
+        <noDataList bandNo="4" useSrcNoData="0"/>
+      </noData>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <pipe>
+        <rasterrenderer opacity="1" alphaBand="4" blueBand="3" greenBand="2" type="multibandcolor" redBand="1">
+          <rasterTransparency/>
+        </rasterrenderer>
+        <brightnesscontrast brightness="0" contrast="0"/>
+        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+        <rasterresampler maxOversampling="2"/>
+      </pipe>
+      <blendMode>0</blendMode>
     </maplayer>
     <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>Wanxiang_Area20180405140704383</id>
