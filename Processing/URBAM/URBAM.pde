@@ -259,6 +259,9 @@ void keyTyped() {
     case 'j':
       drawer.toggleMoBike();
       break;
+    case 'u':
+      drawer.toggleUrbanLens();
+      break;
 }
   }
   }
@@ -266,11 +269,6 @@ void keyTyped() {
 
 
 void doubleClicked(MouseEvent evt){
-  /*if(iterativeMode == false){
-    currentView=0;
-  }else{
-    currentView=-1;
-  }*/
   currentView=-1;
   iterativeMode=!iterativeMode;
 }
@@ -327,9 +325,16 @@ void mouseClicked(MouseEvent evt) {
   }
 }
 
-/*void mousePressed() {
-
-}*/
+void mouseMoved() {
+  if(drawer.showUrbanLens){
+    String s = "TMT,"+(displayWidth-mouseX)+","+(displayHeight-mouseY)+","+displayWidth+","+displayHeight+",0,0,0,0,";
+    //println("sending " + s + "to " + "127.0.0.1" + " port:" + 11969);
+    // UDP Local 
+    udpR.udp.send(s,"127.0.0.1",11969);
+    //UDP Router
+    //udpR.udp.send(s,"192.168.0.189",17999);
+  }
+}
 
 void updateCurrentState(int slideID){
   switch(slideID) {

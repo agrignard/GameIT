@@ -19,7 +19,8 @@ public class Drawer{
                  showContinousHeatMap=false,
                  showCollisionPotential=false,
                  showCongestedRoad=true,
-                 showMoBike=false;
+                 showMoBike=false,
+                 showUrbanLens=true;
   
   
   Drawer(PApplet parent){
@@ -199,4 +200,5 @@ public class Drawer{
   public void toggleMagicTrackpad() { showMagicTrackPad=!showMagicTrackPad;} 
   public void toggleCongestedRoad() { showCongestedRoad=!showCongestedRoad;} 
   public void toggleMoBike() { showMoBike=!showMoBike;} 
+  public void toggleUrbanLens() { showUrbanLens=!showUrbanLens;}
 }

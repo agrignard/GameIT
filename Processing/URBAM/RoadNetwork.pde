@@ -143,7 +143,7 @@ public class RoadNetwork {
             c = lerpColor(legoGrid.c2, legoGrid.c3, (weight-0.5)*2);
           }
         }
-        p.stroke(c); p.strokeWeight(3);
+        p.stroke(c); p.strokeWeight(2);
         p.line(tempN.x, tempN.y, ((Connector)tempN.links.get(j)).n.x, ((Connector)tempN.links.get(j)).n.y);
         p.noStroke();
       }

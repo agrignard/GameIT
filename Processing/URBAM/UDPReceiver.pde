@@ -5,6 +5,7 @@ public class UDPReceiver{
 
 UDP udp;  // define the UDP object
 int udpPort = 15800; //UDP Port 15800  
+//int udpPort = 11969; //UDP Port 15800  
 int index;
 
 //boolean messageDelta = false;
@@ -77,12 +78,13 @@ String messageIn =
 UDPReceiver(){
   udp = new UDP( this, udpPort ); //from Termite desktop
   udp.listen( true );
+  println("I listen to" + udpPort); 
 
 }
 void receive( byte[] data, String ip, int port ) {  // <-- extended handler
   messageIn = new String( data );
   // print the result
-  //println( "receive: \""+messageIn+"\" from "+ip+" on port "+port );
+  println( "receive: \""+messageIn+"\" from "+ip+" on port "+port );
 }
 
 void updateGridValue(){
@@ -124,7 +126,4 @@ void updateGridValue(){
   //reset iterration count
   index = 0;
 }
-
-
-
 }
