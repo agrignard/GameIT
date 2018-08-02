@@ -13,10 +13,9 @@ public class ABM {
   int nbPeoplePerProfile;
   int workingColor= #00ffff;//#000095;//#283c86;//#165E93;//
   int livingColor= #ff00ff;//#FD710A;//#45a247;//#F4A528;//
-  ABM(RoadNetwork _map, String _type, int _nbPeoplePerProfile) {
+  ABM(RoadNetwork _map) {
     map=_map;
-    type=_type;
-    nbPeoplePerProfile= _nbPeoplePerProfile;
+    nbPeoplePerProfile= 100;
     agents = new ArrayList<Agent>();
     //PASTELLE ORANGE AND BLUE
     //colors = new ArrayList<Integer>(Arrays.asList(#AA6839,#FFCDAA,#D4966A,#804115,#552300,#2F4172,#7986AC,#4F608F,#162756,#061439));
@@ -33,10 +32,12 @@ public class ABM {
 
   public void initModel() {
     agents.clear();
-    createAgents(nbPeoplePerProfile, type);
-    createAgents(nbPeoplePerProfile, "static");
-    createAgents(nbPeoplePerProfile/20, "bike");
-    createAgents(nbPeoplePerProfile/20, "dynamic_bike");
+    createAgents(nbPeoplePerProfile, "people");
+    createAgents(nbPeoplePerProfile, "static_people");
+    createAgents(nbPeoplePerProfile/10, "bike");
+    createAgents(nbPeoplePerProfile/20, "static_bike");
+    createAgents(nbPeoplePerProfile/10, "car");
+    createAgents(nbPeoplePerProfile/20, "static_car");
     createAgents(nbPeoplePerProfile, "mobike");
     createAgents(nbPeoplePerProfile, "static_mobike");
   }
@@ -45,22 +46,22 @@ public class ABM {
     if (frameCount % 30 == 0) {
       if (sliderHandler.globalSliders.get(0)>sliderHandler.tmpGlobalSliders.get(0)) {
         addNAgentsPerUsage((int)((sliderHandler.globalSliders.get(0) - sliderHandler.tmpGlobalSliders.get(0)))*10, "people","working");
-        addNAgentsPerUsage((int)((sliderHandler.globalSliders.get(0) - sliderHandler.tmpGlobalSliders.get(0)))*10, "static","working");
+        addNAgentsPerUsage((int)((sliderHandler.globalSliders.get(0) - sliderHandler.tmpGlobalSliders.get(0)))*10, "static_people","working");
         sliderHandler.tmpGlobalSliders.set(0, sliderHandler.globalSliders.get(0));
       }
       if (sliderHandler.globalSliders.get(0)<sliderHandler.tmpGlobalSliders.get(0)) {
         removeNAgentsPerUsage(int((sliderHandler.tmpGlobalSliders.get(0) - sliderHandler.globalSliders.get(0)))*10, "people", "working");
-        removeNAgentsPerUsage(int((sliderHandler.tmpGlobalSliders.get(0) - sliderHandler.globalSliders.get(0)))*10, "static", "working");
+        removeNAgentsPerUsage(int((sliderHandler.tmpGlobalSliders.get(0) - sliderHandler.globalSliders.get(0)))*10, "static_people", "working");
         sliderHandler.tmpGlobalSliders.set(0, sliderHandler.globalSliders.get(0));
       }
       if (sliderHandler.globalSliders.get(1)>sliderHandler.tmpGlobalSliders.get(1)) {
         addNAgentsPerUsage(int((sliderHandler.globalSliders.get(1) - sliderHandler.tmpGlobalSliders.get(1)))*10, "people", "living");
-        addNAgentsPerUsage(int((sliderHandler.globalSliders.get(1) - sliderHandler.tmpGlobalSliders.get(1)))*10, "static", "living");
+        addNAgentsPerUsage(int((sliderHandler.globalSliders.get(1) - sliderHandler.tmpGlobalSliders.get(1)))*10, "static_people", "living");
         sliderHandler.tmpGlobalSliders.set(1, sliderHandler.globalSliders.get(1));
       }
       if (sliderHandler.globalSliders.get(1)<sliderHandler.tmpGlobalSliders.get(1)) {
         removeNAgentsPerUsage(int((sliderHandler.tmpGlobalSliders.get(1) - sliderHandler.globalSliders.get(1)))*10, "people", "living");
-        removeNAgentsPerUsage(int((sliderHandler.tmpGlobalSliders.get(1) - sliderHandler.globalSliders.get(1)))*10, "static", "living");
+        removeNAgentsPerUsage(int((sliderHandler.tmpGlobalSliders.get(1) - sliderHandler.globalSliders.get(1)))*10, "static_people", "living");
         sliderHandler.tmpGlobalSliders.set(1, sliderHandler.globalSliders.get(1));
       }
     }
@@ -72,16 +73,16 @@ public class ABM {
         if (sliderHandler.localSliders.get(i)>sliderHandler.tmpLocalSliders.get(i)) {
           if (i<5) {
             addNAgentPerProfiles((int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "people","living") ;
-            addNAgentPerProfiles((int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "static","living") ;
+            addNAgentPerProfiles((int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "static_people","living") ;
           } else {
             addNAgentPerProfiles((int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "people", "working") ;
-            addNAgentPerProfiles((int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "static", "working") ;
+            addNAgentPerProfiles((int)((sliderHandler.localSliders.get(i) - sliderHandler.tmpLocalSliders.get(i)))*2, profiles.get(i), "static_people", "working") ;
           }
           sliderHandler.tmpLocalSliders.set(i, sliderHandler.localSliders.get(i));
         }
         if (sliderHandler.localSliders.get(i)<sliderHandler.tmpLocalSliders.get(i)) {
           removeNAgentsPerProfiles(int((sliderHandler.tmpLocalSliders.get(i) - sliderHandler.localSliders.get(i)))*2, "people", profiles.get(i));
-          removeNAgentsPerProfiles(int((sliderHandler.tmpLocalSliders.get(i) - sliderHandler.localSliders.get(i)))*2, "static", profiles.get(i));
+          removeNAgentsPerProfiles(int((sliderHandler.tmpLocalSliders.get(i) - sliderHandler.localSliders.get(i)))*2, "static_people", profiles.get(i));
           sliderHandler.tmpLocalSliders.set(i, sliderHandler.localSliders.get(i));
         }
       }
@@ -90,7 +91,7 @@ public class ABM {
 
   public void run(PGraphics p) {
     for (int i=0; i<agents.size(); i++) {
-      if (agents.get(i).type.equals("people") || agents.get(i).type.equals("dynamic_bike") || agents.get(i).type.equals("mobike")) {
+      if (agents.get(i).type.equals("people") || agents.get(i).type.equals("bike") || agents.get(i).type.equals("car") || agents.get(i).type.equals("mobike")) {
         agents.get(i).move();
       } 
       agents.get(i).draw(p);
@@ -112,7 +113,7 @@ public class ABM {
         ag = new Agent(map, profiles.get(5+int(random(4))), type, "working");
         model.agents.add(ag);
       }
-      if(ag.type.equals("static") && drawer.showViewCube){
+      if(ag.type.equals("static_people") && drawer.showViewCube){
           relocateAgentInsideGrid(ag,grid.curActiveGridPos,grid.cellSize);
       }
     }
@@ -150,7 +151,7 @@ public class ABM {
     for (int i = 0; i < num; i++) {
       ag = new Agent(map, profile, type, usage);
       model.agents.add(ag);
-      if(ag.type.equals("static") && drawer.showViewCube){
+      if(ag.type.equals("static_people") && drawer.showViewCube){
           relocateAgentInsideGrid(ag,grid.curActiveGridPos,grid.cellSize);
       }
     }
@@ -197,29 +198,6 @@ public class ABM {
     }
   }
 
-  /*public void createStaticAgents(int id, int num, String type) {
-    for (int i = 0; i < num; i++) {
-      for (int j=0; j<profiles.size()/2; j++) {
-        agents.add( new Agent(id, map, profiles.get(j), type, "living"));
-      }
-      for (int j=5; j<profiles.size(); j++) {
-        agents.add( new Agent(id, map, profiles.get(j), type, "working"));
-      }
-    }
-  }*/
-
-  public int getNbCars() {
-    int nbCars=0;
-    for (int i=0; i<agents.size(); i++) {
-      if (agents.get(i).type.equals("car")) {
-        nbCars++;
-      }
-    }
-    return nbCars;
-  }
-  
-  
-  
   public int getNbMovingPeople() {
     int nbP=0;
     for (int i=0; i<agents.size(); i++) {
@@ -229,18 +207,7 @@ public class ABM {
     }
     return nbP;
   }
-  
-  
-  public Agent getRandomCar(){
-    Agent ag = null;
-    for (int i=0; i<agents.size(); i++) {
-      if (agents.get(i).type.equals("car")) {
-        ag=agents.get(i);
-      }
-    }
-    return ag;
-  }
-  
+    
   public Agent getRandomLivingPeople(){
     Agent ag = null;
     for (int i=0; i<agents.size(); i++) {
@@ -264,74 +231,14 @@ public class ABM {
   public int getNbStaticPeople() {
     int nbP=0;
     for (int i=0; i<agents.size(); i++) {
-      if (agents.get(i).type.equals("static")) {
+      if (agents.get(i).type.equals("static_people")) {
         nbP++;
       }
     }
     return nbP;
   }
   
-  public void updateCarPop() {
-    if (frameCount % 30 == 0) {
-      int living=0;
-      int working=0;
-      int nbCars=getNbCars();
-      for (int i=0; i<agents.size(); i++) {
-        if (agents.get(i).usage.equals("living")) {
-          living++;
-        } else {
-          working++;
-        }
-      }
-      int nbNewCar = abs((sliderHandler.globalSliders.get(1)-sliderHandler.tmpLocalSliders.get(1))-(sliderHandler.globalSliders.get(0)-sliderHandler.tmpLocalSliders.get(0)));
-      nbNewCar=nbNewCar*10;
-      sliderHandler.tmpLocalSliders.set(0, sliderHandler.localSliders.get(0));
-      sliderHandler.tmpLocalSliders.set(1, sliderHandler.localSliders.get(1));
-      if (nbNewCar>0) {
-        if (getNbCars()<nbNewCar) {
-          for (int i=0; i<nbNewCar-nbCars; i++) {
-            if (living>working) {
-              //agents.add( new Agent(id, map, profiles.get(int(random(4))), "car", "living"));
-              getRandomLivingPeople().type="car";
-            } else {
-              //agents.add( new Agent(id, map, profiles.get(int(5+random(4))), "car", "working"));
-              getRandomWorkingPeople().type="car";
-            }
-          }
-        } else {
-          Iterator<Agent> ag = model.agents.iterator();
-          int i=0;
-          while (ag.hasNext()) { 
-            Agent tmpAg = ag.next();
-            if (tmpAg.type.equals("car")) { 
-              if (i<nbNewCar-nbCars) { 
-                //ag.remove();
-                getRandomCar().type="people";
-                i++;
-              }
-            }
-          }
-        }
-      } else {
-        if (getNbCars()>0) {
-          int tmp = getNbCars(); 
-          Iterator<Agent> ag = model.agents.iterator();
-          int i=0;
-          while (ag.hasNext()) { 
-            Agent tmpAg = ag.next();
-            if (tmpAg.type.equals("car")) { 
-              if (i<tmp) { 
-                ag.remove();
-                i++;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  
-    public ArrayList<Agent> getAgentInsideROI(PVector pos, int size){
+  public ArrayList<Agent> getAgentInsideROI(PVector pos, int size){
     ArrayList<Agent> tmp = new ArrayList<Agent>();
     for (int i=0;i<agents.size();i++){
         if(((agents.get(i).pos.x>pos.x-size/2) && (agents.get(i).pos.x)<pos.x+size/2) &&
@@ -402,23 +309,26 @@ public class Agent {
     myProfileColor= (int)(model.colorProfiles.get(profile));
     myUsageColor = (usage.equals("working")) ? color(model.workingColor) : model.livingColor;
 
-    if (type.equals("car")) {
-      speed= 10*0.3 + random(0.5);
-      size= 7;// + random(5);
-    }
     if (type.equals("people")) {
-      speed= 5*0.05 + random(0.1);
+      speed= 0.25;
+      speed = speed + random(-speed*0.2,speed*0.2);
       size= 4;// + random(8);
     }
-    if (type.equals("dynamic_bike")) {
-      speed= 10*0.05 + random(0.1);
-      size= 4;// + random(8);
+    if (type.equals("bike")) {
+      speed= 0.5;
+      speed = speed + random(-speed*0.2,speed*0.2);
+      size= 6;// + random(8);
+    }
+    if (type.equals("car")) {
+      speed= 1.0;
+      speed = speed + random(-speed*0.2,speed*0.2);
+      size= 8;// + random(5);
     }
     if (type.equals("mobike")) {
       speed= 5*0.05 + random(0.1);
       size= 4;// + random(8);
     }
-    if (type.equals("static") || type.equals("bike") || type.equals("static_mobike")) {
+    if (type.equals("static_people") || type.equals("static_bike") || type.equals("static_mobike")) {
       speed= 0.1 + random(0.5);
       size= 4 ;//+ random(8);
       if (usage.equals("living")) {
@@ -436,19 +346,20 @@ public class Agent {
 
   public void draw(PGraphics p) {
     if (drawer.showAgent) {
-      if (type.equals("people") || type.equals("static")) {
+      if (type.equals("people") || type.equals("static_people")) {
         p.noStroke();
         p.fill(myProfileColor);
         p.ellipse(pos.x, pos.y, size, size);
       }
-      if (type.equals("car")) { 
+      
+      if (type.equals("bike") || type.equals("static_bike")){
         p.stroke(myProfileColor);
         p.strokeWeight(2);
         p.noFill();
-        p.ellipse(pos.x, pos.y, size, size);
+        p.ellipse(pos.x, pos.y, size*2, size*2);
+        p.noStroke();
       }
-      
-      if (type.equals("bike") || type.equals("dynamic_bike")){
+      if (type.equals("car") || type.equals("static_car")){
         p.stroke(myProfileColor);
         p.strokeWeight(2);
         p.noFill();

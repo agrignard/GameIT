@@ -102,7 +102,8 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
   String message = new String( data );
    
   newMsg = "receive: " + message +" from "+ip+" on port "+port;
-  //println(newMsg);
+  tags.updateTagDensity();
+  println(newMsg);
   String[] list = split(newMsg, ' ');
   if(int(list[2])==10){
     globalSliders.set(0,int(list[3]));

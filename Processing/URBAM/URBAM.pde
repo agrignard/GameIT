@@ -23,6 +23,10 @@ InteractiveTagTable tags;
 UDPReceiver udpR;
 int currentView=-1;
 boolean iterativeMode=false;
+int nbView=7;
+boolean ABM=true;
+boolean updateDynamicPop=false;
+boolean updateInteractivePop=true;
 
 //INTERFACE VARIABLES
 boolean messageDelta = false;
@@ -35,16 +39,13 @@ boolean tagsInteraction=false;
 import codeanticode.syphon.*;
 SyphonServer server;
 /////////////////////////////////
-
-
-
 void settings() {
   //size(displayWidth, displayHeight, P3D);
   fullScreen(P3D, 0);
 }
 
 void setup() {
-  
+  frameRate(30);
   width=displayWidth;
   height=displayHeight;
   drawer = new Drawer(this);
@@ -59,7 +60,7 @@ void setup() {
   aggregatedHeatmap2 = new ContinousHeatmap(0, 0, width, height);
   aggregatedHeatmap2.setBrush("HeatMap/heatmapBrush.png", 80);
   aggregatedHeatmap2.addGradient("cold", "HeatMap/hot_transp.png");
-  model = new ABM(roads, "people", 100);
+  model = new ABM(roads);
   model.initModel();
   grid = new Grid();
   legoGrid = new StaticGrid(loadStrings("data/Grid/LegoGrid_Block_LLL_5x5.asc"));
@@ -204,6 +205,9 @@ void keyTyped() {
     case 'a':   
       drawer.toggleAgent();
       break;
+    case 'z':   
+      drawer.toggleAgentOnGrid();
+      break;
     case 'b':  
       drawer.toggleBuilding();
       break;
@@ -309,12 +313,12 @@ void mouseClicked(MouseEvent evt) {
   }else{
     if(iterativeMode){
     if (mouseButton == LEFT) {
-      currentView  = (currentView + 1) % 10;
+      currentView  = (currentView + 1) % nbView;
       updateCurrentState(currentView);
     } else if (mouseButton == RIGHT) {
-      currentView  = (currentView - 1) % 10;
+      currentView  = (currentView - 1) % nbView;
       if(currentView < 0){
-        currentView=9;
+        currentView=nbView-1;
       }
       updateCurrentState(currentView);
       
@@ -330,7 +334,7 @@ void mouseMoved() {
     String s = "TMT,"+(displayWidth-mouseX)+","+(displayHeight-mouseY)+","+displayWidth+","+displayHeight+",0,0,0,0,";
     //println("sending " + s + "to " + "127.0.0.1" + " port:" + 11969);
     // UDP Local 
-    udpR.udp.send(s,"127.0.0.1",11969);
+      udpR.udp.send(s,"127.0.0.1",11969);
     //UDP Router
     //udpR.udp.send(s,"192.168.0.189",17999);
   }
@@ -340,7 +344,8 @@ void updateCurrentState(int slideID){
   switch(slideID) {
     case -1:
       drawer.showAgent=true;
-      drawer.showBG=true;
+      drawer.showAgentOnGrid=true;
+      drawer.showBG=false;
       drawer.showStaticGrid=false;
       drawer.showInteractiveGrid=true;
       drawer.showBuilding=false;
@@ -351,43 +356,8 @@ void updateCurrentState(int slideID){
       tagViz = 'T';
       break;
     case 0:
-      drawer.showAgent=true;
-      drawer.showBG=false;
-      drawer.showStaticGrid=false;
-      drawer.showInteractiveGrid=false;
-      drawer.showBuilding=false;
-      drawer.showCollisionPotential=false;
-      drawer.showContinousHeatMap=false;
-      drawer.showRoad=false;
-      drawer.showMoBike=false;
-      tagViz = 'T';
-      break;
-    case 1:
-      drawer.showAgent=true;
-      drawer.showBG=false;
-      drawer.showStaticGrid=false;
-      drawer.showInteractiveGrid=false;
-      drawer.showBuilding=true;
-      drawer.showCollisionPotential=false;
-      drawer.showContinousHeatMap=false;
-      drawer.showRoad=false;
-      drawer.showMoBike=false;
-      tagViz = 'T';
-      break;
-    case 2:
-      drawer.showAgent=true;
-      drawer.showBG=true;
-      drawer.showStaticGrid=false;
-      drawer.showInteractiveGrid=false;
-      drawer.showBuilding=true;
-      drawer.showCollisionPotential=false;
-      drawer.showContinousHeatMap=false;
-      drawer.showRoad=false;
-      drawer.showMoBike=false;
-      tagViz = 'T';
-      break;
-    case 3:
-      drawer.showAgent=true;
+      drawer.showAgent=false;
+      drawer.showAgentOnGrid=true;
       drawer.showBG=false;
       drawer.showStaticGrid=true;
       drawer.showInteractiveGrid=true;
@@ -398,8 +368,9 @@ void updateCurrentState(int slideID){
       drawer.showMoBike=false;
       tagViz = 'T';
       break;
-    case 4:
-      drawer.showAgent=true;
+    case 1:
+      drawer.showAgent=false;
+      drawer.showAgentOnGrid=true;
       drawer.showBG=false;
       drawer.showStaticGrid=true;
       drawer.showInteractiveGrid=true;
@@ -410,8 +381,9 @@ void updateCurrentState(int slideID){
       drawer.showMoBike=false;
       tagViz = 'O';
       break;
-    case 5:
-      drawer.showAgent=true;
+    case 2:
+      drawer.showAgent=false;
+      drawer.showAgentOnGrid=true;
       drawer.showBG=false;
       drawer.showStaticGrid=true;
       drawer.showInteractiveGrid=true;
@@ -422,8 +394,9 @@ void updateCurrentState(int slideID){
       drawer.showMoBike=false;
       tagViz = 'R';
       break;
-    case 6:
-      drawer.showAgent=true;
+    case 3:
+      drawer.showAgent=false;
+      drawer.showAgentOnGrid=true;
       drawer.showBG=false;
       drawer.showStaticGrid=true;
       drawer.showInteractiveGrid=true;
@@ -434,8 +407,9 @@ void updateCurrentState(int slideID){
       drawer.showMoBike=false;
       tagViz = 'P';
       break;
-    case 7:
+    case 4:
       drawer.showAgent=false;
+      drawer.showAgentOnGrid=true;
       drawer.showBG=false;
       drawer.showStaticGrid=true;
       drawer.showInteractiveGrid=false;
@@ -446,8 +420,9 @@ void updateCurrentState(int slideID){
       drawer.showMoBike=false;
       tagViz = 'H';
       break;
-    case 8:
+    case 5:
       drawer.showAgent=true;
+      drawer.showAgentOnGrid=true;
       drawer.showBG=false;
       drawer.showStaticGrid=false;
       drawer.showInteractiveGrid=false;
@@ -457,8 +432,9 @@ void updateCurrentState(int slideID){
       drawer.showRoad=false;
       drawer.showMoBike=true;
       break;
-    case 9:
+    case 6:
       drawer.showAgent=true;
+      drawer.showAgentOnGrid=true;
       drawer.showBG=false;
       drawer.showStaticGrid=false;
       drawer.showInteractiveGrid=false;

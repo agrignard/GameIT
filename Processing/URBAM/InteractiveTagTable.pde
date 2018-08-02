@@ -16,84 +16,57 @@ public class InteractiveTagTable {
   PVector startPoint = new PVector(630*sizeScale, 35*sizeScale, 0);
   int scaleWorld = 1;
   
-  
-  InteractiveTagTable(){
-    //setupInteractiveTagTable();
-  }
-  
   public void setupInteractiveTagTable(){
     unit = unit * scaleWorld;
     for (int y = 0; y < highCount; y++) {
     for (int x = 0; x < wideCount; x++) {     
       int type = parseInt(abs(random(0, 3))); //assign random type , either 0,1,2
-
       //Create new tag and account for street gaps and start location//
       float tagWeight = random(0, 800)/1000.0f;
-      //float tagWeight = 0.9;
-
-      //Here we add a spacer for the highways. The 0.2 
-      //
       float highwaySpacer = 0;
       if (x>18) {
         highwaySpacer= unit*.2;
       }
-
-      LLLTag tempTag = new LLLTag(x*unit+startPoint.x*scaleWorld +highwaySpacer, y*unit+startPoint.y*scaleWorld, type, unit*.8, unit*.8, tagWeight);
+      LLLTag tempTag = new LLLTag(x*unit+startPoint.x*scaleWorld +highwaySpacer, y*unit+startPoint.y*scaleWorld, type, unit*.8, unit*.8, tagWeight, random(10));
       tagList.add(tempTag);
       tempTag.refreshAllWeights();
     }
   }
   }
-    public void UpdateAndDraw(PGraphics p){
-    //println("tagViz" + tagViz);
+  
+  public void UpdateAndDraw(PGraphics p){
     for (LLLTag mod : tagList) {
     udpR.index++;
     float calcWeights = 1.0f; //reset calcweights for each tag
-
     //Update Weights
     if (messageDelta || mouseClicked) {
       //println("udapteweights");
       /////Get distances to all other tags and run a calculation
       int calcsFound = 0;
       for (LLLTag mod2 : tagList) {
-
         float dist = mod2.point.dist(mod.point);
-
-        //println(dist);
-
         switch(tagViz) {
         case 'E':
         break;
         case 'P': 
-          //println("Parks");  // Does not execute
           if (mod2.tagID == 138) {
             if (dist<130) { //distance threshold for parks
               float tempCal =  ( dist/130.0f) ;
-
               //Easing 
               float sqt = sqrt(tempCal);
               tempCal= (sqt / (2.0f * (sqt - tempCal) + 0.5f)) ;
-
-
               if (tempCal<calcWeights) {
                 calcWeights = tempCal;
-                //println(tempCal);
               };
             }
           }
 
           if (mod.delta) {
-
-            //println("Delta piece found");
-            // println(dist);
             float proximityThreshold = 180 * scaleWorld; //This is the proximity threshold of the neighbouring tags that will be impacted by this change in animation/
             if ( dist<proximityThreshold) {
-              // println("Animate wave ");
-
               mod2.animateWave((1.0f- dist/proximityThreshold ));//feed distance ratio to animation wave
             };
           }
-
           break;
         case 'O': 
           if (mod2.tagID==43 || mod2.tagID==63 || mod2.tagID==126) {
@@ -136,17 +109,11 @@ public class InteractiveTagTable {
           }
           break;
         case 'T': 
-          //println("Type");  // 
           break;
         default:
-          // println("Nothing");   // Does not execute
           break;
         }
       }
-
-      //reset delta
-
-
       //reconcile calcWeights with the number of values found
       switch(tagViz) {
       case 'P': 
@@ -165,17 +132,46 @@ public class InteractiveTagTable {
         mod.updateWeight(calcWeights);
         break;
       default:
-        // println("Nothing");   // Does not execute
         break;
       }
-      // println(calcWeights);
-
-      //println("new delta found");
     }
     mod.display(p,tagViz);
   }
   }
   
+ void displayMicroPop(PGraphics p){
+    int spread=2;
+    for (LLLTag t : tags.tagList) {
+      for (int i=0;i<=t.density-1;i++){
+        if(t.tagID==0||t.tagID==9||t.tagID==19||t.tagID==43||t.tagID==63||t.tagID==126){
+          p.fill(legoGrid.colorMap.get(t.tagID));
+          if(i%2==0){
+            p.ellipse(t.x + t.tagWidth/2 + noise(t.x+i)*t.tagWidth*spread,t.y+t.tagHeight/2+ noise(t.y+i)*t.tagHeight*spread,4,4);
+          }else{
+            p.ellipse(t.x + t.tagWidth/2 - noise(t.x+i)*t.tagWidth*spread,t.y+t.tagHeight/2 - noise(t.y+i)*t.tagHeight*spread,4,4);
+          }
+        }
+      }
+    }
+  }
+   
+  void updateTagDensity(){
+    updateTagDensityPerId(0, sliderHandler.localSliders.get(0)/10.0);
+    updateTagDensityPerId(9, sliderHandler.localSliders.get(1)/10.0);
+    updateTagDensityPerId(19, sliderHandler.localSliders.get(2)/10.0);
+    updateTagDensityPerId(43, sliderHandler.localSliders.get(3)/10.0);
+    updateTagDensityPerId(63, sliderHandler.localSliders.get(4)/10.0);
+    updateTagDensityPerId(126, sliderHandler.localSliders.get(5)/10.0);
+  }
+  
+  void updateTagDensityPerId(int id, float value){
+    for (LLLTag t : tags.tagList) {
+      if(id == t.tagID){
+        t.density=value;
+      }
+    }
+  }
+    
 }
 
 class LLLTag {
@@ -184,7 +180,7 @@ class LLLTag {
   color c3 = color(255, 0, 0);
 
 
-  float x, y, rot, tagType, tagWidth, tagHeight, size;
+  float x, y, rot, tagType, tagWidth, tagHeight, size, density;
 
   //Point object used for native dist calcs
   PVector point;
@@ -207,7 +203,7 @@ class LLLTag {
 
 
   // Contructor
-  LLLTag(float xTemp, float yTemp, int typeTemp, float sizeX, float sizeY, float weightTemp) {
+  LLLTag(float xTemp, float yTemp, int typeTemp, float sizeX, float sizeY, float weightTemp, float densityTemp) {
 
     x = xTemp;
     y = yTemp;
@@ -220,6 +216,7 @@ class LLLTag {
     point = new PVector(x, y, 0);
 
     tagWeight = weightTemp;
+    density = densityTemp;
     /////////////////////////////////
     //Iniatiate Inner 2D Voxel array
     /////////////////////////////////
@@ -307,14 +304,11 @@ class LLLTag {
         break;
       case 'T': 
         p.fill(0, 80, 80, 200);
+        if(tagID==0||tagID==9||tagID==19||tagID==43||tagID==63||tagID==126){
+          p.fill(legoGrid.colorMap.get(tagID),150);
+        }
         if (tagID==138) {
           p.fill(0, 230, 0, 255);
-        }
-        if (tagID==0 || tagID==9 || tagID==19) {
-          p.fill(230, 0, 255, 255);
-        }
-        if (tagID==43 || tagID==63 || tagID==126) {
-          p.fill(0, 230, 230, 255);
         }
         p.rect(x, y, tagWidth, tagHeight);
         break;
@@ -329,7 +323,7 @@ class LLLTag {
     //always reset update flags
     updateWeights=false;
   }
-  
+    
   void updateWaveedGrid(PGraphics p){
         //Draw interior grid of 4x4
         for (int i=0; i<tagVoxels.size(); i++) {

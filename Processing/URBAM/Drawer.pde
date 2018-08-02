@@ -6,7 +6,8 @@ public class Drawer{
   PGraphics offscreenSurface;
   PGraphics subSurface;
   public boolean showBG = true,
-                 showAgent = true,
+                 showAgent = false,
+                 showAgentOnGrid = false,
                  showBuilding = false,
                  showRoad=false,
                  showViewCube=false,
@@ -21,11 +22,13 @@ public class Drawer{
                  showCongestedRoad=true,
                  showMoBike=false,
                  showUrbanLens=true;
-  
-  
+  HashMap<Integer,String> viewText;
+
   Drawer(PApplet parent){
     ks = new Keystone(parent);
     offscreenSurface = createGraphics(playGroundWidth, playGroundHeight, P3D);
+  viewText = new HashMap<Integer,String>();
+  viewText.put(-1,"Default");viewText.put(0,"LANDUSE");viewText.put(1,"JOBS2HOME");viewText.put(2,"HOME2JOBS");viewText.put(3,"PARKS");viewText.put(4,"CONGESTION");viewText.put(5,"BIKES SHARE");viewText.put(6,"INTERACTION");
   }
   
   void initSurface(){
@@ -58,10 +61,17 @@ public class Drawer{
       roads.draw(offscreenSurface);
       buildings.draw(offscreenSurface); 
       drawMagicTrackPad(offscreenSurface);
-      model.run(offscreenSurface);
-      model.updateGlobalPop();
-      model.updateLocalPop();
-      model.updateCarPop();
+      if(ABM){
+        model.run(offscreenSurface);
+        if(updateDynamicPop){
+          model.updateGlobalPop();
+          model.updateLocalPop();
+        }
+      }
+      if(updateInteractivePop){
+        
+      }
+
     
       offscreenSurface.endDraw();
       for (int i=0; i<nbProjector;i++){
@@ -79,6 +89,9 @@ public class Drawer{
     p.rect (tags.startPoint.x,tags.startPoint.y, tags.wideCount*tags.unit, tags.highCount*tags.unit);
     udpR.updateGridValue();
     tags.UpdateAndDraw(p);
+    if(drawer.showAgentOnGrid){
+      tags.displayMicroPop(p);
+    }
     messageDelta= false;
     mouseClicked = false;
     started = true;
@@ -97,30 +110,22 @@ public class Drawer{
       p.rectMode(CORNER);
       p.fill(#FFFFFF);
       p.rect (1100*sizeScale,355*sizeScale, 63*sizeScale, 45*sizeScale);
-      p.fill(color(0, 80, 80, 200));
+      p.fill(#000000);
       p.textAlign(CENTER); 
-      p.textSize(20); 
-      p.text(currentView, 1100*sizeScale + (63/2)*sizeScale, 355*sizeScale + (45/2+45/4)*sizeScale);
+      p.textSize(9); 
+      p.text(viewText.get(currentView), 1100*sizeScale + (63/2)*sizeScale, 355*sizeScale + (45/2+45/8)*sizeScale);
     }
   }
     
   void drawABMInfo(PGraphics p){
     p.textAlign(RIGHT); 
     
-   
     p.ellipse(width-50, 40, 10, 10);
     p.text("Moving people : " + int(model.getNbMovingPeople()), width-70, 43);
     
     p.ellipse(width-50, 60, 10, 10);
     p.text("Static people : " + int(model.getNbStaticPeople()), width-70, 63);
-    
-    p.stroke(#FFFFFF);
-    p.strokeWeight(2);
-    p.noFill();
-    p.ellipse(width-50, 80, 10, 10);
-    p.fill(#FFFFFF);
-    p.text("Cars : " + int(model.getNbCars()), width-70, 83);
-    
+        
     p.noStroke();
     p.fill(model.livingColor);
     p.ellipse(width-50, 100, 10, 10);
@@ -188,6 +193,7 @@ public class Drawer{
   } 
   public void toggleBG() { showBG = !showBG; }
   public void toggleAgent() { showAgent = !showAgent; }
+  public void toggleAgentOnGrid() { showAgentOnGrid = !showAgentOnGrid; }
   public void toggleBuilding() { showBuilding = !showBuilding;}
   public void toggleRoad() { showRoad = !showRoad;}
   public void toggleViewCube() { showViewCube = !showViewCube;}
