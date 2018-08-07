@@ -133,9 +133,6 @@ public class RoadNetwork {
         color c= #FFFFFF;
         if(drawer.showCongestedRoad){
           float weight = model.getAgentInsideROI(new PVector(tempN.x,tempN.y),int(legoGrid.cellsize)).size()/5.0;
-          //float dist = dist(tempN.x, tempN.y, ((Connector)tempN.links.get(j)).n.x, ((Connector)tempN.links.get(j)).n.y);
-          //weight = dist/50.0;
-          //println(weight);
           if (weight<0.5) {
             c = lerpColor(legoGrid.c1, legoGrid.c2, weight*2);
           } 

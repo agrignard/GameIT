@@ -3,38 +3,6 @@ import hypermedia.net.*;
 
 UDP udp;  // define the UDP object
 
-public class InterFace{
- InterFace(){
-   // create a new datagram connection on port 6000
-  // and wait for incomming message
-  udp = new UDP( this, 12999 );
-  //udp.log( true );     // <-- printout the connection activity
-  udp.listen( true );
- }
- 
-// void receive( byte[] data ) {       // <-- default handler
-void receive( byte[] data, String ip, int port ) {  // <-- extended handler
-    // get the "real" message =
-  // forget the ";\n" at the end <-- !!! only for a communication with Pd !!!
-  data = subset(data, 0, data.length-2);
-  String message = new String( data );
-  String[] list = split(message, ',');
-  //FIXME: Will be reuse for the viewcube
-  /*if(drawer.useLeap){
-    for (int x=0; x<width/grid.cellSize; x++) {
-        for (int y=0; y<height/grid.cellSize; y++) {
-          grid.cells[x][y]=0;
-        }
-      }
-  grid.cells[int(list[1])][int(list[2])]=1;
-  }*/
-  
-  
-  // print the result
-  println( "receive: \""+message+"\" from "+ip+" on port "+port );
-}
-}
-
 public class SliderHandler{
   ArrayList<Integer> globalSliders;
   ArrayList<Integer> tmpGlobalSliders;
@@ -45,7 +13,7 @@ public class SliderHandler{
   SliderHandler(){
     // create a new datagram connection on port 6000
     // and wait for incomming message
-    udp = new UDP( this, 11999 );
+    udp = new UDP( this, 12999 );
 
     //udp.log( true );     // <-- printout the connection activity
     udp.listen( true );
@@ -102,8 +70,7 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
   String message = new String( data );
    
   newMsg = "receive: " + message +" from "+ip+" on port "+port;
-  tags.updateTagDensity();
-  println(newMsg);
+  //println(newMsg);
   String[] list = split(newMsg, ' ');
   if(int(list[2])==10){
     globalSliders.set(0,int(list[3]));
@@ -117,6 +84,9 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
       localSliders.set(i,int(list[3]));
     }     
  }
+ 
+ tags.updateTagDensity(drawer.QR_ID.get(int(list[2])),int(list[3]));
+ tags.updateTagVisibilityPerId(drawer.QR_ID.get(int(list[2])),int(list[4]));
 }
   
 }

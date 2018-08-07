@@ -27,11 +27,63 @@ public class InteractiveTagTable {
       if (x>18) {
         highwaySpacer= unit*.2;
       }
-      LLLTag tempTag = new LLLTag(x*unit+startPoint.x*scaleWorld +highwaySpacer, y*unit+startPoint.y*scaleWorld, type, unit*.8, unit*.8, tagWeight, random(10));
+      LLLTag tempTag = new LLLTag(x*unit+startPoint.x*scaleWorld +highwaySpacer, y*unit+startPoint.y*scaleWorld, type, unit*.8, unit*.8, tagWeight, 5);
       tagList.add(tempTag);
       tempTag.refreshAllWeights();
     }
   }
+  }
+  
+  public void instantiateAgentFromGrid(){
+    Agent ag = null;
+    int nbWorkingBuilding= buildings.getWorkingBuilding().size();
+    int nbLivingBuilding= buildings.getLivingBuilding().size();
+    println("nbWorkingBuilding" + nbWorkingBuilding);
+    buildings.getLivingBuilding().get(int(random(nbLivingBuilding-1)));
+    println("nbLivingBuilding" + nbLivingBuilding);
+    for (LLLTag t : tagList) {
+      //OFFICE
+      if (t.tagID==43 || t.tagID==63 || t.tagID==126){
+        for ( int i=0;i<=t.density;i++){
+          Node srcNode =  (Node) model.map.graph.nodes.get(int(random(model.map.graph.nodes.size())));
+          //Node srcNode;
+          if(t.tagID==43){
+            srcNode =  model.getNodeInsideROI(getRandomTagPerID(0).point,100).get(0);
+          }
+          if(t.tagID==63){
+            srcNode =  model.getNodeInsideROI(getRandomTagPerID(9).point,100).get(0);
+          }
+          if(t.tagID==126){
+            srcNode =  model.getNodeInsideROI(getRandomTagPerID(19).point,100).get(0);
+          }
+          //Node srcNode =  model.getNodeInsideROI(buildings.getLivingBuilding().get(int(random(nbLivingBuilding-1))).shape.getVertex(0),500).get(0); 
+          Node destNode = model.getNodeInsideROI(t.point,100).get(0);
+          ag = new Agent(model.map, model.profiles.get(5+int(random(4))), "people_from_grid", "working", srcNode, destNode);
+          model.agents.add(ag);
+        }
+        
+      }
+      //RESIDENTIAL
+      if (t.tagID==0 || t.tagID==9 || t.tagID==19){
+        for ( int i=0;i<=t.density;i++){
+          Node srcNode = model.getNodeInsideROI(t.point,100).get(0);
+          Node destNode =  (Node) model.map.graph.nodes.get(int(random(model.map.graph.nodes.size())));
+          if(t.tagID==0){
+            destNode =  model.getNodeInsideROI(getRandomTagPerID(43).point,100).get(0);
+          }
+          if(t.tagID==9){
+            destNode =  model.getNodeInsideROI(getRandomTagPerID(63).point,100).get(0);
+          }
+          if(t.tagID==19){
+            destNode =  model.getNodeInsideROI(getRandomTagPerID(126).point,100).get(0);
+          }
+          //Node destNode =  model.getNodeInsideROI(buildings.getWorkingBuilding().get(int(random(nbWorkingBuilding))).shape.getVertex(0),500).get(0);
+          ag= new Agent(model.map, model.profiles.get(int(random(4))), "people_from_grid", "living",srcNode, destNode);
+          model.agents.add(ag);
+        }
+      }
+      
+    }
   }
   
   public void UpdateAndDraw(PGraphics p){
@@ -135,43 +187,67 @@ public class InteractiveTagTable {
         break;
       }
     }
-    mod.display(p,tagViz);
+    if(mod.visible){
+      mod.display(p,tagViz);
+    }
+    
   }
   }
   
  void displayMicroPop(PGraphics p){
     int spread=2;
     for (LLLTag t : tags.tagList) {
-      for (int i=0;i<=t.density-1;i++){
-        if(t.tagID==0||t.tagID==9||t.tagID==19||t.tagID==43||t.tagID==63||t.tagID==126){
-          p.fill(legoGrid.colorMap.get(t.tagID));
-          if(i%2==0){
-            p.ellipse(t.x + t.tagWidth/2 + noise(t.x+i)*t.tagWidth*spread,t.y+t.tagHeight/2+ noise(t.y+i)*t.tagHeight*spread,4,4);
-          }else{
+      if(t.visible){
+        for (int i=0;i<=t.density-1;i++){
+          if(t.tagID==0||t.tagID==9||t.tagID==19||t.tagID==43||t.tagID==63||t.tagID==126){
+            p.fill(legoGrid.colorMap.get(t.tagID));
+            if(i%2==0){
+              p.ellipse(t.x + t.tagWidth/2 + noise(t.x+i)*t.tagWidth*spread,t.y+t.tagHeight/2+ noise(t.y+i)*t.tagHeight*spread,4,4);
+            } else{
             p.ellipse(t.x + t.tagWidth/2 - noise(t.x+i)*t.tagWidth*spread,t.y+t.tagHeight/2 - noise(t.y+i)*t.tagHeight*spread,4,4);
           }
         }
       }
-    }
-  }
-   
-  void updateTagDensity(){
-    updateTagDensityPerId(0, sliderHandler.localSliders.get(0)/10.0);
-    updateTagDensityPerId(9, sliderHandler.localSliders.get(1)/10.0);
-    updateTagDensityPerId(19, sliderHandler.localSliders.get(2)/10.0);
-    updateTagDensityPerId(43, sliderHandler.localSliders.get(3)/10.0);
-    updateTagDensityPerId(63, sliderHandler.localSliders.get(4)/10.0);
-    updateTagDensityPerId(126, sliderHandler.localSliders.get(5)/10.0);
-  }
-  
-  void updateTagDensityPerId(int id, float value){
-    for (LLLTag t : tags.tagList) {
-      if(id == t.tagID){
-        t.density=value;
       }
     }
   }
-    
+  
+  LLLTag getRandomTagPerID(int id){
+    ArrayList<LLLTag> tmpList = new ArrayList<LLLTag>();
+    for (LLLTag t : tags.tagList) {
+      if(t.tagID==id){
+        tmpList.add(t);
+      }
+    }
+    int size = tmpList.size();
+    return tmpList.get(int(random(size)));
+  }
+   
+  void updateTagDensity(int id, int value){
+    for (LLLTag t : tags.tagList) {
+      if(id == t.tagID){
+        t.density=value/10;
+      }
+    }
+  }  
+  void updateTagVisibilityPerId(int id, int visible){
+    if(visible == 1){
+      drawer.showAgent=false;
+      for (LLLTag t : tags.tagList) {
+        t.visible=false;
+      } 
+      for (LLLTag t : tags.tagList) {
+        if(id == t.tagID){
+          t.visible= (visible == 0) ? false : true;
+        }
+      }
+    }
+    if(visible==0){
+      for (LLLTag t : tags.tagList) {
+        t.visible=true;
+      } 
+    }
+  }
 }
 
 class LLLTag {
@@ -181,6 +257,8 @@ class LLLTag {
 
 
   float x, y, rot, tagType, tagWidth, tagHeight, size, density;
+  
+  boolean visible = true;
 
   //Point object used for native dist calcs
   PVector point;

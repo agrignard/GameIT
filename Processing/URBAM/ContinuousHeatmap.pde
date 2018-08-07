@@ -73,7 +73,7 @@ public class ContinousHeatmap{
             for(int i = 0; i < agents.size(); i++) {
                 PVector position = agents.get(i).pos;
                 if(gradient.equals("hot")){
-                  if(agents.get(i).type.equals("people") || agents.get(i).type.equals("static")){
+                  if(agents.get(i).type.equals("people") || agents.get(i).type.equals("people_from_grid") || agents.get(i).type.equals("static")){
                     gradientMap = addGradientPoint(gradientMap, position.x, position.y);
                   }
                 }

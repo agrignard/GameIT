@@ -11,7 +11,7 @@ public class Drawer{
                  showBuilding = false,
                  showRoad=false,
                  showViewCube=false,
-                 showMagicTrackPad=false,
+                 showMagicTrackPad=true,
                  showSlider=false,
                  keystoneMode=false,
                  showLegend=false,
@@ -19,16 +19,20 @@ public class Drawer{
                  showStaticGrid=true,
                  showContinousHeatMap=false,
                  showCollisionPotential=false,
-                 showCongestedRoad=true,
+                 showCongestedRoad=false,
                  showMoBike=false,
-                 showUrbanLens=true;
+                 showUrbanLens=false;
   HashMap<Integer,String> viewText;
+  HashMap<Integer,Integer> QR_ID;
 
   Drawer(PApplet parent){
     ks = new Keystone(parent);
     offscreenSurface = createGraphics(playGroundWidth, playGroundHeight, P3D);
   viewText = new HashMap<Integer,String>();
   viewText.put(-1,"Default");viewText.put(0,"LANDUSE");viewText.put(1,"JOBS2HOME");viewText.put(2,"HOME2JOBS");viewText.put(3,"PARKS");viewText.put(4,"CONGESTION");viewText.put(5,"BIKES SHARE");viewText.put(6,"INTERACTION");
+  QR_ID = new HashMap<Integer,Integer>();
+  QR_ID.put(0,0);QR_ID.put(1,9);QR_ID.put(2,19);QR_ID.put(3,43);QR_ID.put(4,63);QR_ID.put(5,126);
+
   }
   
   void initSurface(){
@@ -52,7 +56,7 @@ public class Drawer{
         aggregatedHeatmap2.draw(offscreenSurface);
       }
       legoGrid.draw(offscreenSurface);
-      if(drawer.showInteractiveGrid && tagViz != 'H'){
+      if(drawer.showInteractiveGrid){// && tagViz != 'H'){
         drawTags(offscreenSurface);
       }
       if(showLegend){
@@ -60,7 +64,7 @@ public class Drawer{
       }
       roads.draw(offscreenSurface);
       buildings.draw(offscreenSurface); 
-      drawMagicTrackPad(offscreenSurface);
+     
       if(ABM){
         model.run(offscreenSurface);
         if(updateDynamicPop){
@@ -71,6 +75,7 @@ public class Drawer{
       if(updateInteractivePop){
         
       }
+      drawMagicTrackPad(offscreenSurface);
 
     
       offscreenSurface.endDraw();
@@ -88,6 +93,10 @@ public class Drawer{
     p.fill(#000000);
     p.rect (tags.startPoint.x,tags.startPoint.y, tags.wideCount*tags.unit, tags.highCount*tags.unit);
     udpR.updateGridValue();
+    if(initiateGrid == false){
+      tags.instantiateAgentFromGrid();
+      initiateGrid=true;
+    }
     tags.UpdateAndDraw(p);
     if(drawer.showAgentOnGrid){
       tags.displayMicroPop(p);
@@ -109,11 +118,11 @@ public class Drawer{
     if(showMagicTrackPad && currentView !=-1){
       p.rectMode(CORNER);
       p.fill(#FFFFFF);
-      p.rect (1100*sizeScale,355*sizeScale, 63*sizeScale, 45*sizeScale);
+      p.rect (1025*sizeScale,355*sizeScale, 63*sizeScale, 45*sizeScale);
       p.fill(#000000);
       p.textAlign(CENTER); 
       p.textSize(9); 
-      p.text(viewText.get(currentView), 1100*sizeScale + (63/2)*sizeScale, 355*sizeScale + (45/2+45/8)*sizeScale);
+      p.text(viewText.get(currentView), 1025*sizeScale + (63/2)*sizeScale, 355*sizeScale + (45/2+45/8)*sizeScale);
     }
   }
     
@@ -152,7 +161,7 @@ public class Drawer{
         p.text("[d] delta 1 - [f] delta 2 - [l] - Display Grid string - [w] - Normal Interaction", 30, 50);
       }else{
         p.text("Simulation: [a] Agent - [c] Collision Potential - [d] Density ", 30, 30);
-        p.text("HeatMap: [e] No Heatmap - [t] type - [p] Park Heatmap -[o] Office Walkability - [r] Residential Walkability - [n] Road Network - [q] Congested Road ", 30, 50);
+        p.text("Grid: [e] No Heatmap - [t] type - [p] Park Heatmap -[o] Office Walkability - [r] Residential Walkability - [n] Road Network - [q] Congested Road ", 30, 50);
         p.text("Interaction: [g] static grid: " + showStaticGrid + " - [i] Interactive Grid: " +  showInteractiveGrid + "- [v] ViewCube: " + showViewCube + "- [m] map: " + showBG, 30, 70); 
       }  
       p.noStroke();

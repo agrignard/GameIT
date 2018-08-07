@@ -1,6 +1,6 @@
 Drawer drawer;
 public int nbProjector=1;
-public float sizeScale= 1;
+public float sizeScale= 1.0;
 public int displayWidth = int(1920*sizeScale)*nbProjector;
 public int displayHeight = int(1080*sizeScale)*nbProjector;
 
@@ -16,7 +16,6 @@ Grid grid;
 ContinousHeatmap aggregatedHeatmap;
 ContinousHeatmap aggregatedHeatmap2;
 StaticGrid legoGrid;
-InterFace interfaceLeap;
 SliderHandler sliderHandler;
 ControlFrame cf;
 InteractiveTagTable tags;
@@ -27,6 +26,7 @@ int nbView=7;
 boolean ABM=true;
 boolean updateDynamicPop=false;
 boolean updateInteractivePop=true;
+boolean initiateGrid = false;
 
 //INTERFACE VARIABLES
 boolean messageDelta = false;
@@ -53,7 +53,7 @@ void setup() {
   drawer.initSurface();
   JSONBounds = loadJSONObject("GIS/"+city+"/Bounds.geojson");
   roads = new RoadNetwork("GIS/"+city+"/LLL_Roads.geojson");
-  buildings = new Buildings("GIS/"+city+"/Buildings.geojson");
+  buildings = new Buildings("GIS/"+city+"/LLL_Buildings.geojson");
   aggregatedHeatmap = new ContinousHeatmap(0, 0, width, height);
   aggregatedHeatmap.setBrush("HeatMap/heatmapBrush.png", 80);
   aggregatedHeatmap.addGradient("hot", "HeatMap/cold_transp.png");
@@ -64,7 +64,6 @@ void setup() {
   model.initModel();
   grid = new Grid();
   legoGrid = new StaticGrid(loadStrings("data/Grid/LegoGrid_Block_LLL_5x5.asc"));
-  interfaceLeap = new InterFace();
   sliderHandler = new SliderHandler();
   tags = new InteractiveTagTable();
   udpR = new UDPReceiver();
@@ -345,7 +344,7 @@ void updateCurrentState(int slideID){
     case -1:
       drawer.showAgent=true;
       drawer.showAgentOnGrid=true;
-      drawer.showBG=false;
+      drawer.showBG=true;
       drawer.showStaticGrid=false;
       drawer.showInteractiveGrid=true;
       drawer.showBuilding=false;
@@ -370,7 +369,7 @@ void updateCurrentState(int slideID){
       break;
     case 1:
       drawer.showAgent=false;
-      drawer.showAgentOnGrid=true;
+      drawer.showAgentOnGrid=false;
       drawer.showBG=false;
       drawer.showStaticGrid=true;
       drawer.showInteractiveGrid=true;
@@ -383,7 +382,7 @@ void updateCurrentState(int slideID){
       break;
     case 2:
       drawer.showAgent=false;
-      drawer.showAgentOnGrid=true;
+      drawer.showAgentOnGrid=false;
       drawer.showBG=false;
       drawer.showStaticGrid=true;
       drawer.showInteractiveGrid=true;
@@ -396,7 +395,7 @@ void updateCurrentState(int slideID){
       break;
     case 3:
       drawer.showAgent=false;
-      drawer.showAgentOnGrid=true;
+      drawer.showAgentOnGrid=false;
       drawer.showBG=false;
       drawer.showStaticGrid=true;
       drawer.showInteractiveGrid=true;
@@ -408,7 +407,7 @@ void updateCurrentState(int slideID){
       tagViz = 'P';
       break;
     case 4:
-      drawer.showAgent=false;
+      drawer.showAgent=true;
       drawer.showAgentOnGrid=true;
       drawer.showBG=false;
       drawer.showStaticGrid=true;
@@ -416,7 +415,7 @@ void updateCurrentState(int slideID){
       drawer.showBuilding=false;
       drawer.showCollisionPotential=false;
       drawer.showContinousHeatMap=false;
-      drawer.showRoad=true;
+      drawer.showRoad=false;
       drawer.showMoBike=false;
       tagViz = 'H';
       break;
@@ -425,7 +424,7 @@ void updateCurrentState(int slideID){
       drawer.showAgentOnGrid=true;
       drawer.showBG=false;
       drawer.showStaticGrid=false;
-      drawer.showInteractiveGrid=false;
+      drawer.showInteractiveGrid=true;
       drawer.showBuilding=false;
       drawer.showCollisionPotential=false;
       drawer.showContinousHeatMap=false;
@@ -437,7 +436,7 @@ void updateCurrentState(int slideID){
       drawer.showAgentOnGrid=true;
       drawer.showBG=false;
       drawer.showStaticGrid=false;
-      drawer.showInteractiveGrid=false;
+      drawer.showInteractiveGrid=true;
       drawer.showBuilding=false;
       drawer.showCollisionPotential=true;
       drawer.showContinousHeatMap=true;

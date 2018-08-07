@@ -33,13 +33,13 @@ public class ABM {
   public void initModel() {
     agents.clear();
     createAgents(nbPeoplePerProfile, "people");
-    createAgents(nbPeoplePerProfile, "static_people");
+    //createAgents(nbPeoplePerProfile, "static_people");
     createAgents(nbPeoplePerProfile/10, "bike");
     createAgents(nbPeoplePerProfile/20, "static_bike");
     createAgents(nbPeoplePerProfile/10, "car");
     createAgents(nbPeoplePerProfile/20, "static_car");
     createAgents(nbPeoplePerProfile, "mobike");
-    createAgents(nbPeoplePerProfile, "static_mobike");
+    //createAgents(nbPeoplePerProfile, "static_mobike");
   }
 
   public void updateGlobalPop() {
@@ -91,7 +91,7 @@ public class ABM {
 
   public void run(PGraphics p) {
     for (int i=0; i<agents.size(); i++) {
-      if (agents.get(i).type.equals("people") || agents.get(i).type.equals("bike") || agents.get(i).type.equals("car") || agents.get(i).type.equals("mobike")) {
+      if (agents.get(i).type.equals("people") || agents.get(i).type.equals("people_from_grid") || agents.get(i).type.equals("bike") || agents.get(i).type.equals("car") || agents.get(i).type.equals("mobike")) {
         agents.get(i).move();
       } 
       agents.get(i).draw(p);
@@ -280,6 +280,23 @@ public class ABM {
       }
     return tmp;
   }
+  
+    public ArrayList<Node> getNodeInsideROI(PVector pos, int size){
+    ArrayList<Node> tmp = new ArrayList<Node>();
+    Node tmpNode; 
+    for (int i=0;i<map.graph.nodes.size();i++){
+      tmpNode = (Node) map.graph.nodes.get(i);
+        if(((tmpNode.x>pos.x-size/2) && (tmpNode.x)<pos.x+size/2) &&
+        ((tmpNode.y>pos.y-size/2) && (tmpNode.y)<pos.y+size/2))
+        {
+          tmp.add(tmpNode);
+        }       
+      }
+    return tmp;
+  }
+  
+  
+
 }
 
 public class Agent {
@@ -309,28 +326,67 @@ public class Agent {
     myProfileColor= (int)(model.colorProfiles.get(profile));
     myUsageColor = (usage.equals("working")) ? color(model.workingColor) : model.livingColor;
 
-    if (type.equals("people")) {
+    if (type.equals("people") || type.equals("people_from_grid")) {
       speed= 0.25;
       speed = speed + random(-speed*0.2,speed*0.2);
-      size= 4;// + random(8);
+      size= 4;
     }
-    if (type.equals("bike")) {
+    if (type.equals("bike") || type.equals("mobike")) {
       speed= 0.5;
       speed = speed + random(-speed*0.2,speed*0.2);
-      size= 6;// + random(8);
+      size= 4;
     }
     if (type.equals("car")) {
       speed= 1.0;
       speed = speed + random(-speed*0.2,speed*0.2);
-      size= 8;// + random(5);
-    }
-    if (type.equals("mobike")) {
-      speed= 5*0.05 + random(0.1);
-      size= 4;// + random(8);
+      size= 6;
     }
     if (type.equals("static_people") || type.equals("static_bike") || type.equals("static_mobike")) {
-      speed= 0.1 + random(0.5);
-      size= 4 ;//+ random(8);
+      speed= 0;
+      size= 4 ;
+      if (usage.equals("living")) {
+        Building tmp= (buildings.getLivingBuilding().get(int(random(buildings.getLivingBuilding().size()))));
+        pos.x = tmp.shape.getVertex(0).x;
+        pos.y = tmp.shape.getVertex(0).y;
+      } else {
+        Building tmp= (buildings.getWorkingBuilding().get(int(random(buildings.getWorkingBuilding().size()))));
+        pos.x = tmp.shape.getVertex(0).x;
+        pos.y = tmp.shape.getVertex(0).y;
+      }
+    }    
+  }
+    ///FIXME: Need to factorize everything here.  
+    Agent(RoadNetwork _map, String _profile, String _type, String _usage, Node _srcNode, Node _destNode) {
+    map=_map;
+    type=_type;
+    profile=_profile;
+    usage=_usage;
+    srcNode =  _srcNode;
+    destNode =  _destNode;
+    pos= new PVector(srcNode.x, srcNode.y);
+    path=null;
+    dir = new PVector(0.0, 0.0);
+    myProfileColor= (int)(model.colorProfiles.get(profile));
+    myUsageColor = (usage.equals("working")) ? color(model.workingColor) : model.livingColor;
+
+    if (type.equals("people") || type.equals("people_from_grid")) {
+      speed= 0.25;
+      speed = speed + random(-speed*0.2,speed*0.2);
+      size= 4;
+    }
+    if (type.equals("bike") || type.equals("mobike")) {
+      speed= 0.5;
+      speed = speed + random(-speed*0.2,speed*0.2);
+      size= 4;
+    }
+    if (type.equals("car")) {
+      speed= 1.0;
+      speed = speed + random(-speed*0.2,speed*0.2);
+      size= 6;
+    }
+    if (type.equals("static_people") || type.equals("static_bike") || type.equals("static_mobike")) {
+      speed= 0;
+      size= 4 ;
       if (usage.equals("living")) {
         Building tmp= (buildings.getLivingBuilding().get(int(random(buildings.getLivingBuilding().size()))));
         pos.x = tmp.shape.getVertex(0).x;
@@ -346,7 +402,7 @@ public class Agent {
 
   public void draw(PGraphics p) {
     if (drawer.showAgent) {
-      if (type.equals("people") || type.equals("static_people")) {
+      if (type.equals("people") || type.equals("static_people") || type.equals("people_from_grid")) {
         p.noStroke();
         p.fill(myProfileColor);
         p.ellipse(pos.x, pos.y, size, size);
@@ -356,14 +412,14 @@ public class Agent {
         p.stroke(myProfileColor);
         p.strokeWeight(2);
         p.noFill();
-        p.ellipse(pos.x, pos.y, size*2, size*2);
+        p.ellipse(pos.x, pos.y, size, size);
         p.noStroke();
       }
       if (type.equals("car") || type.equals("static_car")){
         p.stroke(myProfileColor);
         p.strokeWeight(2);
         p.noFill();
-        p.ellipse(pos.x, pos.y, size*2, size*2);
+        p.ellipse(pos.x, pos.y, size, size);
         p.noStroke();
       }
       if (type.equals("mobike") || type.equals("static_mobike")){
@@ -416,11 +472,20 @@ public class Agent {
     // Arrived to node -->
     if ( dir.mag() < dir.normalize().mult(speed).mag() ) {
       // Arrived to destination  --->
-      if ( path.indexOf(toNode) == 0 ) {  
+      if ( path.indexOf(toNode) == 0 ) {
+        Node tmpNode;
         pos = destNodePos;
         //Re int src and dest
-        srcNode =  (Node) map.graph.nodes.get(int(random(map.graph.nodes.size())));
-        destNode =  (Node) map.graph.nodes.get(int(random(map.graph.nodes.size())));
+        if(type.equals("people_from_grid")){
+          tmpNode= srcNode;
+          srcNode=destNode;
+          destNode=tmpNode;
+        }
+        else{
+          srcNode =  (Node) map.graph.nodes.get(int(random(map.graph.nodes.size())));
+          destNode =  (Node) map.graph.nodes.get(int(random(map.graph.nodes.size())));
+        }
+        
         pos= new PVector(srcNode.x, srcNode.y);
         path=null;
         dir = new PVector(0.0, 0.0);
