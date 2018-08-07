@@ -13,6 +13,7 @@ RoadNetwork roads;
 Buildings buildings;
 ABM model;
 Grid grid;
+ArrayList<ParticleSystem> systems;
 ContinousHeatmap aggregatedHeatmap;
 ContinousHeatmap aggregatedHeatmap2;
 StaticGrid legoGrid;
@@ -40,8 +41,8 @@ import codeanticode.syphon.*;
 SyphonServer server;
 /////////////////////////////////
 void settings() {
-  //size(displayWidth, displayHeight, P3D);
-  fullScreen(P3D, 0);
+  size(displayWidth, displayHeight, P3D);
+  //fullScreen(P3D, 0);
 }
 
 void setup() {
@@ -63,6 +64,7 @@ void setup() {
   model = new ABM(roads);
   model.initModel();
   grid = new Grid();
+  systems = new ArrayList<ParticleSystem>();
   legoGrid = new StaticGrid(loadStrings("data/Grid/LegoGrid_Block_LLL_5x5.asc"));
   sliderHandler = new SliderHandler();
   tags = new InteractiveTagTable();
@@ -253,9 +255,6 @@ void keyTyped() {
     case 'c':
       drawer.toggleCollisionPotential();
       break;
-    case 'x':
-      drawer.toggleMagicTrackpad();
-      break;
     case 'q':
       drawer.toggleCongestedRoad();
       break;
@@ -264,6 +263,9 @@ void keyTyped() {
       break;
     case 'u':
       drawer.toggleUrbanLens();
+      break;
+    case 'x':
+      //drawer.toggleParticleSystem();
       break;
 }
   }
@@ -424,7 +426,7 @@ void updateCurrentState(int slideID){
       drawer.showAgentOnGrid=true;
       drawer.showBG=false;
       drawer.showStaticGrid=false;
-      drawer.showInteractiveGrid=true;
+      drawer.showInteractiveGrid=false;
       drawer.showBuilding=false;
       drawer.showCollisionPotential=false;
       drawer.showContinousHeatMap=false;
@@ -436,7 +438,7 @@ void updateCurrentState(int slideID){
       drawer.showAgentOnGrid=true;
       drawer.showBG=false;
       drawer.showStaticGrid=false;
-      drawer.showInteractiveGrid=true;
+      drawer.showInteractiveGrid=false;
       drawer.showBuilding=false;
       drawer.showCollisionPotential=true;
       drawer.showContinousHeatMap=true;

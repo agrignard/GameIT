@@ -9,6 +9,7 @@
 
 public class InteractiveTagTable {
   ArrayList<LLLTag> tagList = new ArrayList<LLLTag>();
+  ArrayList<Block> blocks;
   //float unit = 11.95f;
   float unit = 14.175f*sizeScale;
   int wideCount=32;
@@ -17,6 +18,7 @@ public class InteractiveTagTable {
   int scaleWorld = 1;
   
   public void setupInteractiveTagTable(){
+    blocks = new ArrayList<Block>();
     unit = unit * scaleWorld;
     for (int y = 0; y < highCount; y++) {
     for (int x = 0; x < wideCount; x++) {     
@@ -38,9 +40,6 @@ public class InteractiveTagTable {
     Agent ag = null;
     int nbWorkingBuilding= buildings.getWorkingBuilding().size();
     int nbLivingBuilding= buildings.getLivingBuilding().size();
-    println("nbWorkingBuilding" + nbWorkingBuilding);
-    buildings.getLivingBuilding().get(int(random(nbLivingBuilding-1)));
-    println("nbLivingBuilding" + nbLivingBuilding);
     for (LLLTag t : tagList) {
       //OFFICE
       if (t.tagID==43 || t.tagID==63 || t.tagID==126){
@@ -81,8 +80,12 @@ public class InteractiveTagTable {
           ag= new Agent(model.map, model.profiles.get(int(random(4))), "people_from_grid", "living",srcNode, destNode);
           model.agents.add(ag);
         }
+      } 
+    }
+    for (LLLTag t : tagList) {
+      if(t.tagID==0 || t.tagID==9 || t.tagID==19 || t.tagID==43 || t.tagID==63 || t.tagID==126){
+        blocks.add(new Block(t.point, int(t.tagWidth), legoGrid.colorMap.get(t.tagID),t.tagID,int(t.density)*50));
       }
-      
     }
   }
   
@@ -210,6 +213,14 @@ public class InteractiveTagTable {
       }
       }
     }
+    if(drawer.showParticleSystem){
+      for(Block b: tags.blocks){
+        if(b.visible){
+          b.run(p);
+        }
+      }
+    }
+
   }
   
   LLLTag getRandomTagPerID(int id){
@@ -229,6 +240,12 @@ public class InteractiveTagTable {
         t.density=value/10;
       }
     }
+    for (Block b : tags.blocks) {
+      if(id == b.id){
+        b.intensity=value*5;
+      }
+    }
+    
   }  
   void updateTagVisibilityPerId(int id, int visible){
     if(visible == 1){
@@ -241,10 +258,21 @@ public class InteractiveTagTable {
           t.visible= (visible == 0) ? false : true;
         }
       }
+      for (Block b : tags.blocks) {
+        b.visible=false;
+      } 
+      for (Block b : tags.blocks) {
+        if(id == b.id){
+          b.visible= (visible == 0) ? false : true;
+        }
+      }
     }
     if(visible==0){
       for (LLLTag t : tags.tagList) {
         t.visible=true;
+      }
+      for (Block b : tags.blocks) {
+        b.visible=true;
       } 
     }
   }
@@ -388,6 +416,10 @@ class LLLTag {
         if (tagID==138) {
           p.fill(0, 230, 0, 255);
         }
+        p.rect(x, y, tagWidth, tagHeight);
+        break;
+       case 'E': 
+        p.fill(#FFFFFF);
         p.rect(x, y, tagWidth, tagHeight);
         break;
       default:

@@ -141,6 +141,8 @@ public class Block{
       p.rectMode(CORNER);
       switch(tagViz) {
             case 'E':
+            p.fill(#FFFFFF);
+            p.rect (location.x,location.y, size*0.8, size*0.8);
             break;
             case 'T':
             p.fill(legoGrid.colorMap.get(id));

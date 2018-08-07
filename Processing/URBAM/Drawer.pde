@@ -21,7 +21,8 @@ public class Drawer{
                  showCollisionPotential=false,
                  showCongestedRoad=false,
                  showMoBike=false,
-                 showUrbanLens=false;
+                 showUrbanLens=false,
+                 showParticleSystem=false;
   HashMap<Integer,String> viewText;
   HashMap<Integer,Integer> QR_ID;
 
@@ -75,7 +76,7 @@ public class Drawer{
       if(updateInteractivePop){
         
       }
-      drawMagicTrackPad(offscreenSurface);
+      //drawMagicTrackPad(offscreenSurface);
 
     
       offscreenSurface.endDraw();
@@ -160,8 +161,8 @@ public class Drawer{
       if(tagsInteraction){
         p.text("[d] delta 1 - [f] delta 2 - [l] - Display Grid string - [w] - Normal Interaction", 30, 50);
       }else{
-        p.text("Simulation: [a] Agent - [c] Collision Potential - [d] Density ", 30, 30);
-        p.text("Grid: [e] No Heatmap - [t] type - [p] Park Heatmap -[o] Office Walkability - [r] Residential Walkability - [n] Road Network - [q] Congested Road ", 30, 50);
+        p.text("Simulation: [a] Agent - [z] Grid Agent - [c] Collision Potential - [d] Density ", 30, 30);
+        p.text("Grid: [e] Empty - [t] type - [p] Park  -[o] Office  - [r] Residential  - [n] Road Network - [q] Congested Road ", 30, 50);
         p.text("Interaction: [g] static grid: " + showStaticGrid + " - [i] Interactive Grid: " +  showInteractiveGrid + "- [v] ViewCube: " + showViewCube + "- [m] map: " + showBG, 30, 70); 
       }  
       p.noStroke();
@@ -175,7 +176,7 @@ public class Drawer{
       p.fill(#FFFFFF);
       p.text("Working", 70, 123);
       
-      p.text("Settings : [k] keystone - [l] load keystone - [s] save keystone - [x] Trackpad -[w] - Tags Interaction - [space] legend", width - 500, 25);
+      p.text("Settings : [k] keystone - [l] load keystone - [s] save keystone -[w] - Tags Interaction - [space] legend", width - 500, 25);
       p.text("fps: " + int(frameRate) + " fps", width-100, 50);
     }
     p.textAlign(CENTER);
@@ -216,4 +217,5 @@ public class Drawer{
   public void toggleCongestedRoad() { showCongestedRoad=!showCongestedRoad;} 
   public void toggleMoBike() { showMoBike=!showMoBike;} 
   public void toggleUrbanLens() { showUrbanLens=!showUrbanLens;}
+  public void toggleParticleSystem() { showParticleSystem=!showParticleSystem;}
 }

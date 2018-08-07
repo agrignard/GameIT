@@ -33,13 +33,13 @@ public class ABM {
   public void initModel() {
     agents.clear();
     createAgents(nbPeoplePerProfile, "people");
-    //createAgents(nbPeoplePerProfile, "static_people");
+    createAgents(nbPeoplePerProfile/10, "static_people");
     createAgents(nbPeoplePerProfile/10, "bike");
     createAgents(nbPeoplePerProfile/20, "static_bike");
     createAgents(nbPeoplePerProfile/10, "car");
     createAgents(nbPeoplePerProfile/20, "static_car");
     createAgents(nbPeoplePerProfile, "mobike");
-    //createAgents(nbPeoplePerProfile, "static_mobike");
+    createAgents(nbPeoplePerProfile/10, "static_mobike");
   }
 
   public void updateGlobalPop() {
