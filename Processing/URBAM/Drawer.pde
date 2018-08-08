@@ -29,10 +29,10 @@ public class Drawer{
   Drawer(PApplet parent){
     ks = new Keystone(parent);
     offscreenSurface = createGraphics(playGroundWidth, playGroundHeight, P3D);
-  viewText = new HashMap<Integer,String>();
-  viewText.put(-1,"Default");viewText.put(0,"LANDUSE");viewText.put(1,"JOBS2HOME");viewText.put(2,"HOME2JOBS");viewText.put(3,"PARKS");viewText.put(4,"CONGESTION");viewText.put(5,"BIKES SHARE");viewText.put(6,"INTERACTION");
-  QR_ID = new HashMap<Integer,Integer>();
-  QR_ID.put(0,0);QR_ID.put(1,9);QR_ID.put(2,19);QR_ID.put(3,43);QR_ID.put(4,63);QR_ID.put(5,126);
+    viewText = new HashMap<Integer,String>();
+    viewText.put(-1,"Default");viewText.put(0,"LANDUSE");viewText.put(1,"JOBS2HOME");viewText.put(2,"HOME2JOBS");viewText.put(3,"PARKS");viewText.put(4,"CONGESTION");viewText.put(5,"BIKES SHARE");viewText.put(6,"INTERACTION");
+    QR_ID = new HashMap<Integer,Integer>();
+    QR_ID.put(0,0);QR_ID.put(1,9);QR_ID.put(2,19);QR_ID.put(3,43);QR_ID.put(4,63);QR_ID.put(5,126);
 
   }
   
@@ -161,9 +161,9 @@ public class Drawer{
       if(tagsInteraction){
         p.text("[d] delta 1 - [f] delta 2 - [l] - Display Grid string - [w] - Normal Interaction", 30, 50);
       }else{
-        p.text("Simulation: [a] Agent - [z] Grid Agent - [c] Collision Potential - [d] Density ", 30, 30);
-        p.text("Grid: [e] Empty - [t] type - [p] Park  -[o] Office  - [r] Residential  - [n] Road Network - [q] Congested Road ", 30, 50);
-        p.text("Interaction: [g] static grid: " + showStaticGrid + " - [i] Interactive Grid: " +  showInteractiveGrid + "- [v] ViewCube: " + showViewCube + "- [m] map: " + showBG, 30, 70); 
+        p.text("Simulation: [a] Agent - [z] Grid Agent - [b] Building - [c] Collision Potential - [d] Density - [j] Mobike - [x] Particle ", 30, 30);
+        p.text("Grid: [e] Empty - [t] type - [p] Park  -[o] Office  - [r] Residential  - [n] Road Network", 30, 50);
+        p.text("Interaction: [g] static grid: " + showStaticGrid + " - [i] Interactive Grid: " +  showInteractiveGrid +  " - [v] ViewCube: " +  showViewCube + "- [m] map: " + showBG, 30, 70); 
       }  
       p.noStroke();
       p.fill(model.livingColor);
@@ -176,7 +176,7 @@ public class Drawer{
       p.fill(#FFFFFF);
       p.text("Working", 70, 123);
       
-      p.text("Settings : [k] keystone - [l] load keystone - [s] save keystone -[w] - Tags Interaction - [space] legend", width - 500, 25);
+      p.text("Settings : [k] keystone - [l] load keystone - [s] save keystone - [space] legend - [w] tags interaction", width - 500, 25);
       p.text("fps: " + int(frameRate) + " fps", width-100, 50);
     }
     p.textAlign(CENTER);

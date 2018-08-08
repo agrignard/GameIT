@@ -1,3 +1,18 @@
+public class Utility{
+  HashMap<Integer,Integer> colorMap = new HashMap<Integer,Integer>();
+  Utility(){
+    /*colorMap = new HashMap<String,Integer>();
+    colorMap.put("RS",#ff00ff);colorMap.put("RM",#b802ff);colorMap.put("RL",#a200ff);
+    colorMap.put("OS",#00ffff);colorMap.put( "OM",#0099ff);colorMap.put("OL",#00ffd5);*/
+    
+    colorMap = new HashMap<Integer,Integer>();
+    colorMap.put(999,color(0, 80, 80, 200));colorMap.put(0,#ff00ff);colorMap.put(9,#b802ff);colorMap.put(19,#a200ff);
+    colorMap.put(43,#00ffff);colorMap.put( 63,#0099ff);colorMap.put(126,#00ffd5);colorMap.put(138,#a2ff00);
+    
+  }
+}
+
+
 public enum Visibility { HIDE, SHOW, TOGGLE; }
 
 public class ContinousHeatmap{

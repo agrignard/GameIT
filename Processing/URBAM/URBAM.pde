@@ -7,6 +7,7 @@ public int displayHeight = int(1080*sizeScale)*nbProjector;
 public int playGroundWidth = displayWidth;
 public int playGroundHeight = displayHeight;
 String city="Hanghzhou";
+boolean devMode=false;
 PImage bg;
 JSONObject JSONBounds;
 RoadNetwork roads;
@@ -18,9 +19,9 @@ ContinousHeatmap aggregatedHeatmap;
 ContinousHeatmap aggregatedHeatmap2;
 StaticGrid legoGrid;
 SliderHandler sliderHandler;
-ControlFrame cf;
 InteractiveTagTable tags;
 UDPReceiver udpR;
+Utility utils;
 int currentView=-1;
 boolean iterativeMode=false;
 int nbView=7;
@@ -50,6 +51,8 @@ void setup() {
   width=displayWidth;
   height=displayHeight;
   drawer = new Drawer(this);
+  utils = new Utility();
+  systems =  new ArrayList<ParticleSystem>();
   bg = loadImage("data/GIS/"+city+"/Table_Video_Frame_Template_4k_BG_No building.png");
   drawer.initSurface();
   JSONBounds = loadJSONObject("GIS/"+city+"/Bounds.geojson");
@@ -64,13 +67,11 @@ void setup() {
   model = new ABM(roads);
   model.initModel();
   grid = new Grid();
-  systems = new ArrayList<ParticleSystem>();
   legoGrid = new StaticGrid(loadStrings("data/Grid/LegoGrid_Block_LLL_5x5.asc"));
   sliderHandler = new SliderHandler();
   tags = new InteractiveTagTable();
   udpR = new UDPReceiver();
   udpR.oldMessage = udpR.messageIn ;
-  //cf = new ControlFrame(this,400,400,"box");
   tags.setupInteractiveTagTable();
   ///////////CREATE MASKING FOR MISSING GRID PIECES/////////////
   udpR.maskParts = udpR.messageMask.split(" ");
@@ -96,6 +97,7 @@ void drawScene() {
 }
 
 void keyTyped() {
+  if(devMode){
   if(tagsInteraction){
     delay(50);
   if (key == 'd') {
@@ -255,9 +257,6 @@ void keyTyped() {
     case 'c':
       drawer.toggleCollisionPotential();
       break;
-    case 'q':
-      drawer.toggleCongestedRoad();
-      break;
     case 'j':
       drawer.toggleMoBike();
       break;
@@ -265,9 +264,10 @@ void keyTyped() {
       drawer.toggleUrbanLens();
       break;
     case 'x':
-      //drawer.toggleParticleSystem();
+      drawer.toggleParticleSystem();
       break;
 }
+  }
   }
   }
 }

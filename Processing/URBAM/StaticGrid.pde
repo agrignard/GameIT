@@ -9,7 +9,6 @@ public class StaticGrid {
   ArrayList<Block> blocks;
   
   String type;
-  HashMap<Integer,Integer> colorMap = new HashMap<Integer,Integer>();
   int walkabilityDistance = 10;
   color c1 = color(0, 255, 0);
   color c2 = color(255, 255, 0);
@@ -32,9 +31,7 @@ public class StaticGrid {
     println("NODATA_value" + NODATA_value);*/
     //blocks= new int[nrows][ncols];
     blocks = new ArrayList<Block>();
-    colorMap = new HashMap<Integer,Integer>();
-    colorMap.put(999,color(0, 80, 80, 200));colorMap.put(0,#ff00ff);colorMap.put(9,#b802ff);colorMap.put(19,#a200ff);
-    colorMap.put(43,#00ffff);colorMap.put( 63,#0099ff);colorMap.put(126,#00ffd5);colorMap.put(138,#a2ff00);
+
    
     for (int i = 0 ; i < lines.length -6; i++) {
       float[] nums = float(split(lines[i+6], ' '));
@@ -145,7 +142,7 @@ public class Block{
             p.rect (location.x,location.y, size*0.8, size*0.8);
             break;
             case 'T':
-            p.fill(legoGrid.colorMap.get(id));
+            p.fill(utils.colorMap.get(id));
             p.rect (location.x,location.y, size*0.8, size*0.8);
             break;
             case 'P':
@@ -167,7 +164,7 @@ public class Block{
             p.fill(c);
             p.rect (location.x,location.y, size*0.8, size*0.8);
             if(id==0 || id==9 || id==19 || id==43 || id==63 || id==126){
-              p.fill(legoGrid.colorMap.get(id));
+              p.fill(utils.colorMap.get(id));
               p.rect (location.x+size/4,location.y+size/4, size*0.3, size*0.3);
             }
             break;
@@ -180,7 +177,7 @@ public class Block{
             p.fill(c);
             p.rect (location.x,location.y, size*0.8, size*0.8);
             if(id==0 || id==9 || id==19 || id==43 || id==63 || id==126){
-              p.fill(legoGrid.colorMap.get(id));
+              p.fill(utils.colorMap.get(id));
               p.rect (location.x+size/4,location.y+size/4, size*0.3, size*0.3);
             }
             break;

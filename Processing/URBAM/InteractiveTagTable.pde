@@ -84,7 +84,7 @@ public class InteractiveTagTable {
     }
     for (LLLTag t : tagList) {
       if(t.tagID==0 || t.tagID==9 || t.tagID==19 || t.tagID==43 || t.tagID==63 || t.tagID==126){
-        blocks.add(new Block(t.point, int(t.tagWidth), legoGrid.colorMap.get(t.tagID),t.tagID,int(t.density)*50));
+        blocks.add(new Block(t.point, int(t.tagWidth), utils.colorMap.get(t.tagID),t.tagID,int(t.density)*50));
       }
     }
   }
@@ -203,7 +203,7 @@ public class InteractiveTagTable {
       if(t.visible){
         for (int i=0;i<=t.density-1;i++){
           if(t.tagID==0||t.tagID==9||t.tagID==19||t.tagID==43||t.tagID==63||t.tagID==126){
-            p.fill(legoGrid.colorMap.get(t.tagID));
+            p.fill(utils.colorMap.get(t.tagID));
             if(i%2==0){
               p.ellipse(t.x + t.tagWidth/2 + noise(t.x+i)*t.tagWidth*spread,t.y+t.tagHeight/2+ noise(t.y+i)*t.tagHeight*spread,4,4);
             } else{
@@ -411,7 +411,7 @@ class LLLTag {
       case 'T': 
         p.fill(0, 80, 80, 200);
         if(tagID==0||tagID==9||tagID==19||tagID==43||tagID==63||tagID==126){
-          p.fill(legoGrid.colorMap.get(tagID),150);
+          p.fill(utils.colorMap.get(tagID),150);
         }
         if (tagID==138) {
           p.fill(0, 230, 0, 255);
