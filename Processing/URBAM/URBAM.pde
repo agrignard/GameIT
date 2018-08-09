@@ -358,7 +358,7 @@ void updateCurrentState(int slideID){
       break;
     case 0:
       drawer.showAgent=false;
-      drawer.showAgentOnGrid=true;
+      drawer.showAgentOnGrid=false;
       drawer.showBG=false;
       drawer.showStaticGrid=true;
       drawer.showInteractiveGrid=true;
